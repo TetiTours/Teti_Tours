@@ -1,0 +1,699 @@
+```css
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4eee4;
+    color: #33251b;
+}
+
+
+/* ================= HEADER ================= */
+
+.navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 90px;
+    padding: 5px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    z-index: 1000;
+}
+
+
+/* ================= LOGO ================= */
+
+.brand {
+    display: flex;
+    align-items: center;
+}
+
+.brand img {
+    width: 230px;
+    height: 230px;
+    object-fit: contain;
+    display: block;
+    transform: translate(25px, 20px);
+}
+
+
+/* ================= NAVIGATION ================= */
+
+.navbar nav {
+    display: flex;
+    gap: 35px;
+    padding-top: 30px;
+    padding-right: 25px;
+}
+
+.navbar nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.navbar nav a:hover {
+    color: #d6b77a;
+}
+
+
+/* ================= HERO ================= */
+
+.hero {
+    width: 100%;
+    height: 100vh;
+    min-height: 700px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 140px 7%;
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            rgba(15, 10, 7, 0.78),
+            rgba(15, 10, 7, 0.90)
+        ),
+        url("https://images.unsplash.com/photo-1568322445389-f64ac2515020?auto=format&fit=crop&w=2000&q=85");
+
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+
+/* ================= HERO CONTENT ================= */
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 750px;
+    color: white;
+    margin-left: auto;
+    margin-right: -6%;
+    transform: translateY(100px);
+}
+
+.small-title {
+    color: #d6b77a;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 4px;
+    margin-bottom: 18px;
+}
+
+.hero h1 {
+    font-size: clamp(48px, 7vw, 82px);
+    line-height: 1.05;
+    margin-bottom: 28px;
+}
+
+.hero-text {
+    max-width: 620px;
+    font-size: 20px;
+    line-height: 1.7;
+    color: #ded6cc;
+    margin-bottom: 38px;
+}
+
+
+/* ================= HERO BUTTONS ================= */
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.main-button,
+.second-button {
+    padding: 16px 30px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.main-button {
+    background: #b38b52;
+    color: white;
+}
+
+.main-button:hover {
+    background: #96713e;
+}
+
+.second-button {
+    border: 1px solid white;
+    color: white;
+}
+
+.second-button:hover {
+    background: white;
+    color: #33251b;
+}
+
+
+/* ================= TOURS ================= */
+
+.tours {
+    padding: 100px 7%;
+    background: #f4eee4;
+}
+
+.tours .section-title {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.tours .section-title p {
+    color: #a17b45;
+    letter-spacing: 3px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.tours .section-title h2 {
+    font-size: 40px;
+    margin-top: 12px;
+}
+
+.tours .section-title span {
+    display: block;
+    margin-top: 12px;
+    color: #75675b;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+
+/* ================= TOUR CONTAINER ================= */
+
+.tour-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+
+/* ================= TOUR CARD ================= */
+
+.tour-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.09);
+
+    transition: 0.3s ease;
+}
+
+.tour-card:hover {
+    transform: translateY(-6px);
+
+    box-shadow:
+        0 18px 35px rgba(0, 0, 0, 0.13);
+}
+
+
+/* ================= TOUR IMAGE ================= */
+
+.tour-image {
+    height: 220px;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 15px;
+}
+
+
+/* ================= AIRPORT ================= */
+
+.airport-image {
+    background-image:
+        linear-gradient(
+            rgba(0, 0, 0, 0.15),
+            rgba(0, 0, 0, 0.15)
+        ),
+        url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=85");
+}
+
+
+/* ================= CAIRO & GIZA ================= */
+
+.cairo-image {
+    background-image:
+        linear-gradient(
+            rgba(0, 0, 0, 0.10),
+            rgba(0, 0, 0, 0.10)
+        ),
+        url("https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&w=1200&q=85");
+}
+
+
+/* ================= FAYOUM ================= */
+
+.fayoum-image {
+    background-image:
+        linear-gradient(
+            rgba(0, 0, 0, 0.10),
+            rgba(0, 0, 0, 0.10)
+        ),
+        url("https://commons.wikimedia.org/wiki/Special:Redirect/file/Wadi%20elhitan%20museum%20%2820%29.jpg");
+
+    background-position: center;
+}
+
+
+/* ================= ALEXANDRIA ================= */
+
+.alex-image {
+    background-image:
+        linear-gradient(
+            rgba(0, 0, 0, 0.10),
+            rgba(0, 0, 0, 0.10)
+        ),
+        url("https://commons.wikimedia.org/wiki/Special:Redirect/file/Citadel%20of%20Qaitbay%2C%20Alexandria.jpg");
+
+    background-position: center;
+}
+
+
+/* ================= TOUR LABEL ================= */
+
+.tour-label {
+    background: #b38b52;
+    color: white;
+    padding: 7px 11px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+
+/* ================= TOUR CONTENT ================= */
+
+.tour-content {
+    padding: 22px;
+}
+
+.tour-content h3 {
+    font-size: 23px;
+    color: #33251b;
+    margin-bottom: 12px;
+}
+
+.tour-content p {
+    color: #75675b;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 70px;
+}
+
+
+/* ================= TOUR BOTTOM ================= */
+
+.tour-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid #e5ddd2;
+}
+
+.tour-bottom span {
+    color: #8b6a42;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.tour-bottom a {
+    background: #2a1d15;
+    color: white;
+    text-decoration: none;
+    padding: 10px 17px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.tour-bottom a:hover {
+    background: #b38b52;
+}
+
+
+/* ================= ABOUT ================= */
+
+.about {
+    padding: 110px 7%;
+    background: #2a1d15;
+    color: white;
+}
+
+.about-content {
+    max-width: 750px;
+}
+
+.about h2 {
+    font-size: 52px;
+    line-height: 1.1;
+    margin-bottom: 30px;
+}
+
+.about p:not(.small-title) {
+    color: #d9cec1;
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 18px;
+}
+
+
+/* ================= CONTACT ================= */
+
+.contact {
+    text-align: center;
+    padding: 100px 20px;
+    background: #f4eee4;
+}
+
+.contact h2 {
+    font-size: 42px;
+    margin-bottom: 20px;
+}
+
+.contact > p:not(.small-title) {
+    color: #75675b;
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.contact button {
+    border: none;
+    background: #2a1d15;
+    color: white;
+    padding: 16px 35px;
+    border-radius: 5px;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.contact button:hover {
+    background: #4a3325;
+}
+
+
+/* ================= FOOTER ================= */
+
+footer {
+    background: #17100c;
+    color: white;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.footer-logo img {
+    width: 65px;
+    height: 65px;
+    object-fit: contain;
+}
+
+footer p {
+    margin-top: 12px;
+    color: #c8bbac;
+}
+
+footer .copyright {
+    margin-top: 25px;
+    font-size: 13px;
+}
+
+
+/* ================= BOOKING POPUP ================= */
+
+.booking-modal {
+    display: none;
+
+    position: fixed;
+    inset: 0;
+
+    z-index: 99999;
+
+    background: rgba(0, 0, 0, 0.75);
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+.booking-box {
+    position: relative;
+
+    width: 100%;
+    max-width: 520px;
+
+    max-height: 90vh;
+    overflow-y: auto;
+
+    background: #f4eee4;
+
+    padding: 35px;
+
+    border-radius: 10px;
+
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.close-booking {
+    position: absolute;
+
+    top: 10px;
+    right: 15px;
+
+    border: none;
+    background: transparent;
+
+    color: #33251b;
+
+    font-size: 32px;
+
+    cursor: pointer;
+}
+
+.booking-small-title {
+    color: #a17b45;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    letter-spacing: 3px;
+
+    margin-bottom: 10px;
+}
+
+.booking-box h2 {
+    color: #33251b;
+
+    font-size: 32px;
+
+    margin-bottom: 12px;
+}
+
+.selected-tour {
+    color: #75675b;
+
+    margin-bottom: 20px;
+}
+
+.selected-tour strong {
+    color: #a17b45;
+}
+
+.booking-box label {
+    display: block;
+
+    color: #33251b;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    margin-top: 14px;
+
+    margin-bottom: 6px;
+}
+
+.booking-box input,
+.booking-box select,
+.booking-box textarea {
+    width: 100%;
+
+    border: 1px solid #d5c8b8;
+
+    border-radius: 5px;
+
+    padding: 12px;
+
+    background: white;
+
+    color: #33251b;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 15px;
+
+    outline: none;
+}
+
+.booking-box input:focus,
+.booking-box select:focus,
+.booking-box textarea:focus {
+    border-color: #b38b52;
+}
+
+.booking-submit {
+    width: 100%;
+
+    margin-top: 22px;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 5px;
+
+    background: #2a1d15;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.booking-submit:hover {
+    background: #b38b52;
+}
+
+
+/* ================= TABLET ================= */
+
+@media (max-width: 900px) {
+
+    .navbar {
+        height: 80px;
+        padding: 5px 10px;
+    }
+
+    .brand img {
+        width: 150px;
+        height: 150px;
+        transform: translate(15px, 15px);
+    }
+
+    .navbar nav {
+        display: none;
+    }
+
+    .hero-content {
+        margin-right: 0;
+        transform: translateY(60px);
+    }
+
+    .tour-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 600px) {
+
+    .hero {
+        padding: 130px 25px 70px;
+        min-height: 700px;
+    }
+
+    .hero h1 {
+        font-size: 48px;
+    }
+
+    .hero-text {
+        font-size: 17px;
+    }
+
+    .brand img {
+        width: 120px;
+        height: 120px;
+        transform: translate(10px, 15px);
+    }
+
+    .tours {
+        padding: 70px 20px;
+    }
+
+    .tours .section-title h2 {
+        font-size: 34px;
+    }
+
+    .tour-image {
+        height: 200px;
+    }
+
+    .tour-content {
+        padding: 20px;
+    }
+
+    .tour-content h3 {
+        font-size: 21px;
+    }
+
+    .tour-content p {
+        min-height: auto;
+    }
+
+    .about {
+        padding: 70px 25px;
+    }
+
+    .about h2 {
+        font-size: 40px;
+    }
+
+    .contact h2 {
+        font-size: 34px;
+    }
+
+    .booking-box {
+        padding: 28px 20px;
+    }
+}
+```
