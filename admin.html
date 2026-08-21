@@ -1036,7 +1036,6 @@ async function logout(){
    AUTH STATE
 ========================================================= */
 
-
 supabase.auth.onAuthStateChange(
     function(event, session){
 
@@ -1055,7 +1054,7 @@ supabase.auth.onAuthStateChange(
 
         }
 
-                      if(
+        if(
             session &&
             event !== "SIGNED_OUT"
         ){
@@ -1072,11 +1071,6 @@ supabase.auth.onAuthStateChange(
 
         }
 
-            return;
-
-        }
-        }
-
         if(
             event === "SIGNED_OUT"
         ){
@@ -1087,6 +1081,12 @@ supabase.auth.onAuthStateChange(
 
     }
 );
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
 
 
 /* =========================================================
