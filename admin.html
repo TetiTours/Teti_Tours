@@ -1,12 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Teti Tour | Admin</title>
 
 <style>
+
+/* =========================================================
+   GENERAL
+   ========================================================= */
 
 *{
 margin:0;
@@ -79,8 +88,20 @@ margin-top:12px;
 font-weight:bold;
 }
 
+.success-message{
+color:#52733f;
+margin-top:15px;
+font-weight:bold;
+}
+
 .admin-content{
 display:none;
+}
+
+.reset-box{
+display:none;
+max-width:450px;
+margin:50px auto;
 }
 
 .price-list{
@@ -106,17 +127,17 @@ width:100%;
 margin-top:25px;
 }
 
-.success{
-display:none;
-text-align:center;
-color:#52733f;
-font-weight:bold;
-margin-top:15px;
-}
-
 .logout{
 float:right;
 background:#777;
+}
+
+.logout:hover{
+background:#555;
+}
+
+.loading{
+padding:20px 0;
 }
 
 @media(max-width:700px){
@@ -134,21 +155,32 @@ margin-bottom:20px;
 }
 
 </style>
+
 </head>
+
 
 <body>
 
+
 <div class="admin-box">
 
-<!-- LOGIN -->
 
-<div class="login-box" id="loginBox">
+<!-- =========================================================
+     LOGIN
+     ========================================================= -->
 
-<h1>Teti Tour Admin</h1>
+<div
+class="login-box"
+id="loginBox">
+
+<h1>
+Teti Tour Admin
+</h1>
 
 <p class="subtitle">
 Admin login
 </p>
+
 
 <label>
 Email
@@ -157,7 +189,9 @@ Email
 <input
 type="email"
 id="email"
-placeholder="Admin email">
+placeholder="Admin email"
+autocomplete="email">
+
 
 <label>
 Password
@@ -166,7 +200,9 @@ Password
 <input
 type="password"
 id="password"
-placeholder="Password">
+placeholder="Password"
+autocomplete="current-password">
+
 
 <button
 type="button"
@@ -176,6 +212,7 @@ Login
 
 </button>
 
+
 <div
 class="error"
 id="loginError">
@@ -184,11 +221,78 @@ id="loginError">
 </div>
 
 
-<!-- ADMIN -->
+
+<!-- =========================================================
+     RESET PASSWORD
+     ========================================================= -->
+
+<div
+class="reset-box"
+id="resetBox">
+
+<h1>
+Reset Password
+</h1>
+
+<p class="subtitle">
+Choose your new admin password.
+</p>
+
+
+<label>
+New Password
+</label>
+
+<input
+type="password"
+id="newPassword"
+placeholder="New password"
+autocomplete="new-password">
+
+
+<label>
+Confirm Password
+</label>
+
+<input
+type="password"
+id="confirmPassword"
+placeholder="Confirm password"
+autocomplete="new-password">
+
+
+<button
+type="button"
+onclick="updatePassword()">
+
+Update Password
+
+</button>
+
+
+<div
+class="error"
+id="resetError">
+</div>
+
+
+<div
+class="success-message"
+id="resetSuccess">
+</div>
+
+</div>
+
+
+
+<!-- =========================================================
+     ADMIN CONTENT
+     ========================================================= -->
 
 <div
 class="admin-content"
 id="adminContent">
+
 
 <button
 class="logout"
@@ -199,6 +303,7 @@ Logout
 
 </button>
 
+
 <h1>
 Teti Tour Price List
 </h1>
@@ -207,17 +312,23 @@ Teti Tour Price List
 Manage your tour prices.
 </p>
 
+
 <div
 class="price-list"
 id="priceList">
 
+<div class="loading">
 Loading prices...
-
 </div>
 
 </div>
 
+
 </div>
+
+
+</div>
+
 
 
 <script>
@@ -247,11 +358,38 @@ row.tour_id ??
 
 }
 
+
 function getTourName(row){
 
 return row.Tour_name ??
 row.tour_name ??
 getTourId(row);
+
+}
+
+
+/* =========================================================
+   SHOW ADMIN
+   ========================================================= */
+
+function showAdmin(){
+
+document.getElementById(
+"loginBox"
+).style.display =
+"none";
+
+document.getElementById(
+"resetBox"
+).style.display =
+"none";
+
+document.getElementById(
+"adminContent"
+).style.display =
+"block";
+
+loadPrices();
 
 }
 
@@ -263,15 +401,22 @@ getTourId(row);
 async function login(){
 
 const email =
-document.getElementById("email").value.trim();
+document.getElementById(
+"email"
+).value.trim();
 
 const password =
-document.getElementById("password").value;
+document.getElementById(
+"password"
+).value;
 
 const error =
-document.getElementById("loginError");
+document.getElementById(
+"loginError"
+);
 
 error.textContent = "";
+
 
 if(!email || !password){
 
@@ -287,56 +432,64 @@ try{
 
 const response =
 await fetch(
+
 SUPABASE_URL +
 "/auth/v1/token?grant_type=password",
+
 {
 
 method:"POST",
 
 headers:{
-"apikey":SUPABASE_KEY,
-"Content-Type":"application/json"
+
+"apikey":
+SUPABASE_KEY,
+
+"Content-Type":
+"application/json"
+
 },
 
 body:JSON.stringify({
+
 email:email,
+
 password:password
+
 })
 
 }
+
 );
 
-
-if(!response.ok){
 
 const data =
 await response.json();
 
+
+if(!response.ok){
+
 throw new Error(
+
 data.error_description ||
 data.msg ||
-"Invalid login."
+"Invalid login credentials."
+
 );
 
 }
 
 
-const session =
-await response.json();
-
-
-/*
-Save session locally
-*/
+/* Save session */
 
 localStorage.setItem(
 "teti_admin_access_token",
-session.access_token
+data.access_token
 );
 
 localStorage.setItem(
 "teti_admin_refresh_token",
-session.refresh_token
+data.refresh_token
 );
 
 localStorage.setItem(
@@ -345,22 +498,255 @@ email
 );
 
 
+/* Show admin */
+
+showAdmin();
+
+}
+
+catch(error){
+
+console.error(error);
+
+errorMessage(
+"loginError",
+error.message ||
+"Login failed."
+);
+
+}
+
+}
+
+
+/* =========================================================
+   ERROR HELPER
+   ========================================================= */
+
+function errorMessage(
+elementId,
+message
+){
+
+const element =
+document.getElementById(
+elementId
+);
+
+if(element){
+
+element.textContent =
+message;
+
+}
+
+}
+
+
+/* =========================================================
+   PASSWORD RESET
+   ========================================================= */
+
+async function updatePassword(){
+
+const newPassword =
+document.getElementById(
+"newPassword"
+).value;
+
+const confirmPassword =
+document.getElementById(
+"confirmPassword"
+).value;
+
+const error =
+document.getElementById(
+"resetError"
+);
+
+const success =
+document.getElementById(
+"resetSuccess"
+);
+
+
+error.textContent = "";
+success.textContent = "";
+
+
+if(!newPassword || !confirmPassword){
+
+error.textContent =
+"Please enter and confirm your new password.";
+
+return;
+
+}
+
+
+if(newPassword !== confirmPassword){
+
+error.textContent =
+"Passwords do not match.";
+
+return;
+
+}
+
+
+if(newPassword.length < 6){
+
+error.textContent =
+"Password must be at least 6 characters.";
+
+return;
+
+}
+
+
 /*
-Show admin
+Supabase password recovery puts
+the recovery access token in the URL hash.
 */
 
+const hash =
+window.location.hash;
+
+const params =
+new URLSearchParams(
+hash.substring(1)
+);
+
+const accessToken =
+params.get(
+"access_token"
+);
+
+
+if(!accessToken){
+
+error.textContent =
+"Password reset session is missing or expired. Please request a new reset email.";
+
+return;
+
+}
+
+
+try{
+
+const response =
+await fetch(
+
+SUPABASE_URL +
+"/auth/v1/user",
+
+{
+
+method:"PUT",
+
+headers:{
+
+"apikey":
+SUPABASE_KEY,
+
+"Authorization":
+"Bearer " +
+accessToken,
+
+"Content-Type":
+"application/json"
+
+},
+
+body:JSON.stringify({
+
+password:
+newPassword
+
+})
+
+}
+
+);
+
+
+const data =
+await response.json();
+
+
+if(!response.ok){
+
+throw new Error(
+
+data.msg ||
+data.message ||
+data.error_description ||
+"Could not update password."
+
+);
+
+}
+
+
+/*
+Password changed successfully.
+*/
+
+success.textContent =
+"Password updated successfully!";
+
+
+/*
+Remove recovery information
+from the URL.
+*/
+
+window.history.replaceState(
+{},
+document.title,
+window.location.pathname
+);
+
+
+/*
+Wait a moment then show login.
+*/
+
+setTimeout(
+
+function(){
+
 document.getElementById(
-"loginBox"
+"resetBox"
 ).style.display =
 "none";
 
 document.getElementById(
-"adminContent"
+"loginBox"
 ).style.display =
 "block";
 
+document.getElementById(
+"newPassword"
+).value =
+"";
 
-loadPrices();
+document.getElementById(
+"confirmPassword"
+).value =
+"";
+
+document.getElementById(
+"resetSuccess"
+).textContent =
+"";
+
+},
+
+1500
+
+);
 
 }
 
@@ -370,9 +756,68 @@ console.error(error);
 
 error.textContent =
 error.message ||
-"Login failed.";
+"Could not update password.";
 
 }
+
+}
+
+
+/* =========================================================
+   CHECK PASSWORD RECOVERY
+   ========================================================= */
+
+function checkPasswordRecovery(){
+
+const hash =
+window.location.hash;
+
+if(!hash){
+
+return false;
+
+}
+
+
+const params =
+new URLSearchParams(
+hash.substring(1)
+);
+
+
+const type =
+params.get("type");
+
+const accessToken =
+params.get("access_token");
+
+
+if(
+type === "recovery" &&
+accessToken
+){
+
+document.getElementById(
+"loginBox"
+).style.display =
+"none";
+
+document.getElementById(
+"adminContent"
+).style.display =
+"none";
+
+document.getElementById(
+"resetBox"
+).style.display =
+"block";
+
+return true;
+
+}
+
+
+return false;
 
 }
 
@@ -395,7 +840,8 @@ localStorage.removeItem(
 "teti_admin_email"
 );
 
-location.reload();
+window.location.href =
+"admin.html";
 
 }
 
@@ -410,6 +856,7 @@ const token =
 localStorage.getItem(
 "teti_admin_access_token"
 );
+
 
 if(!token){
 
@@ -428,11 +875,17 @@ SUPABASE_URL +
 
 {
 
+method:"GET",
+
 headers:{
-"apikey":SUPABASE_KEY,
+
+"apikey":
+SUPABASE_KEY,
+
 "Authorization":
 "Bearer " +
 token
+
 }
 
 }
@@ -442,7 +895,11 @@ token
 
 if(!response.ok){
 
+const text =
+await response.text();
+
 throw new Error(
+text ||
 "Could not load prices."
 );
 
@@ -451,6 +908,7 @@ throw new Error(
 
 const prices =
 await response.json();
+
 
 renderPrices(prices);
 
@@ -482,6 +940,7 @@ document.getElementById(
 "priceList"
 );
 
+
 if(!prices.length){
 
 container.innerHTML =
@@ -496,20 +955,29 @@ let html = `
 
 <div class="price-row">
 
-<strong>Tour</strong>
+<strong>
+Tour
+</strong>
 
-<strong>1–2 Guests</strong>
+<strong>
+1–2 Guests
+</strong>
 
-<strong>3–14 Guests</strong>
+<strong>
+3–14 Guests
+</strong>
 
-<strong>15–25 Guests</strong>
+<strong>
+15–25 Guests
+</strong>
 
 </div>
 
 `;
 
 
-prices.forEach(tour => {
+prices.forEach(
+function(tour){
 
 const id =
 getTourId(tour);
@@ -523,27 +991,27 @@ html += `
 <div class="price-row">
 
 <strong>
-${name}
+${escapeHtml(name)}
 </strong>
 
 <input
 type="number"
 step="0.01"
-data-id="${id}"
+data-id="${escapeHtml(id)}"
 data-field="price_1_2"
 value="${tour.price_1_2 ?? ""}">
 
 <input
 type="number"
 step="0.01"
-data-id="${id}"
+data-id="${escapeHtml(id)}"
 data-field="price_3_14"
 value="${tour.price_3_14 ?? ""}">
 
 <input
 type="number"
 step="0.01"
-data-id="${id}"
+data-id="${escapeHtml(id)}"
 data-field="price_15_25"
 value="${tour.price_15_25 ?? ""}">
 
@@ -566,7 +1034,7 @@ Save Prices
 </button>
 
 <div
-class="success"
+class="success-message"
 id="success">
 
 Prices saved successfully.
@@ -583,6 +1051,27 @@ html;
 
 
 /* =========================================================
+   ESCAPE HTML
+   ========================================================= */
+
+function escapeHtml(value){
+
+return String(value)
+
+.replaceAll("&","&amp;")
+
+.replaceAll("<","&lt;")
+
+.replaceAll(">","&gt;")
+
+.replaceAll('"',"&quot;")
+
+.replaceAll("'","&#039;");
+
+}
+
+
+/* =========================================================
    SAVE PRICES
    ========================================================= */
 
@@ -592,6 +1081,7 @@ const token =
 localStorage.getItem(
 "teti_admin_access_token"
 );
+
 
 if(!token){
 
@@ -609,10 +1099,12 @@ document.querySelectorAll(
 "#priceList input"
 );
 
+
 const grouped = {};
 
 
-inputs.forEach(input => {
+inputs.forEach(
+function(input){
 
 const id =
 input.dataset.id;
@@ -620,19 +1112,27 @@ input.dataset.id;
 const field =
 input.dataset.field;
 
+
 if(!grouped[id]){
+
 grouped[id] = {};
+
 }
 
+
 grouped[id][field] =
+
 input.value === ""
+
 ? null
+
 : Number(input.value);
 
 });
 
 
 try{
+
 
 for(
 const tourId in grouped
@@ -682,8 +1182,10 @@ const text =
 await response.text();
 
 throw new Error(
+
 text ||
 "Could not save prices."
+
 );
 
 }
@@ -696,19 +1198,26 @@ document.getElementById(
 "success"
 );
 
+
+if(success){
+
 success.style.display =
 "block";
 
-
 setTimeout(
+
 function(){
 
 success.style.display =
 "none";
 
 },
+
 2500
+
 );
+
+}
 
 }
 
@@ -717,8 +1226,10 @@ catch(error){
 console.error(error);
 
 alert(
+
 "Could not save prices.\n\n" +
 error.message
+
 );
 
 }
@@ -727,37 +1238,51 @@ error.message
 
 
 /* =========================================================
-   CHECK LOGIN
+   PAGE START
    ========================================================= */
 
 window.addEventListener(
+
 "DOMContentLoaded",
+
 function(){
+
+/*
+First check if this is a
+password recovery link.
+*/
+
+if(
+checkPasswordRecovery()
+){
+
+return;
+
+}
+
+
+/*
+Otherwise check normal login.
+*/
 
 const token =
 localStorage.getItem(
 "teti_admin_access_token"
 );
 
+
 if(token){
 
-document.getElementById(
-"loginBox"
-).style.display =
-"none";
-
-document.getElementById(
-"adminContent"
-).style.display =
-"block";
-
-loadPrices();
+showAdmin();
 
 }
 
-});
+}
+
+);
 
 </script>
 
 </body>
+
 </html>
