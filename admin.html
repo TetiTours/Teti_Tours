@@ -1174,13 +1174,33 @@ async function initialize(){
 
         }
 
-              if(session){
+        if(session){
 
             const recovery =
                 window.location.hash
                 .includes(
                     "type=recovery"
                 );
+
+            if(recovery){
+
+                showReset();
+
+            }
+
+            else{
+
+                showAdmin();
+
+            }
+
+        }
+
+        else{
+
+            showLogin();
+
+        }
 
             if(recovery){
 
