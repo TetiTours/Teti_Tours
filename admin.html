@@ -904,11 +904,6 @@ function renderPrices(prices){
 
 async function savePrices(){
 
-    const saveSuccess =
-        document.getElementById("saveSuccess");
-
-    saveSuccess.textContent = "";
-
     try {
 
         const {
@@ -953,26 +948,37 @@ async function savePrices(){
 
         for (const tourId in grouped) {
 
-            const { error } =
-                await supabase
-                    .from("tour_prices")
-                    .update(grouped[tourId])
-                    .eq("Tour_id", tourId);
+            const {
+                data,
+                error
+            } = await supabase
+                .from("tour_prices")
+                .update(grouped[tourId])
+                .eq("Tour_id", tourId)
+                .select();
 
             if (error) {
-                throw error;
+                throw new Error(
+                    "Tour: " +
+                    tourId +
+                    "\n\n" +
+                    error.message
+                );
+            }
+
+            if (!data || data.length === 0) {
+                throw new Error(
+                    "NO ROW UPDATED\n\n" +
+                    "Tour: " +
+                    tourId
+                );
             }
 
         }
 
-        saveSuccess.textContent =
-            "Prices saved successfully.";
+        alert("Prices saved successfully.");
 
-        setTimeout(function(){
-
-            saveSuccess.textContent = "";
-
-        }, 2500);
+        await loadPrices();
 
     }
     catch(error){
@@ -983,13 +989,14 @@ async function savePrices(){
         );
 
         alert(
-            "Could not save prices.\n\n" +
+            "SAVE FAILED\n\n" +
             error.message
         );
 
     }
 
 }
+
     
 /* =========================================================
    LOGOUT
