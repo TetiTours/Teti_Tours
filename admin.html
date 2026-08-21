@@ -1,221 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Teti Tour | Admin</title>
 
 <style>
-
-/* =========================================================
-   GENERAL
-   ========================================================= */
-
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
 body{
-font-family:Arial,sans-serif;
-background:#f4eee4;
-color:#33251b;
-padding:30px 15px;
+    font-family:Arial,sans-serif;
+    background:#f4eee4;
+    color:#33251b;
+    padding:30px 15px;
 }
 
 .admin-box{
-max-width:1000px;
-margin:30px auto;
-background:white;
-padding:30px;
-border-radius:12px;
-box-shadow:0 15px 40px rgba(0,0,0,.12);
-}
-
-h1{
-margin-bottom:10px;
-}
-
-.subtitle{
-color:#75675b;
-margin-bottom:30px;
+    max-width:1000px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 15px 40px rgba(0,0,0,.12);
 }
 
 .login-box,
 .reset-box{
-max-width:450px;
-margin:50px auto;
+    max-width:450px;
+    margin:50px auto;
 }
 
-.reset-box{
-display:none;
+.reset-box,
+.admin-content{
+    display:none;
+}
+
+h1{
+    margin-bottom:10px;
+}
+
+.subtitle{
+    color:#75675b;
+    margin-bottom:30px;
 }
 
 label{
-display:block;
-font-weight:bold;
-margin-bottom:7px;
+    display:block;
+    font-weight:bold;
+    margin-bottom:7px;
 }
 
 input{
-width:100%;
-padding:13px;
-border:1px solid #d5c8b8;
-border-radius:5px;
-margin-bottom:18px;
-font-size:15px;
+    width:100%;
+    padding:13px;
+    border:1px solid #d5c8b8;
+    border-radius:5px;
+    margin-bottom:18px;
+    font-size:15px;
 }
 
 button{
-border:none;
-padding:13px 20px;
-border-radius:5px;
-background:#2a1d15;
-color:white;
-font-weight:bold;
-cursor:pointer;
+    border:none;
+    padding:13px 20px;
+    border-radius:5px;
+    background:#2a1d15;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
 }
 
 button:hover{
-background:#b38b52;
+    background:#b38b52;
 }
 
 .error{
-color:#a33;
-margin-top:12px;
-font-weight:bold;
-line-height:1.5;
+    color:#a33;
+    margin-top:12px;
+    font-weight:bold;
+    line-height:1.5;
 }
 
 .success{
-color:#52733f;
-margin-top:15px;
-font-weight:bold;
-line-height:1.5;
-}
-
-.admin-content{
-display:none;
-}
-
-.price-list{
-margin-top:25px;
-overflow-x:auto;
-}
-
-.price-row{
-display:grid;
-grid-template-columns:1.5fr 1fr 1fr 1fr;
-gap:10px;
-align-items:center;
-padding:14px 0;
-border-bottom:1px solid #e5ddd2;
-}
-
-.price-row input{
-margin:0;
-}
-
-.save{
-width:100%;
-margin-top:25px;
-}
-
-.logout{
-float:right;
-background:#777;
-}
-
-.logout:hover{
-background:#555;
-}
-
-.loading{
-padding:20px 0;
-color:#75675b;
+    color:#52733f;
+    margin-top:15px;
+    font-weight:bold;
+    line-height:1.5;
 }
 
 .small-note{
-margin-top:15px;
-font-size:13px;
-color:#75675b;
-line-height:1.5;
+    margin-top:15px;
+    font-size:13px;
+    color:#75675b;
+    line-height:1.5;
 }
 
-@media(max-width:700px){
+.price-list{
+    margin-top:25px;
+    overflow-x:auto;
+}
 
 .price-row{
-grid-template-columns:1fr;
-gap:8px;
+    display:grid;
+    grid-template-columns:1.5fr 1fr 1fr 1fr;
+    gap:10px;
+    align-items:center;
+    padding:14px 0;
+    border-bottom:1px solid #e5ddd2;
+}
+
+.price-row input{
+    margin:0;
+}
+
+.save{
+    width:100%;
+    margin-top:25px;
 }
 
 .logout{
-float:none;
-margin-bottom:20px;
+    float:right;
+    background:#777;
 }
 
+.logout:hover{
+    background:#555;
 }
 
+.loading{
+    padding:20px 0;
+    color:#75675b;
+}
+
+@media(max-width:700px){
+    .price-row{
+        grid-template-columns:1fr;
+        gap:8px;
+    }
+
+    .logout{
+        float:none;
+        margin-bottom:20px;
+    }
+}
 </style>
-
 </head>
-
 
 <body>
 
-
 <div class="admin-box">
 
-
-<!-- =========================================================
+<!-- =========================
      LOGIN
-     ========================================================= -->
+========================= -->
 
-<div
-class="login-box"
-id="loginBox">
+<div class="login-box" id="loginBox">
 
-<h1>
-Teti Tour Admin
-</h1>
+<h1>Teti Tour Admin</h1>
 
 <p class="subtitle">
 Admin login
 </p>
 
-
-<label>
-Email
-</label>
+<label>Email</label>
 
 <input
-type="email"
-id="email"
-placeholder="Admin email"
-autocomplete="email">
+    type="email"
+    id="email"
+    placeholder="Admin email"
+    autocomplete="email"
+>
 
-
-<label>
-Password
-</label>
+<label>Password</label>
 
 <input
-type="password"
-id="password"
-placeholder="Password"
-autocomplete="current-password">
-
+    type="password"
+    id="password"
+    placeholder="Password"
+    autocomplete="current-password"
+>
 
 <button
     type="button"
-    id="loginButton">
+    id="loginButton"
+>
     Login
 </button>
 
@@ -223,27 +194,25 @@ autocomplete="current-password">
 
 <button
     type="button"
-    id="forgotPasswordButton">
+    id="forgotPasswordButton"
+>
     Forgot Password
 </button>
 
 <div
     class="success"
-    id="forgotSuccess">
-</div>
+    id="forgotSuccess"
+></div>
 
 <div
     class="error"
-    id="forgotError">
-</div>
-
-
+    id="forgotError"
+></div>
 
 <div
-class="error"
-id="loginError">
-</div>
-
+    class="error"
+    id="loginError"
+></div>
 
 <p class="small-note">
 Use your Supabase admin account.
@@ -252,14 +221,14 @@ Use your Supabase admin account.
 </div>
 
 
-
-<!-- =========================================================
+<!-- =========================
      RESET PASSWORD
-     ========================================================= -->
+========================= -->
 
 <div
-class="reset-box"
-id="resetBox">
+    class="reset-box"
+    id="resetBox"
+>
 
 <h1>
 Reset Password
@@ -269,71 +238,64 @@ Reset Password
 Choose your new admin password.
 </p>
 
-
 <label>
 New Password
 </label>
 
 <input
-type="password"
-id="newPassword"
-placeholder="New password"
-autocomplete="new-password">
-
+    type="password"
+    id="newPassword"
+    placeholder="New password"
+    autocomplete="new-password"
+>
 
 <label>
 Confirm Password
 </label>
 
 <input
-type="password"
-id="confirmPassword"
-placeholder="Confirm password"
-autocomplete="new-password">
-
+    type="password"
+    id="confirmPassword"
+    placeholder="Confirm password"
+    autocomplete="new-password"
+>
 
 <button
-type="button"
-id="updatePasswordButton">
-
-Update Password
-
+    type="button"
+    id="updatePasswordButton"
+>
+    Update Password
 </button>
 
+<div
+    class="error"
+    id="resetError"
+></div>
 
 <div
-class="error"
-id="resetError">
-</div>
-
-
-<div
-class="success"
-id="resetSuccess">
-</div>
+    class="success"
+    id="resetSuccess"
+></div>
 
 </div>
 
 
-
-<!-- =========================================================
+<!-- =========================
      ADMIN CONTENT
-     ========================================================= -->
+========================= -->
 
 <div
-class="admin-content"
-id="adminContent">
-
+    class="admin-content"
+    id="adminContent"
+>
 
 <button
-class="logout"
-type="button"
-id="logoutButton">
-
-Logout
-
+    class="logout"
+    type="button"
+    id="logoutButton"
+>
+    Logout
 </button>
-
 
 <h1>
 Teti Tour Price List
@@ -343,280 +305,197 @@ Teti Tour Price List
 Manage your tour prices.
 </p>
 
-
 <div
-class="price-list"
-id="priceList">
-
-<div class="loading">
-Loading prices...
+    class="price-list"
+    id="priceList"
+>
+    <div class="loading">
+        Loading prices...
+    </div>
 </div>
 
 </div>
 
-
 </div>
 
 
-</div>
-
-
-
-<!-- =========================================================
-     SUPABASE JS
-     ========================================================= -->
+<!-- =========================
+     SUPABASE
+========================= -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 
 <script>
 
 /* =========================================================
    SUPABASE CONFIG
-   ========================================================= */
+========================================================= */
 
 const SUPABASE_URL =
-"https://rzwzkndabcmiyuzzwnts.supabase.co";
+    "https://rzwzkndabcmiyuzzwnts.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_oQXE8doEKIJeFK7KLUm3kQ_H_gDhERh";
-
+    "sb_publishable_oQXE8doEKIJeFK7KLUm3kQ_H_gDhERh";
 
 const {
-createClient
+    createClient
 } = window.supabase;
 
-
 const supabase =
-createClient(
-SUPABASE_URL,
-SUPABASE_KEY
-);
+    createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
 
 /* =========================================================
    DOM
-   ========================================================= */
+========================================================= */
 
 const loginBox =
-document.getElementById(
-"loginBox"
-);
+    document.getElementById("loginBox");
 
 const resetBox =
-document.getElementById(
-"resetBox"
-);
+    document.getElementById("resetBox");
 
 const adminContent =
-document.getElementById(
-"adminContent"
-);
+    document.getElementById("adminContent");
 
 const loginError =
-document.getElementById(
-"loginError"
-);
+    document.getElementById("loginError");
 
 const resetError =
-document.getElementById(
-"resetError"
-);
+    document.getElementById("resetError");
 
 const resetSuccess =
-document.getElementById(
-"resetSuccess"
-);
+    document.getElementById("resetSuccess");
 
 const priceList =
-document.getElementById(
-"priceList"
-);
+    document.getElementById("priceList");
 
+const forgotError =
+    document.getElementById("forgotError");
 
-/* =========================================================
-   HELPERS
-   ========================================================= */
-
-function getTourId(row){
-
-return String(
-row.Tour_id ??
-row.tour_id ??
-""
-).trim();
-
-}
-
-
-function getTourName(row){
-
-return (
-row.Tour_name ??
-row.tour_name ??
-getTourId(row)
-);
-
-}
-
-
-function escapeHtml(value){
-
-return String(value)
-
-.replaceAll("&","&amp;")
-.replaceAll("<","&lt;")
-.replaceAll(">","&gt;")
-.replaceAll('"',"&quot;")
-.replaceAll("'","&#039;");
-
-}
+const forgotSuccess =
+    document.getElementById("forgotSuccess");
 
 
 /* =========================================================
    SHOW / HIDE
-   ========================================================= */
+========================================================= */
 
 function showLogin(){
 
-loginBox.style.display =
-"block";
-
-resetBox.style.display =
-"none";
-
-adminContent.style.display =
-"none";
+    loginBox.style.display = "block";
+    resetBox.style.display = "none";
+    adminContent.style.display = "none";
 
 }
-
 
 function showReset(){
 
-loginBox.style.display =
-"none";
-
-resetBox.style.display =
-"block";
-
-adminContent.style.display =
-"none";
+    loginBox.style.display = "none";
+    resetBox.style.display = "block";
+    adminContent.style.display = "none";
 
 }
-
 
 function showAdmin(){
 
-loginBox.style.display =
-"none";
+    loginBox.style.display = "none";
+    resetBox.style.display = "none";
+    adminContent.style.display = "block";
 
-resetBox.style.display =
-"none";
-
-adminContent.style.display =
-"block";
-
-loadPrices();
+    loadPrices();
 
 }
 
 
 /* =========================================================
-   NORMAL LOGIN
-   ========================================================= */
+   LOGIN
+========================================================= */
 
 async function login(){
 
-loginError.textContent = "";
+    loginError.textContent = "";
 
-const email =
-document.getElementById(
-"email"
-).value.trim();
+    const email =
+        document.getElementById("email")
+        .value
+        .trim();
 
-const password =
-document.getElementById(
-"password"
-).value;
+    const password =
+        document.getElementById("password")
+        .value;
 
+    if(!email || !password){
 
-if(!email || !password){
+        loginError.textContent =
+            "Please enter your email and password.";
 
-loginError.textContent =
-"Please enter your email and password.";
+        return;
+    }
 
-return;
+    try{
 
-}
+        const {
+            data,
+            error
+        } =
+        await supabase.auth.signInWithPassword({
 
+            email:email,
+            password:password
 
-try{
+        });
 
-const {
-data,
-error
-} =
-await supabase.auth.signInWithPassword({
+        if(error){
 
-email:email,
+            throw error;
 
-password:password
+        }
 
-});
+        if(!data.session){
 
+            throw new Error(
+                "Login succeeded but no session was created."
+            );
 
-if(error){
+        }
 
-throw error;
+        showAdmin();
 
-}
+    }
 
+    catch(error){
 
-if(!data.session){
+        console.error(
+            "LOGIN ERROR:",
+            error
+        );
 
-throw new Error(
-"Login succeeded but no session was created."
-);
+        loginError.textContent =
+            error.message ||
+            "Invalid login credentials.";
 
-}
-
-
-showAdmin();
-
-}
-
-catch(error){
-
-console.error(
-"LOGIN ERROR:",
-error
-);
-
-loginError.textContent =
-error.message ||
-"Invalid login credentials.";
+    }
 
 }
 
-}
 
 /* =========================================================
    FORGOT PASSWORD
-   ========================================================= */
+========================================================= */
 
 async function forgotPassword(){
 
-    const email =
-        document.getElementById("email").value.trim();
-
-    const forgotError =
-        document.getElementById("forgotError");
-
-    const forgotSuccess =
-        document.getElementById("forgotSuccess");
-
     forgotError.textContent = "";
     forgotSuccess.textContent = "";
+
+    const email =
+        document.getElementById("email")
+        .value
+        .trim();
 
     if(!email){
 
@@ -628,18 +507,21 @@ async function forgotPassword(){
 
     try{
 
-        const { error } =
-            await supabase.auth.resetPasswordForEmail(
-                email,
-                {
-                    redirectTo:
-                        "https://www.tetitours.com/admin.html"
-                }
-            );
+        const {
+            error
+        } =
+        await supabase.auth.resetPasswordForEmail(
+            email,
+            {
+                redirectTo:
+                    "https://www.tetitours.com/admin.html"
+            }
+        );
 
         if(error){
 
             throw error;
+
         }
 
         forgotSuccess.textContent =
@@ -661,838 +543,672 @@ async function forgotPassword(){
     }
 
 }
+
+
 /* =========================================================
-   PASSWORD UPDATE
-   ========================================================= */
+   UPDATE PASSWORD
+========================================================= */
 
 async function updatePassword(){
 
-resetError.textContent =
-"";
+    resetError.textContent = "";
+    resetSuccess.textContent = "";
 
-resetSuccess.textContent =
-"";
+    const newPassword =
+        document.getElementById("newPassword")
+        .value;
 
+    const confirmPassword =
+        document.getElementById("confirmPassword")
+        .value;
 
-const newPassword =
-document.getElementById(
-"newPassword"
-).value;
+    if(!newPassword || !confirmPassword){
 
-const confirmPassword =
-document.getElementById(
-"confirmPassword"
-).value;
+        resetError.textContent =
+            "Please enter and confirm your new password.";
 
+        return;
+    }
 
-if(!newPassword || !confirmPassword){
+    if(newPassword !== confirmPassword){
 
-resetError.textContent =
-"Please enter and confirm your new password.";
+        resetError.textContent =
+            "Passwords do not match.";
 
-return;
+        return;
+    }
 
-}
+    if(newPassword.length < 6){
 
+        resetError.textContent =
+            "Password must be at least 6 characters.";
 
-if(newPassword !== confirmPassword){
+        return;
+    }
 
-resetError.textContent =
-"Passwords do not match.";
+    try{
 
-return;
+        const {
+            data,
+            error
+        } =
+        await supabase.auth.updateUser({
 
-}
+            password:newPassword
 
+        });
 
-if(newPassword.length < 6){
+        if(error){
 
-resetError.textContent =
-"Password must be at least 6 characters.";
+            throw error;
 
-return;
+        }
 
-}
+        if(!data.user){
 
+            throw new Error(
+                "Password could not be updated."
+            );
 
-try{
+        }
 
-/*
-Supabase has already created the recovery
-session when the reset link is opened.
-*/
+        resetSuccess.textContent =
+            "Password updated successfully.";
 
-const {
-data: {
-user
-},
-error
-} =
-await supabase.auth.updateUser({
+        document.getElementById(
+            "newPassword"
+        ).value = "";
 
-password:newPassword
+        document.getElementById(
+            "confirmPassword"
+        ).value = "";
 
-});
+        setTimeout(
+            function(){
 
+                showLogin();
 
-if(error){
+            },
+            1500
+        );
 
-throw error;
+    }
 
-}
+    catch(error){
 
+        console.error(
+            "UPDATE PASSWORD ERROR:",
+            error
+        );
 
-if(!user){
+        resetError.textContent =
+            error.message ||
+            "Could not update password.";
 
-throw new Error(
-"Password could not be updated."
-);
-
-}
-
-
-resetSuccess.textContent =
-"Password updated successfully.";
-
-
-/*
-Clear form
-*/
-
-document.getElementById(
-"newPassword"
-).value =
-"";
-
-document.getElementById(
-"confirmPassword"
-).value =
-"";
-
-
-/*
-Remove recovery parameters
-from the browser URL.
-*/
-
-window.history.replaceState(
-{},
-document.title,
-window.location.pathname
-);
-
-
-/*
-Show login after a short delay.
-*/
-
-setTimeout(
-
-function(){
-
-showLogin();
-
-},
-
-1500
-
-);
-
-}
-
-catch(error){
-
-console.error(
-"UPDATE PASSWORD ERROR:",
-error
-);
-
-resetError.textContent =
-error.message ||
-"Could not update password.";
-
-}
+    }
 
 }
 
 
 /* =========================================================
-   LOGOUT
-   ========================================================= */
+   HELPERS
+========================================================= */
 
-async function logout(){
+function getTourId(row){
 
-await supabase.auth.signOut();
+    return String(
+        row.Tour_id ??
+        row.tour_id ??
+        ""
+    ).trim();
 
-showLogin();
+}
+
+function getTourName(row){
+
+    return (
+        row.Tour_name ??
+        row.tour_name ??
+        getTourId(row)
+    );
+
+}
+
+function escapeHtml(value){
+
+    return String(value)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
 
 }
 
 
 /* =========================================================
    LOAD PRICES
-   ========================================================= */
+========================================================= */
 
 async function loadPrices(){
 
-priceList.innerHTML =
+    priceList.innerHTML =
+        '<div class="loading">Loading prices...</div>';
 
-'<div class="loading">Loading prices...</div>';
+    try{
 
+        const {
+            data:{
+                session
+            }
+        } =
+        await supabase.auth.getSession();
 
-try{
+        if(!session){
 
-const {
-data: {
-session
-}
-} =
-await supabase.auth.getSession();
+            showLogin();
 
+            return;
 
-if(!session){
+        }
 
-showLogin();
+        const response =
+            await fetch(
 
-return;
+                SUPABASE_URL +
+                "/rest/v1/tour_prices?select=*&order=Tour_id.asc",
 
-}
+                {
+                    method:"GET",
 
+                    headers:{
 
-const response =
-await fetch(
+                        "apikey":
+                            SUPABASE_KEY,
 
-SUPABASE_URL +
-"/rest/v1/tour_prices?select=*&order=Tour_id.asc",
+                        "Authorization":
+                            "Bearer " +
+                            session.access_token,
 
-{
+                        "Content-Type":
+                            "application/json"
 
-method:"GET",
+                    }
 
-headers:{
+                }
 
-"apikey":
-SUPABASE_KEY,
+            );
 
-"Authorization":
-"Bearer " +
-session.access_token,
+        if(!response.ok){
 
-"Content-Type":
-"application/json"
+            const text =
+                await response.text();
 
-}
+            throw new Error(
+                text ||
+                "Could not load prices."
+            );
 
-}
+        }
 
-);
+        const prices =
+            await response.json();
 
+        renderPrices(prices);
 
-if(!response.ok){
+    }
 
-const text =
-await response.text();
+    catch(error){
 
-throw new Error(
-text ||
-"Could not load prices."
-);
+        console.error(
+            "LOAD PRICES ERROR:",
+            error
+        );
 
-}
+        priceList.innerHTML =
+            '<div class="error">' +
+            "Could not load prices." +
+            "</div>";
 
-
-const prices =
-await response.json();
-
-
-renderPrices(prices);
-
-}
-
-catch(error){
-
-console.error(
-"LOAD PRICES ERROR:",
-error
-);
-
-priceList.innerHTML =
-
-'<div class="error">' +
-"Could not load prices." +
-"</div>";
-
-}
+    }
 
 }
 
 
 /* =========================================================
    RENDER PRICES
-   ========================================================= */
+========================================================= */
 
 function renderPrices(prices){
 
-if(
-!Array.isArray(prices) ||
-prices.length === 0
-){
+    if(
+        !Array.isArray(prices) ||
+        prices.length === 0
+    ){
 
-priceList.innerHTML =
-"<p>No prices available.</p>";
+        priceList.innerHTML =
+            "<p>No prices available.</p>";
 
-return;
+        return;
 
-}
+    }
 
+    let html = `
 
-let html = `
+        <div class="price-row">
 
-<div class="price-row">
+            <strong>
+                Tour
+            </strong>
 
-<strong>
-Tour
-</strong>
+            <strong>
+                1–2 Guests
+            </strong>
 
-<strong>
-1–2 Guests
-</strong>
+            <strong>
+                3–14 Guests
+            </strong>
 
-<strong>
-3–14 Guests
-</strong>
+            <strong>
+                15–25 Guests
+            </strong>
 
-<strong>
-15–25 Guests
-</strong>
+        </div>
 
-</div>
+    `;
 
-`;
+    prices.forEach(
+        function(tour){
 
+            const id =
+                getTourId(tour);
 
-prices.forEach(
-function(tour){
+            const name =
+                getTourName(tour);
 
-const id =
-getTourId(tour);
+            html += `
 
-const name =
-getTourName(tour);
+                <div class="price-row">
 
+                    <strong>
+                        ${escapeHtml(name)}
+                    </strong>
 
-html += `
+                    <input
+                        type="number"
+                        step="0.01"
+                        data-id="${escapeHtml(id)}"
+                        data-field="price_1_2"
+                        value="${tour.price_1_2 ?? ""}"
+                    >
 
-<div class="price-row">
+                    <input
+                        type="number"
+                        step="0.01"
+                        data-id="${escapeHtml(id)}"
+                        data-field="price_3_14"
+                        value="${tour.price_3_14 ?? ""}"
+                    >
 
-<strong>
-${escapeHtml(name)}
-</strong>
+                    <input
+                        type="number"
+                        step="0.01"
+                        data-id="${escapeHtml(id)}"
+                        data-field="price_15_25"
+                        value="${tour.price_15_25 ?? ""}"
+                    >
 
-<input
-type="number"
-step="0.01"
-data-id="${escapeHtml(id)}"
-data-field="price_1_2"
-value="${tour.price_1_2 ?? ""}">
+                </div>
 
-<input
-type="number"
-step="0.01"
-data-id="${escapeHtml(id)}"
-data-field="price_3_14"
-value="${tour.price_3_14 ?? ""}">
+            `;
 
-<input
-type="number"
-step="0.01"
-data-id="${escapeHtml(id)}"
-data-field="price_15_25"
-value="${tour.price_15_25 ?? ""}">
+        }
+    );
 
-</div>
+    html += `
 
-`;
+        <button
+            class="save"
+            type="button"
+            id="savePricesButton"
+        >
+            Save Prices
+        </button>
 
-});
+        <div
+            class="success"
+            id="saveSuccess"
+        ></div>
 
+    `;
 
-html += `
+    priceList.innerHTML = html;
 
-<button
-class="save"
-type="button"
-id="savePricesButton">
-
-Save Prices
-
-</button>
-
-<div
-class="success"
-id="saveSuccess">
-</div>
-
-`;
-
-
-priceList.innerHTML =
-html;
-
-
-document
-.getElementById(
-"savePricesButton"
-)
-.addEventListener(
-"click",
-savePrices
-);
+    document
+        .getElementById("savePricesButton")
+        .addEventListener(
+            "click",
+            savePrices
+        );
 
 }
 
 
 /* =========================================================
    SAVE PRICES
-   ========================================================= */
+========================================================= */
 
 async function savePrices(){
 
-const saveSuccess =
-document.getElementById(
-"saveSuccess"
-);
+    const saveSuccess =
+        document.getElementById(
+            "saveSuccess"
+        );
 
-saveSuccess.textContent =
-"";
+    saveSuccess.textContent = "";
 
+    try{
 
-try{
+        const {
+            data:{
+                session
+            }
+        } =
+        await supabase.auth.getSession();
 
-const {
-data: {
-session
-}
-} =
-await supabase.auth.getSession();
+        if(!session){
 
+            throw new Error(
+                "Your session has expired. Please login again."
+            );
 
-if(!session){
+        }
 
-throw new Error(
-"Your session has expired. Please login again."
-);
+        const inputs =
+            document.querySelectorAll(
+                "#priceList input"
+            );
 
-}
+        const grouped = {};
 
+        inputs.forEach(
+            function(input){
 
-const inputs =
-document.querySelectorAll(
-"#priceList input"
-);
+                const id =
+                    input.dataset.id;
 
+                const field =
+                    input.dataset.field;
 
-const grouped = {};
+                if(!grouped[id]){
 
+                    grouped[id] = {};
 
-inputs.forEach(
-function(input){
+                }
 
-const id =
-input.dataset.id;
+                grouped[id][field] =
+                    input.value === ""
+                    ? null
+                    : Number(input.value);
 
-const field =
-input.dataset.field;
+            }
+        );
 
+        for(
+            const tourId in grouped
+        ){
 
-if(!grouped[id]){
+            const response =
+                await fetch(
 
-grouped[id] = {};
+                    SUPABASE_URL +
+                    "/rest/v1/tour_prices?Tour_id=eq." +
+                    encodeURIComponent(tourId),
 
-}
+                    {
 
+                        method:"PATCH",
 
-grouped[id][field] =
-input.value === ""
-? null
-: Number(input.value);
+                        headers:{
 
-});
+                            "apikey":
+                                SUPABASE_KEY,
 
+                            "Authorization":
+                                "Bearer " +
+                                session.access_token,
 
-for(
-const tourId in grouped
-){
+                            "Content-Type":
+                                "application/json",
 
-const response =
-await fetch(
+                            "Prefer":
+                                "return=minimal"
 
-SUPABASE_URL +
-"/rest/v1/tour_prices?Tour_id=eq." +
-encodeURIComponent(tourId),
+                        },
 
-{
+                        body:
+                            JSON.stringify(
+                                grouped[tourId]
+                            )
 
-method:"PATCH",
+                    }
 
-headers:{
+                );
 
-"apikey":
-SUPABASE_KEY,
+            if(!response.ok){
 
-"Authorization":
-"Bearer " +
-session.access_token,
+                const text =
+                    await response.text();
 
-"Content-Type":
-"application/json",
+                throw new Error(
+                    text ||
+                    "Could not save prices."
+                );
 
-"Prefer":
-"return=minimal"
+            }
 
-},
+        }
 
-body:
-JSON.stringify(
-grouped[tourId]
-)
+        saveSuccess.textContent =
+            "Prices saved successfully.";
 
-}
+        setTimeout(
+            function(){
 
-);
+                saveSuccess.textContent = "";
 
+            },
+            2500
+        );
 
-if(!response.ok){
+    }
 
-const text =
-await response.text();
+    catch(error){
 
-throw new Error(
-text ||
-"Could not save prices."
-);
+        console.error(
+            "SAVE PRICES ERROR:",
+            error
+        );
 
-}
+        alert(
+            "Could not save prices.\n\n" +
+            error.message
+        );
 
-}
-
-
-saveSuccess.textContent =
-"Prices saved successfully.";
-
-setTimeout(
-function(){
-
-saveSuccess.textContent =
-"";
-
-},
-2500
-);
-
-}
-
-catch(error){
-
-console.error(
-"SAVE PRICES ERROR:",
-error
-);
-
-alert(
-"Could not save prices.\n\n" +
-error.message
-);
-
-}
+    }
 
 }
 
 
 /* =========================================================
    AUTH STATE
-   ========================================================= */
+========================================================= */
 
 supabase.auth.onAuthStateChange(
+    function(event, session){
 
-function(event, session){
+        console.log(
+            "AUTH EVENT:",
+            event
+        );
 
-console.log(
-"AUTH EVENT:",
-event
+        if(
+            event === "PASSWORD_RECOVERY"
+        ){
+
+            showReset();
+
+            return;
+
+        }
+
+        if(
+            session &&
+            event !== "SIGNED_OUT"
+        ){
+
+            if(
+                resetBox.style.display !== "block"
+            ){
+
+                showAdmin();
+
+            }
+
+            return;
+
+        }
+
+        if(
+            event === "SIGNED_OUT"
+        ){
+
+            showLogin();
+
+        }
+
+    }
 );
-
-
-/*
-When Supabase returns the user
-from a recovery link.
-*/
-
-if(
-event === "PASSWORD_RECOVERY"
-){
-
-showReset();
-
-return;
-
-}
-
-
-/*
-Normal signed-in session.
-*/
-
-if(
-session &&
-event !== "SIGNED_OUT"
-){
-
-/*
-Do not immediately override
-the reset screen.
-*/
-
-if(
-resetBox.style.display !== "block"
-){
-
-showAdmin();
-
-}
-
-return;
-
-}
-
-
-/*
-Signed out.
-*/
-
-if(
-event === "SIGNED_OUT"
-){
-
-showLogin();
-
-}
-
-});
 
 
 /* =========================================================
    INITIALIZE
-   ========================================================= */
+========================================================= */
 
 async function initialize(){
 
-try{
+    try{
 
-/*
-If the URL contains ?code=...
-Supabase needs to exchange that
-code for a session.
-*/
+        const url =
+            new URL(
+                window.location.href
+            );
 
-const url =
-new URL(
-window.location.href
-);
+        const code =
+            url.searchParams.get(
+                "code"
+            );
 
-const code =
-url.searchParams.get(
-"code"
-);
+        if(code){
 
+            const {
+                data,
+                error
+            } =
+            await supabase.auth.exchangeCodeForSession(
+                code
+            );
 
-if(code){
+            if(error){
 
-const {
-data,
-error
-} =
-await supabase.auth.exchangeCodeForSession(
-code
-);
+                throw error;
 
+            }
 
-if(error){
+            if(data.session){
 
-throw error;
+                showReset();
 
-}
+                window.history.replaceState(
+                    {},
+                    document.title,
+                    window.location.pathname
+                );
 
+                return;
 
-if(data.session){
+            }
 
-showReset();
+        }
 
-/*
-Remove ?code from URL.
-*/
+        const {
+            data:{
+                session
+            },
+            error
+        } =
+        await supabase.auth.getSession();
 
-window.history.replaceState(
-{},
-document.title,
-window.location.pathname
-);
+        if(error){
 
-return;
+            throw error;
 
-}
+        }
 
-}
+        if(session){
 
+            const recovery =
+                window.location.hash
+                .includes(
+                    "type=recovery"
+                );
 
-/*
-Check current session.
-*/
+            if(recovery){
 
-const {
-data: {
-session
-},
-error
-} =
-await supabase.auth.getSession();
+                showReset();
 
+            }
 
-if(error){
+            else{
 
-throw error;
+                showAdmin();
 
-}
+            }
 
+        }
 
-if(session){
+        else{
 
-/*
-If we're returning from a
-recovery flow, show reset.
-*/
+            showLogin();
 
-const recovery =
-window.location.hash
-.includes(
-"type=recovery"
-);
+        }
 
+    }
 
-if(recovery){
+    catch(error){
 
-showReset();
+        console.error(
+            "INITIALIZE ERROR:",
+            error
+        );
 
-}
+        showLogin();
 
-else{
-
-showAdmin();
-
-}
-
-}
-
-else{
-
-showLogin();
-
-}
-
-}
-
-catch(error){
-
-console.error(
-"INITIALIZE ERROR:",
-error
-);
-
-showLogin();
-
-}
+    }
 
 }
 
 
 /* =========================================================
    BUTTON EVENTS
-   ========================================================= */
+========================================================= */
 
 document
-.getElementById(
-"loginButton"
-)
-.addEventListener(
-"click",
-login
-);
-
-
-document
-.getElementById(
-"updatePasswordButton"
-)
-.addEventListener(
-"click",
-updatePassword
-);
-
-
-document
-.getElementById(
-"logoutButton"
-)
-.addEventListener(
-"click",
-logout
-);
-
-
-/*
-Allow Enter key on login.
-*/
-
-document
-.getElementById(
-"password"
-)
-.addEventListener(
-"keydown",
-function(event){
-
-if(
-event.key === "Enter"
-){
-
-login();
-
-}
-
-});
-
-
-/*
-Allow Enter key on reset.
-*/
-
-document
-.getElementById(
-"confirmPassword"
-)
-.addEventListener(
-"keydown",
-function(event){
-
-if(
-event.key === "Enter"
-){
-
-updatePassword();
-
-}
-
-});
+    .getElementById("loginButton")
+    .addEventListener(
+        "click",
+        login
+    );
 
 document
     .getElementById("forgotPasswordButton")
@@ -1500,12 +1216,69 @@ document
         "click",
         forgotPassword
     );
-/* START */
+
+document
+    .getElementById("updatePasswordButton")
+    .addEventListener(
+        "click",
+        updatePassword
+    );
+
+document
+    .getElementById("logoutButton")
+    .addEventListener(
+        "click",
+        logout
+    );
+
+
+/* =========================================================
+   ENTER KEY
+========================================================= */
+
+document
+    .getElementById("password")
+    .addEventListener(
+        "keydown",
+        function(event){
+
+            if(
+                event.key === "Enter"
+            ){
+
+                login();
+
+            }
+
+        }
+    );
+
+
+document
+    .getElementById("confirmPassword")
+    .addEventListener(
+        "keydown",
+        function(event){
+
+            if(
+                event.key === "Enter"
+            ){
+
+                updatePassword();
+
+            }
+
+        }
+    );
+
+
+/* =========================================================
+   START
+========================================================= */
 
 initialize();
 
 </script>
 
 </body>
-
 </html>
