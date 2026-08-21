@@ -712,46 +712,68 @@ async function loadPrices(){
 
         }
 
- const response =
-    await fetch(
+        const response =
+            await fetch(
 
-        SUPABASE_URL +
-        "/rest/v1/tour_prices?select=*&order=Tour_id.asc",
+                SUPABASE_URL +
+                "/rest/v1/tour_prices?select=*&order=Tour_id.asc",
 
-        {
-            method:"GET",
+                {
+                    method:"GET",
 
-            headers:{
+                    headers:{
 
-                "apikey":
-                    SUPABASE_KEY,
+                        "apikey":
+                            SUPABASE_KEY,
 
-                "Authorization":
-                    "Bearer " +
-                    session.access_token,
+                        "Authorization":
+                            "Bearer " +
+                            session.access_token,
 
-                "Content-Type":
-                    "application/json"
+                        "Content-Type":
+                            "application/json"
 
-            }
+                    }
+
+                }
+
+            );
+
+        if(!response.ok){
+
+            const text =
+                await response.text();
+
+            throw new Error(
+                text ||
+                "Could not load prices."
+            );
 
         }
 
-    );
+        const prices =
+            await response.json();
 
-if(!response.ok){
+        renderPrices(prices);
 
-    const text =
-        await response.text();
+    }
 
-    throw new Error(
-        text ||
-        "Could not load prices."
-    );
+    catch(error){
+
+        console.error(
+            "LOAD PRICES ERROR:",
+            error
+        );
+
+        priceList.innerHTML =
+            '<div class="error">' +
+            "Could not load prices." +
+            "</div>";
+
+    }
 
 }
 
-}
 
 /* =========================================================
    RENDER PRICES
