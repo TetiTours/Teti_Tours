@@ -898,66 +898,62 @@ function renderPrices(prices){
    SAVE PRICES
 ========================================================= */
 
-/* =========================================================
-   SAVE PRICES
-========================================================= */
-
 async function savePrices(){
 
-    try {
+    try{
 
         const {
             data: { session },
             error: sessionError
         } = await supabase.auth.getSession();
 
-        if (sessionError) {
+        if(sessionError){
             throw sessionError;
         }
 
-        if (!session) {
+        if(!session){
             throw new Error(
                 "Your session has expired. Please login again."
             );
         }
 
         const inputs =
-            document.querySelectorAll("#priceList input");
+            document.querySelectorAll(
+                "#priceList input"
+            );
 
-        const grouped = {};
+        for(const input of inputs){
 
-        inputs.forEach(function(input){
+            const tourId =
+                input.dataset.id;
 
-            const id = input.dataset.id;
-            const field = input.dataset.field;
+            const field =
+                input.dataset.field;
 
-            if (!id || !field) {
-                return;
+            if(!tourId || !field){
+                continue;
             }
 
-            if (!grouped[id]) {
-                grouped[id] = {};
-            }
-
-            grouped[id][field] =
+            const value =
                 input.value === ""
                     ? null
                     : Number(input.value);
-
-        });
-
-        for (const tourId in grouped) {
 
             const {
                 data,
                 error
             } = await supabase
                 .from("tour_prices")
-                .update(grouped[tourId])
-                .eq("Tour_id", tourId)
+                .update({
+                    [field]: value
+                })
+                .eq(
+                    "Tour_id",
+                    tourId
+                )
                 .select();
 
-            if (error) {
+            if(error){
                 throw new Error(
                     "Tour: " +
                     tourId +
@@ -966,21 +962,26 @@ async function savePrices(){
                 );
             }
 
-            if (!data || data.length === 0) {
+            if(!data || data.length === 0){
+
                 throw new Error(
                     "NO ROW UPDATED\n\n" +
                     "Tour: " +
                     tourId
                 );
+
             }
 
         }
 
-        alert("Prices saved successfully.");
+        alert(
+            "Prices saved successfully."
+        );
 
         await loadPrices();
 
     }
+
     catch(error){
 
         console.error(
@@ -996,7 +997,6 @@ async function savePrices(){
     }
 
 }
-
     
 /* =========================================================
    LOGOUT
