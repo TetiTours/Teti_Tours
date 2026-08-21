@@ -48,9 +48,14 @@ color:#75675b;
 margin-bottom:30px;
 }
 
-.login-box{
+.login-box,
+.reset-box{
 max-width:450px;
 margin:50px auto;
+}
+
+.reset-box{
+display:none;
 }
 
 label{
@@ -86,22 +91,18 @@ background:#b38b52;
 color:#a33;
 margin-top:12px;
 font-weight:bold;
+line-height:1.5;
 }
 
-.success-message{
+.success{
 color:#52733f;
 margin-top:15px;
 font-weight:bold;
+line-height:1.5;
 }
 
 .admin-content{
 display:none;
-}
-
-.reset-box{
-display:none;
-max-width:450px;
-margin:50px auto;
 }
 
 .price-list{
@@ -138,6 +139,14 @@ background:#555;
 
 .loading{
 padding:20px 0;
+color:#75675b;
+}
+
+.small-note{
+margin-top:15px;
+font-size:13px;
+color:#75675b;
+line-height:1.5;
 }
 
 @media(max-width:700px){
@@ -206,7 +215,7 @@ autocomplete="current-password">
 
 <button
 type="button"
-onclick="login()">
+id="loginButton">
 
 Login
 
@@ -217,6 +226,11 @@ Login
 class="error"
 id="loginError">
 </div>
+
+
+<p class="small-note">
+Use your Supabase admin account.
+</p>
 
 </div>
 
@@ -263,7 +277,7 @@ autocomplete="new-password">
 
 <button
 type="button"
-onclick="updatePassword()">
+id="updatePasswordButton">
 
 Update Password
 
@@ -277,7 +291,7 @@ id="resetError">
 
 
 <div
-class="success-message"
+class="success"
 id="resetSuccess">
 </div>
 
@@ -297,7 +311,7 @@ id="adminContent">
 <button
 class="logout"
 type="button"
-onclick="logout()">
+id="logoutButton">
 
 Logout
 
@@ -331,10 +345,17 @@ Loading prices...
 
 
 
+<!-- =========================================================
+     SUPABASE JS
+     ========================================================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
 <script>
 
 /* =========================================================
-   SUPABASE
+   SUPABASE CONFIG
    ========================================================= */
 
 const SUPABASE_URL =
@@ -342,6 +363,58 @@ const SUPABASE_URL =
 
 const SUPABASE_KEY =
 "sb_publishable_oQXE8doEKIJeFK7KLUm3kQ_H_gDhERh";
+
+
+const {
+createClient
+} = window.supabase;
+
+
+const supabase =
+createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+
+/* =========================================================
+   DOM
+   ========================================================= */
+
+const loginBox =
+document.getElementById(
+"loginBox"
+);
+
+const resetBox =
+document.getElementById(
+"resetBox"
+);
+
+const adminContent =
+document.getElementById(
+"adminContent"
+);
+
+const loginError =
+document.getElementById(
+"loginError"
+);
+
+const resetError =
+document.getElementById(
+"resetError"
+);
+
+const resetSuccess =
+document.getElementById(
+"resetSuccess"
+);
+
+const priceList =
+document.getElementById(
+"priceList"
+);
 
 
 /* =========================================================
@@ -361,32 +434,69 @@ row.tour_id ??
 
 function getTourName(row){
 
-return row.Tour_name ??
+return (
+row.Tour_name ??
 row.tour_name ??
-getTourId(row);
+getTourId(row)
+);
+
+}
+
+
+function escapeHtml(value){
+
+return String(value)
+
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
 
 }
 
 
 /* =========================================================
-   SHOW ADMIN
+   SHOW / HIDE
    ========================================================= */
+
+function showLogin(){
+
+loginBox.style.display =
+"block";
+
+resetBox.style.display =
+"none";
+
+adminContent.style.display =
+"none";
+
+}
+
+
+function showReset(){
+
+loginBox.style.display =
+"none";
+
+resetBox.style.display =
+"block";
+
+adminContent.style.display =
+"none";
+
+}
+
 
 function showAdmin(){
 
-document.getElementById(
-"loginBox"
-).style.display =
+loginBox.style.display =
 "none";
 
-document.getElementById(
-"resetBox"
-).style.display =
+resetBox.style.display =
 "none";
 
-document.getElementById(
-"adminContent"
-).style.display =
+adminContent.style.display =
 "block";
 
 loadPrices();
@@ -395,10 +505,12 @@ loadPrices();
 
 
 /* =========================================================
-   LOGIN
+   NORMAL LOGIN
    ========================================================= */
 
 async function login(){
+
+loginError.textContent = "";
 
 const email =
 document.getElementById(
@@ -410,18 +522,11 @@ document.getElementById(
 "password"
 ).value;
 
-const error =
-document.getElementById(
-"loginError"
-);
-
-error.textContent = "";
-
 
 if(!email || !password){
 
-error.textContent =
-"Please enter email and password.";
+loginError.textContent =
+"Please enter your email and password.";
 
 return;
 
@@ -430,75 +535,34 @@ return;
 
 try{
 
-const response =
-await fetch(
-
-SUPABASE_URL +
-"/auth/v1/token?grant_type=password",
-
-{
-
-method:"POST",
-
-headers:{
-
-"apikey":
-SUPABASE_KEY,
-
-"Content-Type":
-"application/json"
-
-},
-
-body:JSON.stringify({
+const {
+data,
+error
+} =
+await supabase.auth.signInWithPassword({
 
 email:email,
 
 password:password
 
-})
+});
+
+
+if(error){
+
+throw error;
 
 }
 
-);
 
-
-const data =
-await response.json();
-
-
-if(!response.ok){
+if(!data.session){
 
 throw new Error(
-
-data.error_description ||
-data.msg ||
-"Invalid login credentials."
-
+"Login succeeded but no session was created."
 );
 
 }
 
-
-/* Save session */
-
-localStorage.setItem(
-"teti_admin_access_token",
-data.access_token
-);
-
-localStorage.setItem(
-"teti_admin_refresh_token",
-data.refresh_token
-);
-
-localStorage.setItem(
-"teti_admin_email",
-email
-);
-
-
-/* Show admin */
 
 showAdmin();
 
@@ -506,13 +570,14 @@ showAdmin();
 
 catch(error){
 
-console.error(error);
+console.error(
+"LOGIN ERROR:",
+error
+);
 
-errorMessage(
-"loginError",
+loginError.textContent =
 error.message ||
-"Login failed."
-);
+"Invalid login credentials.";
 
 }
 
@@ -520,34 +585,17 @@ error.message ||
 
 
 /* =========================================================
-   ERROR HELPER
-   ========================================================= */
-
-function errorMessage(
-elementId,
-message
-){
-
-const element =
-document.getElementById(
-elementId
-);
-
-if(element){
-
-element.textContent =
-message;
-
-}
-
-}
-
-
-/* =========================================================
-   PASSWORD RESET
+   PASSWORD UPDATE
    ========================================================= */
 
 async function updatePassword(){
+
+resetError.textContent =
+"";
+
+resetSuccess.textContent =
+"";
+
 
 const newPassword =
 document.getElementById(
@@ -559,24 +607,10 @@ document.getElementById(
 "confirmPassword"
 ).value;
 
-const error =
-document.getElementById(
-"resetError"
-);
-
-const success =
-document.getElementById(
-"resetSuccess"
-);
-
-
-error.textContent = "";
-success.textContent = "";
-
 
 if(!newPassword || !confirmPassword){
 
-error.textContent =
+resetError.textContent =
 "Please enter and confirm your new password.";
 
 return;
@@ -586,7 +620,7 @@ return;
 
 if(newPassword !== confirmPassword){
 
-error.textContent =
+resetError.textContent =
 "Passwords do not match.";
 
 return;
@@ -596,37 +630,8 @@ return;
 
 if(newPassword.length < 6){
 
-error.textContent =
+resetError.textContent =
 "Password must be at least 6 characters.";
-
-return;
-
-}
-
-
-/*
-Supabase password recovery puts
-the recovery access token in the URL hash.
-*/
-
-const hash =
-window.location.hash;
-
-const params =
-new URLSearchParams(
-hash.substring(1)
-);
-
-const accessToken =
-params.get(
-"access_token"
-);
-
-
-if(!accessToken){
-
-error.textContent =
-"Password reset session is missing or expired. Please request a new reset email.";
 
 return;
 
@@ -635,97 +640,47 @@ return;
 
 try{
 
-const response =
-await fetch(
+/*
+Supabase has already created the recovery
+session when the reset link is opened.
+*/
 
-SUPABASE_URL +
-"/auth/v1/user",
-
-{
-
-method:"PUT",
-
-headers:{
-
-"apikey":
-SUPABASE_KEY,
-
-"Authorization":
-"Bearer " +
-accessToken,
-
-"Content-Type":
-"application/json"
-
+const {
+data: {
+user
 },
+error
+} =
+await supabase.auth.updateUser({
 
-body:JSON.stringify({
+password:newPassword
 
-password:
-newPassword
+});
 
-})
+
+if(error){
+
+throw error;
 
 }
 
-);
 
-
-const data =
-await response.json();
-
-
-if(!response.ok){
+if(!user){
 
 throw new Error(
-
-data.msg ||
-data.message ||
-data.error_description ||
-"Could not update password."
-
+"Password could not be updated."
 );
 
 }
 
 
-/*
-Password changed successfully.
-*/
-
-success.textContent =
-"Password updated successfully!";
+resetSuccess.textContent =
+"Password updated successfully.";
 
 
 /*
-Remove recovery information
-from the URL.
+Clear form
 */
-
-window.history.replaceState(
-{},
-document.title,
-window.location.pathname
-);
-
-
-/*
-Wait a moment then show login.
-*/
-
-setTimeout(
-
-function(){
-
-document.getElementById(
-"resetBox"
-).style.display =
-"none";
-
-document.getElementById(
-"loginBox"
-).style.display =
-"block";
 
 document.getElementById(
 "newPassword"
@@ -737,10 +692,28 @@ document.getElementById(
 ).value =
 "";
 
-document.getElementById(
-"resetSuccess"
-).textContent =
-"";
+
+/*
+Remove recovery parameters
+from the browser URL.
+*/
+
+window.history.replaceState(
+{},
+document.title,
+window.location.pathname
+);
+
+
+/*
+Show login after a short delay.
+*/
+
+setTimeout(
+
+function(){
+
+showLogin();
 
 },
 
@@ -752,9 +725,12 @@ document.getElementById(
 
 catch(error){
 
-console.error(error);
+console.error(
+"UPDATE PASSWORD ERROR:",
+error
+);
 
-error.textContent =
+resetError.textContent =
 error.message ||
 "Could not update password.";
 
@@ -764,84 +740,14 @@ error.message ||
 
 
 /* =========================================================
-   CHECK PASSWORD RECOVERY
-   ========================================================= */
-
-function checkPasswordRecovery(){
-
-const hash =
-window.location.hash;
-
-if(!hash){
-
-return false;
-
-}
-
-
-const params =
-new URLSearchParams(
-hash.substring(1)
-);
-
-
-const type =
-params.get("type");
-
-const accessToken =
-params.get("access_token");
-
-
-if(
-type === "recovery" &&
-accessToken
-){
-
-document.getElementById(
-"loginBox"
-).style.display =
-"none";
-
-document.getElementById(
-"adminContent"
-).style.display =
-"none";
-
-document.getElementById(
-"resetBox"
-).style.display =
-"block";
-
-return true;
-
-}
-
-
-return false;
-
-}
-
-
-/* =========================================================
    LOGOUT
    ========================================================= */
 
-function logout(){
+async function logout(){
 
-localStorage.removeItem(
-"teti_admin_access_token"
-);
+await supabase.auth.signOut();
 
-localStorage.removeItem(
-"teti_admin_refresh_token"
-);
-
-localStorage.removeItem(
-"teti_admin_email"
-);
-
-window.location.href =
-"admin.html";
+showLogin();
 
 }
 
@@ -852,20 +758,29 @@ window.location.href =
 
 async function loadPrices(){
 
-const token =
-localStorage.getItem(
-"teti_admin_access_token"
-);
+priceList.innerHTML =
+
+'<div class="loading">Loading prices...</div>';
 
 
-if(!token){
+try{
+
+const {
+data: {
+session
+}
+} =
+await supabase.auth.getSession();
+
+
+if(!session){
+
+showLogin();
 
 return;
 
 }
 
-
-try{
 
 const response =
 await fetch(
@@ -884,7 +799,10 @@ SUPABASE_KEY,
 
 "Authorization":
 "Bearer " +
-token
+session.access_token,
+
+"Content-Type":
+"application/json"
 
 }
 
@@ -916,13 +834,16 @@ renderPrices(prices);
 
 catch(error){
 
-console.error(error);
+console.error(
+"LOAD PRICES ERROR:",
+error
+);
 
-document.getElementById(
-"priceList"
-).innerHTML =
+priceList.innerHTML =
 
-"<p>Could not load prices.</p>";
+'<div class="error">' +
+"Could not load prices." +
+"</div>";
 
 }
 
@@ -935,15 +856,12 @@ document.getElementById(
 
 function renderPrices(prices){
 
-const container =
-document.getElementById(
-"priceList"
-);
+if(
+!Array.isArray(prices) ||
+prices.length === 0
+){
 
-
-if(!prices.length){
-
-container.innerHTML =
+priceList.innerHTML =
 "<p>No prices available.</p>";
 
 return;
@@ -1027,46 +945,32 @@ html += `
 <button
 class="save"
 type="button"
-onclick="savePrices()">
+id="savePricesButton">
 
 Save Prices
 
 </button>
 
 <div
-class="success-message"
-id="success">
-
-Prices saved successfully.
-
+class="success"
+id="saveSuccess">
 </div>
 
 `;
 
 
-container.innerHTML =
+priceList.innerHTML =
 html;
 
-}
 
-
-/* =========================================================
-   ESCAPE HTML
-   ========================================================= */
-
-function escapeHtml(value){
-
-return String(value)
-
-.replaceAll("&","&amp;")
-
-.replaceAll("<","&lt;")
-
-.replaceAll(">","&gt;")
-
-.replaceAll('"',"&quot;")
-
-.replaceAll("'","&#039;");
+document
+.getElementById(
+"savePricesButton"
+)
+.addEventListener(
+"click",
+savePrices
+);
 
 }
 
@@ -1077,19 +981,30 @@ return String(value)
 
 async function savePrices(){
 
-const token =
-localStorage.getItem(
-"teti_admin_access_token"
+const saveSuccess =
+document.getElementById(
+"saveSuccess"
 );
 
+saveSuccess.textContent =
+"";
 
-if(!token){
 
-alert(
-"Please login first."
+try{
+
+const {
+data: {
+session
+}
+} =
+await supabase.auth.getSession();
+
+
+if(!session){
+
+throw new Error(
+"Your session has expired. Please login again."
 );
-
-return;
 
 }
 
@@ -1121,17 +1036,11 @@ grouped[id] = {};
 
 
 grouped[id][field] =
-
 input.value === ""
-
 ? null
-
 : Number(input.value);
 
 });
-
-
-try{
 
 
 for(
@@ -1156,7 +1065,7 @@ SUPABASE_KEY,
 
 "Authorization":
 "Bearer " +
-token,
+session.access_token,
 
 "Content-Type":
 "application/json",
@@ -1182,10 +1091,8 @@ const text =
 await response.text();
 
 throw new Error(
-
 text ||
 "Could not save prices."
-
 );
 
 }
@@ -1193,43 +1100,31 @@ text ||
 }
 
 
-const success =
-document.getElementById(
-"success"
-);
-
-
-if(success){
-
-success.style.display =
-"block";
+saveSuccess.textContent =
+"Prices saved successfully.";
 
 setTimeout(
-
 function(){
 
-success.style.display =
-"none";
+saveSuccess.textContent =
+"";
 
 },
-
 2500
-
 );
-
-}
 
 }
 
 catch(error){
 
-console.error(error);
+console.error(
+"SAVE PRICES ERROR:",
+error
+);
 
 alert(
-
 "Could not save prices.\n\n" +
 error.message
-
 );
 
 }
@@ -1238,23 +1133,29 @@ error.message
 
 
 /* =========================================================
-   PAGE START
+   AUTH STATE
    ========================================================= */
 
-window.addEventListener(
+supabase.auth.onAuthStateChange(
 
-"DOMContentLoaded",
+function(event, session){
 
-function(){
+console.log(
+"AUTH EVENT:",
+event
+);
+
 
 /*
-First check if this is a
-password recovery link.
+When Supabase returns the user
+from a recovery link.
 */
 
 if(
-checkPasswordRecovery()
+event === "PASSWORD_RECOVERY"
 ){
+
+showReset();
 
 return;
 
@@ -1262,16 +1163,152 @@ return;
 
 
 /*
-Otherwise check normal login.
+Normal signed-in session.
 */
 
-const token =
-localStorage.getItem(
-"teti_admin_access_token"
+if(
+session &&
+event !== "SIGNED_OUT"
+){
+
+/*
+Do not immediately override
+the reset screen.
+*/
+
+if(
+resetBox.style.display !== "block"
+){
+
+showAdmin();
+
+}
+
+return;
+
+}
+
+
+/*
+Signed out.
+*/
+
+if(
+event === "SIGNED_OUT"
+){
+
+showLogin();
+
+}
+
+});
+
+
+/* =========================================================
+   INITIALIZE
+   ========================================================= */
+
+async function initialize(){
+
+try{
+
+/*
+If the URL contains ?code=...
+Supabase needs to exchange that
+code for a session.
+*/
+
+const url =
+new URL(
+window.location.href
+);
+
+const code =
+url.searchParams.get(
+"code"
 );
 
 
-if(token){
+if(code){
+
+const {
+data,
+error
+} =
+await supabase.auth.exchangeCodeForSession(
+code
+);
+
+
+if(error){
+
+throw error;
+
+}
+
+
+if(data.session){
+
+showReset();
+
+/*
+Remove ?code from URL.
+*/
+
+window.history.replaceState(
+{},
+document.title,
+window.location.pathname
+);
+
+return;
+
+}
+
+}
+
+
+/*
+Check current session.
+*/
+
+const {
+data: {
+session
+},
+error
+} =
+await supabase.auth.getSession();
+
+
+if(error){
+
+throw error;
+
+}
+
+
+if(session){
+
+/*
+If we're returning from a
+recovery flow, show reset.
+*/
+
+const recovery =
+window.location.hash
+.includes(
+"type=recovery"
+);
+
+
+if(recovery){
+
+showReset();
+
+}
+
+else{
 
 showAdmin();
 
@@ -1279,7 +1316,111 @@ showAdmin();
 
 }
 
+else{
+
+showLogin();
+
+}
+
+}
+
+catch(error){
+
+console.error(
+"INITIALIZE ERROR:",
+error
 );
+
+showLogin();
+
+}
+
+}
+
+
+/* =========================================================
+   BUTTON EVENTS
+   ========================================================= */
+
+document
+.getElementById(
+"loginButton"
+)
+.addEventListener(
+"click",
+login
+);
+
+
+document
+.getElementById(
+"updatePasswordButton"
+)
+.addEventListener(
+"click",
+updatePassword
+);
+
+
+document
+.getElementById(
+"logoutButton"
+)
+.addEventListener(
+"click",
+logout
+);
+
+
+/*
+Allow Enter key on login.
+*/
+
+document
+.getElementById(
+"password"
+)
+.addEventListener(
+"keydown",
+function(event){
+
+if(
+event.key === "Enter"
+){
+
+login();
+
+}
+
+});
+
+
+/*
+Allow Enter key on reset.
+*/
+
+document
+.getElementById(
+"confirmPassword"
+)
+.addEventListener(
+"keydown",
+function(event){
+
+if(
+event.key === "Enter"
+){
+
+updatePassword();
+
+}
+
+});
+
+
+/* START */
+
+initialize();
 
 </script>
 
