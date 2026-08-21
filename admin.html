@@ -751,10 +751,20 @@ if(!response.ok){
 
 }
 
-const prices =
-    await response.json();
+}
 
-renderPrices(prices);
+/* =========================================================
+   RENDER PRICES
+========================================================= */
+
+function renderPrices(prices){
+
+    if(
+        !Array.isArray(prices) ||
+        prices.length === 0
+    ){
+
+        priceList.innerHTML =
             "<p>No prices available.</p>";
 
         return;
