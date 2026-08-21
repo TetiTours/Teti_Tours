@@ -712,49 +712,49 @@ async function loadPrices(){
 
         }
 
-  const {
-    data: prices,
-    error
-} = await supabase
-    .from("tour_prices")
-    .select("*");
+ const response =
+    await fetch(
 
-if(error){
-    throw error;
+        SUPABASE_URL +
+        "/rest/v1/tour_prices?select=*&order=Tour_id.asc",
+
+        {
+            method:"GET",
+
+            headers:{
+
+                "apikey":
+                    SUPABASE_KEY,
+
+                "Authorization":
+                    "Bearer " +
+                    session.access_token,
+
+                "Content-Type":
+                    "application/json"
+
+            }
+
+        }
+
+    );
+
+if(!response.ok){
+
+    const text =
+        await response.text();
+
+    throw new Error(
+        text ||
+        "Could not load prices."
+    );
+
 }
+
+const prices =
+    await response.json();
 
 renderPrices(prices);
-    }
-
-    catch(error){
-
-        console.error(
-            "LOAD PRICES ERROR:",
-            error
-        );
-
-        priceList.innerHTML =
-            '<div class="error">' +
-            "Could not load prices." +
-            "</div>";
-
-    }
-
-}
-
-
-/* =========================================================
-   RENDER PRICES
-========================================================= */
-
-function renderPrices(prices){
-
-    if(
-        !Array.isArray(prices) ||
-        prices.length === 0
-    ){
-
-        priceList.innerHTML =
             "<p>No prices available.</p>";
 
         return;
