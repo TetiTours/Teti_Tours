@@ -1055,9 +1055,12 @@ supabase.auth.onAuthStateChange(
 
         }
 
-        if(
+               if(
             session &&
-            event !== "SIGNED_OUT"
+            (
+                event === "SIGNED_IN" ||
+                event === "INITIAL_SESSION"
+            )
         ){
 
             if(
@@ -1070,6 +1073,7 @@ supabase.auth.onAuthStateChange(
 
             return;
 
+        }
         }
 
         if(
