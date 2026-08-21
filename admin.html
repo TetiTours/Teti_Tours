@@ -1055,12 +1055,9 @@ supabase.auth.onAuthStateChange(
 
         }
 
-               if(
+                      if(
             session &&
-            (
-                event === "SIGNED_IN" ||
-                event === "INITIAL_SESSION"
-            )
+            event !== "SIGNED_OUT"
         ){
 
             if(
@@ -1070,6 +1067,10 @@ supabase.auth.onAuthStateChange(
                 showAdmin();
 
             }
+
+            return;
+
+        }
 
             return;
 
