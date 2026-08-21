@@ -214,12 +214,29 @@ autocomplete="current-password">
 
 
 <button
-type="button"
-id="loginButton">
-
-Login
-
+    type="button"
+    id="loginButton">
+    Login
 </button>
+
+<br><br>
+
+<button
+    type="button"
+    id="forgotPasswordButton">
+    Forgot Password
+</button>
+
+<div
+    class="success"
+    id="forgotSuccess">
+</div>
+
+<div
+    class="error"
+    id="forgotError">
+</div>
+
 
 
 <div
@@ -583,7 +600,67 @@ error.message ||
 
 }
 
+/* =========================================================
+   FORGOT PASSWORD
+   ========================================================= */
 
+async function forgotPassword(){
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const forgotError =
+        document.getElementById("forgotError");
+
+    const forgotSuccess =
+        document.getElementById("forgotSuccess");
+
+    forgotError.textContent = "";
+    forgotSuccess.textContent = "";
+
+    if(!email){
+
+        forgotError.textContent =
+            "Please enter your admin email first.";
+
+        return;
+    }
+
+    try{
+
+        const { error } =
+            await supabase.auth.resetPasswordForEmail(
+                email,
+                {
+                    redirectTo:
+                        "https://www.tetitours.com/admin.html"
+                }
+            );
+
+        if(error){
+
+            throw error;
+        }
+
+        forgotSuccess.textContent =
+            "Password reset email sent. Check your email.";
+
+    }
+
+    catch(error){
+
+        console.error(
+            "FORGOT PASSWORD ERROR:",
+            error
+        );
+
+        forgotError.textContent =
+            error.message ||
+            "Could not send reset email.";
+
+    }
+
+}
 /* =========================================================
    PASSWORD UPDATE
    ========================================================= */
@@ -1417,7 +1494,12 @@ updatePassword();
 
 });
 
-
+document
+    .getElementById("forgotPasswordButton")
+    .addEventListener(
+        "click",
+        forgotPassword
+    );
 /* START */
 
 initialize();
