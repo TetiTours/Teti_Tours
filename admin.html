@@ -1074,7 +1074,10 @@ supabase.auth.onAuthStateChange(
 
         if(
             session &&
-            event !== "SIGNED_OUT"
+            (
+                event === "SIGNED_IN" ||
+                event === "INITIAL_SESSION"
+            )
         ){
 
             if(
