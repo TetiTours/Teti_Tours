@@ -1039,7 +1039,45 @@ async function savePrices(){
 
 }
 
+}
+    
+/* =========================================================
+   LOGOUT
+========================================================= */
 
+async function logout(){
+
+    try{
+
+        const { error } =
+            await supabase.auth.signOut();
+
+        if(error){
+            throw error;
+        }
+
+        showLogin();
+
+    }
+    catch(error){
+
+        console.error(
+            "LOGOUT ERROR:",
+            error
+        );
+
+        alert(
+            "Could not logout.\n\n" +
+            error.message
+        );
+
+    }
+
+}
+
+/* =========================================================
+   AUTH STATE
+========================================================= */
 /* =========================================================
    AUTH STATE
 ========================================================= */
