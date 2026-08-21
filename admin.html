@@ -898,6 +898,10 @@ function renderPrices(prices){
    SAVE PRICES
 ========================================================= */
 
+/* =========================================================
+   SAVE PRICES
+========================================================= */
+
 async function savePrices(){
 
     try{
@@ -951,7 +955,9 @@ async function savePrices(){
                     "Tour_id",
                     tourId
                 )
-                .select();
+                .select(
+                    "Tour_id," + field
+                );
 
             if(error){
                 throw new Error(
@@ -962,14 +968,26 @@ async function savePrices(){
                 );
             }
 
-            if(!data || data.length === 0){
-
+            if(!data || data.length !== 1){
                 throw new Error(
                     "NO ROW UPDATED\n\n" +
                     "Tour: " +
                     tourId
                 );
+            }
 
+            if(data[0][field] !== value){
+                throw new Error(
+                    "SAVE VERIFICATION FAILED\n\n" +
+                    "Tour: " +
+                    tourId +
+                    "\n" +
+                    "Expected: " +
+                    value +
+                    "\n" +
+                    "Database: " +
+                    data[0][field]
+                );
             }
 
         }
