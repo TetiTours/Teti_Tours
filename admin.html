@@ -1067,7 +1067,9 @@ function renderPrices(prices){
     `;
 
 
-    prices.forEach(
+    prices
+    .filter(tour => getTourId(tour).trim() !== "Cairo Giza")
+    .forEach(
         function(tour){
 
             const id =
