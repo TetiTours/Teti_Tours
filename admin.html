@@ -1,171 +1,307 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
 <title>Teti Tour | Admin</title>
 
+
 <style>
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
 
+
 body{
+
     font-family:Arial,sans-serif;
+
     background:#f4eee4;
+
     color:#33251b;
+
     padding:30px 15px;
+
 }
 
+
 .admin-box{
+
     max-width:1000px;
+
     margin:30px auto;
+
     background:white;
+
     padding:30px;
+
     border-radius:12px;
+
     box-shadow:0 15px 40px rgba(0,0,0,.12);
+
 }
+
 
 .login-box,
 .reset-box{
+
     max-width:450px;
+
     margin:50px auto;
+
 }
+
 
 .reset-box,
 .admin-content{
+
     display:none;
+
 }
+
 
 h1{
+
     margin-bottom:10px;
+
 }
+
 
 .subtitle{
+
     color:#75675b;
+
     margin-bottom:30px;
+
 }
+
 
 label{
+
     display:block;
+
     font-weight:bold;
+
     margin-bottom:7px;
+
 }
+
 
 input{
+
     width:100%;
+
     padding:13px;
+
     border:1px solid #d5c8b8;
+
     border-radius:5px;
+
     margin-bottom:18px;
+
     font-size:15px;
+
 }
+
 
 button{
+
     border:none;
+
     padding:13px 20px;
+
     border-radius:5px;
+
     background:#2a1d15;
+
     color:white;
+
     font-weight:bold;
+
     cursor:pointer;
+
 }
+
 
 button:hover{
+
     background:#b38b52;
+
 }
+
 
 .error{
+
     color:#a33;
+
     margin-top:12px;
+
     font-weight:bold;
+
     line-height:1.5;
+
 }
+
 
 .success{
+
     color:#52733f;
+
     margin-top:15px;
+
     font-weight:bold;
+
     line-height:1.5;
+
 }
+
 
 .small-note{
+
     margin-top:15px;
+
     font-size:13px;
+
     color:#75675b;
+
     line-height:1.5;
+
 }
+
 
 .price-list{
+
     margin-top:25px;
+
     overflow-x:auto;
+
 }
+
 
 .price-row{
+
     display:grid;
+
     grid-template-columns:1.5fr 1fr 1fr 1fr;
+
     gap:10px;
+
     align-items:center;
+
     padding:14px 0;
+
     border-bottom:1px solid #e5ddd2;
+
 }
+
 
 .price-row input{
+
     margin:0;
+
 }
+
 
 .save{
+
     width:100%;
+
     margin-top:25px;
+
 }
+
 
 .logout{
+
     float:right;
+
     background:#777;
+
 }
+
 
 .logout:hover{
+
     background:#555;
+
 }
+
 
 .loading{
+
     padding:20px 0;
+
     color:#75675b;
+
 }
+
 
 @media(max-width:700px){
+
     .price-row{
+
         grid-template-columns:1fr;
+
         gap:8px;
+
     }
 
+
     .logout{
+
         float:none;
+
         margin-bottom:20px;
+
     }
+
 }
+
 </style>
+
 </head>
+
 
 <body>
 
+
 <div class="admin-box">
+
 
 <!-- =========================
      LOGIN
 ========================= -->
 
-<div class="login-box" id="loginBox">
 
-<h1>Teti Tour Admin</h1>
+<div
+    class="login-box"
+    id="loginBox"
+>
+
+<h1>
+Teti Tour Admin
+</h1>
+
 
 <p class="subtitle">
 Admin login
 </p>
 
-<label>Email</label>
+
+<label>
+Email
+</label>
+
 
 <input
     type="email"
@@ -174,7 +310,11 @@ Admin login
     autocomplete="email"
 >
 
-<label>Password</label>
+
+<label>
+Password
+</label>
+
 
 <input
     type="password"
@@ -183,64 +323,86 @@ Admin login
     autocomplete="current-password"
 >
 
+
 <button
     type="button"
     id="loginButton"
 >
+
     Login
+
 </button>
 
+
 <br><br>
+
 
 <button
     type="button"
     id="forgotPasswordButton"
 >
+
     Forgot Password
+
 </button>
+
 
 <div
     class="success"
     id="forgotSuccess"
 ></div>
 
+
 <div
     class="error"
     id="forgotError"
 ></div>
+
 
 <div
     class="error"
     id="loginError"
 ></div>
 
+
 <p class="small-note">
+
 Use your Supabase admin account.
+
 </p>
 
+
 </div>
+
 
 
 <!-- =========================
      RESET PASSWORD
 ========================= -->
 
+
 <div
     class="reset-box"
     id="resetBox"
 >
 
+
 <h1>
 Reset Password
 </h1>
 
+
 <p class="subtitle">
+
 Choose your new admin password.
+
 </p>
+
 
 <label>
 New Password
 </label>
+
 
 <input
     type="password"
@@ -249,9 +411,11 @@ New Password
     autocomplete="new-password"
 >
 
+
 <label>
 Confirm Password
 </label>
+
 
 <input
     type="password"
@@ -260,74 +424,96 @@ Confirm Password
     autocomplete="new-password"
 >
 
+
 <button
     type="button"
     id="updatePasswordButton"
 >
+
     Update Password
+
 </button>
+
 
 <div
     class="error"
     id="resetError"
 ></div>
 
+
 <div
     class="success"
     id="resetSuccess"
 ></div>
 
+
 </div>
+
 
 
 <!-- =========================
      ADMIN CONTENT
 ========================= -->
 
+
 <div
     class="admin-content"
     id="adminContent"
 >
+
 
 <button
     class="logout"
     type="button"
     id="logoutButton"
 >
+
     Logout
+
 </button>
+
 
 <h1>
 Teti Tour Price List
 </h1>
 
+
 <p class="subtitle">
+
 Manage your tour prices.
+
 </p>
+
 
 <div
     class="price-list"
     id="priceList"
 >
+
     <div class="loading">
         Loading prices...
     </div>
-</div>
 
 </div>
 
+
 </div>
+
+
+</div>
+
 
 
 <!-- =========================
      SUPABASE
 ========================= -->
 
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script>
 
-/* =========================================================
+<script>
+    /* =========================================================
    SUPABASE CONFIG
 ========================================================= */
 
@@ -346,6 +532,7 @@ var supabase =
         SUPABASE_URL,
         SUPABASE_KEY
     );
+
 
 
 /* =========================================================
@@ -380,6 +567,7 @@ const forgotSuccess =
     document.getElementById("forgotSuccess");
 
 
+
 /* =========================================================
    SHOW / HIDE
 ========================================================= */
@@ -387,28 +575,37 @@ const forgotSuccess =
 function showLogin(){
 
     loginBox.style.display = "block";
+
     resetBox.style.display = "none";
+
     adminContent.style.display = "none";
 
 }
+
 
 function showReset(){
 
     loginBox.style.display = "none";
+
     resetBox.style.display = "block";
+
     adminContent.style.display = "none";
 
 }
 
+
 function showAdmin(){
 
     loginBox.style.display = "none";
+
     resetBox.style.display = "none";
+
     adminContent.style.display = "block";
 
     loadPrices();
 
 }
+
 
 
 /* =========================================================
@@ -434,6 +631,7 @@ async function login(){
             "Please enter your email and password.";
 
         return;
+
     }
 
     try{
@@ -445,15 +643,18 @@ async function login(){
         await supabase.auth.signInWithPassword({
 
             email:email,
+
             password:password
 
         });
+
 
         if(error){
 
             throw error;
 
         }
+
 
         if(!data.session){
 
@@ -462,6 +663,7 @@ async function login(){
             );
 
         }
+
 
         showAdmin();
 
@@ -483,6 +685,7 @@ async function login(){
 }
 
 
+
 /* =========================================================
    FORGOT PASSWORD
 ========================================================= */
@@ -490,6 +693,7 @@ async function login(){
 async function forgotPassword(){
 
     forgotError.textContent = "";
+
     forgotSuccess.textContent = "";
 
     const email =
@@ -497,13 +701,16 @@ async function forgotPassword(){
         .value
         .trim();
 
+
     if(!email){
 
         forgotError.textContent =
             "Please enter your admin email first.";
 
         return;
+
     }
+
 
     try{
 
@@ -511,18 +718,23 @@ async function forgotPassword(){
             error
         } =
         await supabase.auth.resetPasswordForEmail(
+
             email,
+
             {
                 redirectTo:
                     "https://www.tetitours.com/admin.html"
             }
+
         );
+
 
         if(error){
 
             throw error;
 
         }
+
 
         forgotSuccess.textContent =
             "Password reset email sent. Check your email.";
@@ -545,6 +757,7 @@ async function forgotPassword(){
 }
 
 
+
 /* =========================================================
    UPDATE PASSWORD
 ========================================================= */
@@ -552,15 +765,19 @@ async function forgotPassword(){
 async function updatePassword(){
 
     resetError.textContent = "";
+
     resetSuccess.textContent = "";
+
 
     const newPassword =
         document.getElementById("newPassword")
         .value;
 
+
     const confirmPassword =
         document.getElementById("confirmPassword")
         .value;
+
 
     if(!newPassword || !confirmPassword){
 
@@ -568,7 +785,9 @@ async function updatePassword(){
             "Please enter and confirm your new password.";
 
         return;
+
     }
+
 
     if(newPassword !== confirmPassword){
 
@@ -576,7 +795,9 @@ async function updatePassword(){
             "Passwords do not match.";
 
         return;
+
     }
+
 
     if(newPassword.length < 6){
 
@@ -584,7 +805,9 @@ async function updatePassword(){
             "Password must be at least 6 characters.";
 
         return;
+
     }
+
 
     try{
 
@@ -598,11 +821,13 @@ async function updatePassword(){
 
         });
 
+
         if(error){
 
             throw error;
 
         }
+
 
         if(!data.user){
 
@@ -612,16 +837,20 @@ async function updatePassword(){
 
         }
 
+
         resetSuccess.textContent =
             "Password updated successfully.";
+
 
         document.getElementById(
             "newPassword"
         ).value = "";
 
+
         document.getElementById(
             "confirmPassword"
         ).value = "";
+
 
         setTimeout(
             function(){
@@ -650,6 +879,7 @@ async function updatePassword(){
 }
 
 
+
 /* =========================================================
    HELPERS
 ========================================================= */
@@ -657,36 +887,49 @@ async function updatePassword(){
 function getTourId(row){
 
     return String(
+
         row.Tour_id ??
+
         row.tour_id ??
+
         ""
+
     ).trim();
 
 }
 
+
 function getTourName(row){
 
     return (
+
         row.Tour_name ??
+
         row.tour_name ??
+
         getTourId(row)
+
     );
 
 }
 
+
 function escapeHtml(value){
 
     return String(value)
+
         .replaceAll("&","&amp;")
+
         .replaceAll("<","&lt;")
+
         .replaceAll(">","&gt;")
+
         .replaceAll('"',"&quot;")
+
         .replaceAll("'","&#039;");
 
 }
-
-
-/* =========================================================
+    /* =========================================================
    LOAD PRICES
 ========================================================= */
 
@@ -704,6 +947,7 @@ async function loadPrices(){
         } =
         await supabase.auth.getSession();
 
+
         if(!session){
 
             showLogin();
@@ -711,6 +955,7 @@ async function loadPrices(){
             return;
 
         }
+
 
         const response =
             await fetch(
@@ -739,6 +984,7 @@ async function loadPrices(){
 
             );
 
+
         if(!response.ok){
 
             const text =
@@ -750,6 +996,7 @@ async function loadPrices(){
             );
 
         }
+
 
         const prices =
             await response.json();
@@ -775,6 +1022,7 @@ async function loadPrices(){
 }
 
 
+
 /* =========================================================
    RENDER PRICES
 ========================================================= */
@@ -792,6 +1040,7 @@ function renderPrices(prices){
         return;
 
     }
+
 
     let html = `
 
@@ -817,6 +1066,7 @@ function renderPrices(prices){
 
     `;
 
+
     prices.forEach(
         function(tour){
 
@@ -825,6 +1075,7 @@ function renderPrices(prices){
 
             const name =
                 getTourName(tour);
+
 
             html += `
 
@@ -865,6 +1116,7 @@ function renderPrices(prices){
         }
     );
 
+
     html += `
 
         <button
@@ -872,8 +1124,11 @@ function renderPrices(prices){
             type="button"
             id="savePricesButton"
         >
+
             Save Prices
+
         </button>
+
 
         <div
             class="success"
@@ -882,7 +1137,9 @@ function renderPrices(prices){
 
     `;
 
+
     priceList.innerHTML = html;
+
 
     document
         .getElementById("savePricesButton")
@@ -892,9 +1149,7 @@ function renderPrices(prices){
         );
 
 }
-
-
-/* =========================================================
+    /* =========================================================
    SAVE PRICES
 ========================================================= */
 
@@ -910,11 +1165,17 @@ async function savePrices(){
     try{
 
         const {
-            data:{
-                session
-            }
-        } =
-        await supabase.auth.getSession();
+            data: { session },
+            error: sessionError
+        } = await supabase.auth.getSession();
+
+
+        if(sessionError){
+
+            throw sessionError;
+
+        }
+
 
         if(!session){
 
@@ -924,12 +1185,15 @@ async function savePrices(){
 
         }
 
+
         const inputs =
             document.querySelectorAll(
                 "#priceList input"
             );
 
+
         const grouped = {};
+
 
         inputs.forEach(
             function(input){
@@ -940,77 +1204,100 @@ async function savePrices(){
                 const field =
                     input.dataset.field;
 
+
+                if(!id || !field){
+
+                    return;
+
+                }
+
+
                 if(!grouped[id]){
 
                     grouped[id] = {};
 
                 }
 
+
                 grouped[id][field] =
                     input.value === ""
-                    ? null
-                    : Number(input.value);
+                        ? null
+                        : Number(input.value);
 
             }
         );
 
-        for(
-            const tourId in grouped
-        ){
 
-            const response =
-                await fetch(
+        for(const tourId in grouped){
 
-                    SUPABASE_URL +
-                    "/rest/v1/tour_prices?Tour_id=eq." +
-                    encodeURIComponent(tourId),
+            const {
+                data,
+                error
+            } = await supabase
+                .from("tour_prices")
+                .update(grouped[tourId])
+                .eq("Tour_id", tourId)
+                .select();
 
-                    {
 
-                        method:"PATCH",
-
-                        headers:{
-
-                            "apikey":
-                                SUPABASE_KEY,
-
-                            "Authorization":
-                                "Bearer " +
-                                session.access_token,
-
-                            "Content-Type":
-                                "application/json",
-
-                            "Prefer":
-                                "return=minimal"
-
-                        },
-
-                        body:
-                            JSON.stringify(
-                                grouped[tourId]
-                            )
-
-                    }
-
-                );
-
-            if(!response.ok){
-
-                const text =
-                    await response.text();
+            if(error){
 
                 throw new Error(
-                    text ||
-                    "Could not save prices."
+                    "Tour: " +
+                    tourId +
+                    "\n\n" +
+                    error.message
                 );
+
+            }
+
+
+            if(!data || data.length !== 1){
+
+                throw new Error(
+                    "NO ROW UPDATED\n\n" +
+                    "Tour: " +
+                    tourId
+                );
+
+            }
+
+
+            for(const field in grouped[tourId]){
+
+                if(
+                    data[0][field] !==
+                    grouped[tourId][field]
+                ){
+
+                    throw new Error(
+                        "SAVE VERIFICATION FAILED\n\n" +
+                        "Tour: " +
+                        tourId +
+                        "\n" +
+                        "Field: " +
+                        field +
+                        "\n" +
+                        "Expected: " +
+                        grouped[tourId][field] +
+                        "\n" +
+                        "Database: " +
+                        data[0][field]
+                    );
+
+                }
 
             }
 
         }
 
+
         saveSuccess.textContent =
             "Prices saved successfully.";
+
+
+        await loadPrices();
+
 
         setTimeout(
             function(){
@@ -1023,12 +1310,14 @@ async function savePrices(){
 
     }
 
+
     catch(error){
 
         console.error(
             "SAVE PRICES ERROR:",
             error
         );
+
 
         alert(
             "Could not save prices.\n\n" +
@@ -1038,8 +1327,7 @@ async function savePrices(){
     }
 
 }
-
-/* =========================================================
+    /* =========================================================
    LOGOUT
 ========================================================= */
 
@@ -1050,19 +1338,25 @@ async function logout(){
         const { error } =
             await supabase.auth.signOut();
 
+
         if(error){
+
             throw error;
+
         }
+
 
         showLogin();
 
     }
+
     catch(error){
 
         console.error(
             "LOGOUT ERROR:",
             error
         );
+
 
         alert(
             "Could not logout.\n\n" +
@@ -1072,6 +1366,9 @@ async function logout(){
     }
 
 }
+
+
+
 /* =========================================================
    AUTH STATE
 ========================================================= */
@@ -1084,6 +1381,7 @@ supabase.auth.onAuthStateChange(
             event
         );
 
+
         if(
             event === "PASSWORD_RECOVERY"
         ){
@@ -1094,9 +1392,13 @@ supabase.auth.onAuthStateChange(
 
         }
 
+
         if(
             session &&
-            event !== "SIGNED_OUT"
+            (
+                event === "SIGNED_IN" ||
+                event === "INITIAL_SESSION"
+            )
         ){
 
             if(
@@ -1111,6 +1413,7 @@ supabase.auth.onAuthStateChange(
 
         }
 
+
         if(
             event === "SIGNED_OUT"
         ){
@@ -1121,6 +1424,7 @@ supabase.auth.onAuthStateChange(
 
     }
 );
+
 
 
 /* =========================================================
@@ -1136,10 +1440,12 @@ async function initialize(){
                 window.location.href
             );
 
+
         const code =
             url.searchParams.get(
                 "code"
             );
+
 
         if(code){
 
@@ -1151,15 +1457,18 @@ async function initialize(){
                 code
             );
 
+
             if(error){
 
                 throw error;
 
             }
 
+
             if(data.session){
 
                 showReset();
+
 
                 window.history.replaceState(
                     {},
@@ -1167,11 +1476,13 @@ async function initialize(){
                     window.location.pathname
                 );
 
+
                 return;
 
             }
 
         }
+
 
         const {
             data:{
@@ -1181,11 +1492,13 @@ async function initialize(){
         } =
         await supabase.auth.getSession();
 
+
         if(error){
 
             throw error;
 
         }
+
 
         if(session){
 
@@ -1194,6 +1507,7 @@ async function initialize(){
                 .includes(
                     "type=recovery"
                 );
+
 
             if(recovery){
 
@@ -1224,11 +1538,13 @@ async function initialize(){
             error
         );
 
+
         showLogin();
 
     }
 
 }
+
 
 
 /* =========================================================
@@ -1242,12 +1558,14 @@ document
         login
     );
 
+
 document
     .getElementById("forgotPasswordButton")
     .addEventListener(
         "click",
         forgotPassword
     );
+
 
 document
     .getElementById("updatePasswordButton")
@@ -1256,12 +1574,14 @@ document
         updatePassword
     );
 
+
 document
     .getElementById("logoutButton")
     .addEventListener(
         "click",
         logout
     );
+
 
 
 /* =========================================================
@@ -1304,6 +1624,7 @@ document
     );
 
 
+
 /* =========================================================
    START
 ========================================================= */
@@ -1313,4 +1634,5 @@ initialize();
 </script>
 
 </body>
+
 </html>
