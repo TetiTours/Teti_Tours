@@ -1,0 +1,3639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Teti Tour | Egypt Tours & Private Transfers</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:Arial,sans-serif;
+background:#f4eee4;
+color:#33251b;
+}
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+.navbar{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:90px;
+padding:5px 10px;
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+z-index:1000;
+}
+
+.brand img{
+width:230px;
+height:230px;
+object-fit:contain;
+display:block;
+transform:translate(25px,20px);
+}
+
+.navbar nav{
+display:flex;
+gap:35px;
+padding-top:30px;
+padding-right:25px;
+}
+
+.navbar nav a{
+color:white;
+text-decoration:none;
+font-size:16px;
+font-weight:500;
+}
+
+.navbar nav a:hover{
+color:#d6b77a;
+}
+
+
+/* =========================================================
+   HERO - VIDEO BACKGROUND
+   ========================================================= */
+
+.hero{
+width:100%;
+height:100vh;
+min-height:700px;
+position:relative;
+display:flex;
+align-items:center;
+padding:140px 7%;
+overflow:hidden;
+background:#17100c;
+}
+
+.hero-video{
+position:absolute;
+inset:0;
+width:100%;
+height:100%;
+object-fit:cover;
+z-index:0;
+}
+
+.hero-slideshow{
+position:absolute;
+inset:0;
+z-index:0;
+overflow:hidden;
+}
+
+.hero-slide{
+position:absolute;
+inset:0;
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+opacity:0;
+animation:heroFade 30s infinite;
+}
+
+.slide-1{
+background-image:url("assets/great-pyramid.jpg");
+animation-delay:0s;
+}
+
+.slide-2{
+background-image:url("assets/fayoum-fossils.jpg");
+animation-delay:5s;
+}
+
+.slide-3{
+background-image:url("alexandria-citadel.jpg");
+animation-delay:10s;
+}
+
+.slide-4{
+background-image:url("assets/airport.jpg");
+animation-delay:15s;
+}
+
+.slide-5{
+background-image:url("felucca.jpg");
+animation-delay:20s;
+}
+
+.slide-6{
+background-image:url("logo.png");
+animation-delay:25s;
+}
+
+@keyframes heroFade{
+0%,16.66%{opacity:1;}
+20%,96%{opacity:0;}
+100%{opacity:1;}
+}
+
+.hero-overlay{
+position:absolute;
+inset:0;
+background:
+linear-gradient(
+90deg,
+rgba(15,10,7,.80),
+rgba(15,10,7,.45),
+rgba(15,10,7,.72)
+);
+z-index:1;
+}
+
+.hero-content{
+position:relative;
+z-index:2;
+max-width:750px;
+color:white;
+margin-left:auto;
+margin-right:-6%;
+transform:translateY(100px);
+}
+
+.small-title{
+color:#d6b77a;
+font-size:14px;
+font-weight:bold;
+letter-spacing:4px;
+margin-bottom:18px;
+}
+
+.hero h1{
+font-size:clamp(48px,7vw,82px);
+line-height:1.05;
+margin-bottom:28px;
+}
+
+.hero-text{
+max-width:620px;
+font-size:20px;
+line-height:1.7;
+color:#ded6cc;
+margin-bottom:38px;
+}
+
+.hero-buttons{
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.main-button,
+.second-button{
+padding:16px 30px;
+border-radius:5px;
+text-decoration:none;
+font-weight:bold;
+}
+
+.main-button{
+background:#b38b52;
+color:white;
+}
+
+.second-button{
+border:1px solid white;
+color:white;
+}
+
+
+/* =========================================================
+   TOURS
+   ========================================================= */
+
+.tours{
+padding:100px 7%;
+background:#f4eee4;
+}
+
+.section-title{
+text-align:center;
+margin-bottom:45px;
+}
+
+.section-title p{
+color:#a17b45;
+letter-spacing:3px;
+font-size:13px;
+font-weight:bold;
+}
+
+.section-title h2{
+font-size:40px;
+margin-top:12px;
+}
+
+.section-title span{
+display:block;
+margin-top:12px;
+color:#75675b;
+font-size:16px;
+line-height:1.6;
+}
+
+.tour-container{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:25px;
+max-width:1100px;
+margin:0 auto;
+}
+
+.tour-card{
+background:white;
+border-radius:10px;
+overflow:hidden;
+box-shadow:0 10px 30px rgba(0,0,0,.09);
+transition:.3s;
+}
+
+.tour-card:hover{
+transform:translateY(-6px);
+}
+
+.tour-image{
+height:220px;
+position:relative;
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+display:flex;
+align-items:flex-start;
+justify-content:flex-end;
+padding:15px;
+}
+
+.airport-image{
+background-image:
+linear-gradient(rgba(0,0,0,.15),rgba(0,0,0,.15)),
+url("assets/airport.jpg");
+}
+
+.cairo-image{
+    background-image:
+    linear-gradient(rgba(0,0,0,.10),rgba(0,0,0,.10)),
+    url("great-pyramid.jpg");
+}
+
+.fayoum-image{
+background-image:
+linear-gradient(rgba(0,0,0,.08),rgba(0,0,0,.08)),
+url("assets/fayoum-fossils.jpg");
+}
+
+.alex-image{
+background-image:
+linear-gradient(rgba(0,0,0,.08),rgba(0,0,0,.08)),
+url("assets/alexandria-citadel.jpg");
+}
+
+.tour-label{
+background:#b38b52;
+color:white;
+padding:7px 11px;
+border-radius:4px;
+font-size:10px;
+font-weight:bold;
+letter-spacing:1px;
+}
+
+.tour-content{
+padding:22px;
+}
+
+.tour-content h3{
+font-size:23px;
+color:#33251b;
+margin-bottom:12px;
+}
+
+.tour-content p{
+color:#75675b;
+font-size:15px;
+line-height:1.6;
+min-height:70px;
+}
+
+.tour-bottom{
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin-top:18px;
+padding-top:16px;
+border-top:1px solid #e5ddd2;
+}
+
+.tour-bottom span{
+color:#8b6a42;
+font-size:13px;
+font-weight:bold;
+}
+
+.tour-bottom button{
+background:#2a1d15;
+color:white;
+border:none;
+padding:10px 17px;
+border-radius:4px;
+font-size:13px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.tour-bottom button:hover{
+background:#b38b52;
+}
+
+
+/* =========================================================
+   CAIRO & GIZA SUB TOURS
+   ========================================================= */
+
+.cairo-options{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:25px;
+max-width:1200px;
+margin:0 auto;
+}
+
+.cairo-option-card{
+background:white;
+border-radius:10px;
+overflow:hidden;
+box-shadow:0 10px 30px rgba(0,0,0,.09);
+transition:.3s;
+}
+
+.cairo-option-card:hover{
+transform:translateY(-6px);
+}
+
+.cairo-option-image{
+height:220px;
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+position:relative;
+}
+
+
+/* =========================================================
+   EXACT TOUR IMAGES
+   ========================================================= */
+
+.image-gem{
+background-image:
+linear-gradient(
+90deg,
+rgba(0,0,0,.05),
+rgba(0,0,0,.05)
+),
+url("https://commons.wikimedia.org/wiki/Special:Redirect/file/Grand%20Egyptian%20Museum%202025.jpg"),
+url("https://commons.wikimedia.org/wiki/Special:Redirect/file/Great%20Pyramid%20%28Pyramid%20of%20Cheops%20Khufu%29%2C%20Giza%2C%20GG%2C%20EGY%20%2840936250113%29.jpg");
+
+background-size:
+50% 100%,
+50% 100%,
+50% 100%;
+
+background-position:
+center,
+left center,
+right center;
+
+background-repeat:
+no-repeat,
+no-repeat,
+no-repeat;
+}
+
+.image-saqqara{
+background-image:
+linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.05)),
+url("https://commons.wikimedia.org/wiki/Special:Redirect/file/Saqqara%20Pyramid%20Djoser.jpg");
+
+background-size:cover;
+background-position:center 42%;
+background-repeat:no-repeat;
+}
+
+.image-dahshur{
+background-image:
+linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.05)),
+url("https://commons.wikimedia.org/wiki/Special:Redirect/file/Snefru%27s%20Bent%20Pyramid%20in%20Dahshur.jpg");
+
+background-size:cover;
+background-position:center 45%;
+background-repeat:no-repeat;
+}
+
+.image-citadel{
+background-image:
+linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.05)),
+url("https://commons.wikimedia.org/wiki/Special:Redirect/file/Citadel%20of%20Saladin%20in%20Cairo.jpg");
+
+background-size:cover;
+background-position:center 45%;
+background-repeat:no-repeat;
+}
+
+.image-giza{
+background-image:
+linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.05)),
+url("https://commons.wikimedia.org/wiki/Special:Redirect/file/Great%20Pyramid%20%28Pyramid%20of%20Cheops%20Khufu%29%2C%20Giza%2C%20GG%2C%20EGY%20%2840936250113%29.jpg");
+
+background-size:cover;
+background-position:center 48%;
+background-repeat:no-repeat;
+}
+
+.image-gem-half{
+background-image:
+linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.05)),
+url("https://commons.wikimedia.org/wiki/Special:Redirect/file/Grand%20Egyptian%20Museum%202025.jpg");
+
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+}
+
+.image-nile-cruise{
+background-image:
+linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.05)),
+url("https://commons.wikimedia.org/wiki/Special:Redirect/file/Nile%20Cruise.jpg");
+
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+}
+
+
+/* =========================================================
+   VIP FELUCCA
+   ========================================================= */
+
+.image-felucca-vip{
+background-image:
+linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.05)),
+url("assets/felucca.jpg");
+
+background-size:cover;
+background-position:center 45%;
+background-repeat:no-repeat;
+}
+
+
+/* =========================================================
+   FELUCCA ONE HOUR
+   ========================================================= */
+
+.image-felucca-hour{
+background-image:
+linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.05)),
+url("assets/felucca.jpg");
+
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+}
+
+
+/* =========================================================
+   CAIRO CARDS
+   ========================================================= */
+
+.cairo-option-content{
+padding:20px;
+}
+
+.cairo-option-content h3{
+font-size:21px;
+line-height:1.35;
+color:#33251b;
+min-height:57px;
+margin-bottom:10px;
+}
+
+.cairo-option-content p{
+color:#75675b;
+font-size:14px;
+line-height:1.6;
+min-height:45px;
+margin-bottom:15px;
+}
+
+.cairo-option-button{
+width:100%;
+padding:12px;
+border:none;
+border-radius:5px;
+background:#2a1d15;
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+.cairo-option-button:hover{
+background:#b38b52;
+}
+
+
+/* =========================================================
+   ABOUT
+   ========================================================= */
+
+.about{
+padding:110px 7%;
+background:#2a1d15;
+color:white;
+}
+
+.about-content{
+max-width:750px;
+}
+
+.about h2{
+font-size:52px;
+line-height:1.1;
+margin-bottom:30px;
+}
+
+.about p:not(.small-title){
+color:#d9cec1;
+font-size:18px;
+line-height:1.8;
+margin-bottom:18px;
+}
+
+
+/* =========================================================
+   CONTACT
+   ========================================================= */
+
+.contact{
+text-align:center;
+padding:100px 20px;
+background:#f4eee4;
+}
+
+.contact h2{
+font-size:42px;
+margin-bottom:20px;
+}
+
+.contact>p:not(.small-title){
+color:#75675b;
+font-size:18px;
+margin-bottom:30px;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer{
+background:#17100c;
+color:white;
+text-align:center;
+padding:40px 20px;
+}
+
+.footer-logo img{
+width:65px;
+height:65px;
+object-fit:contain;
+}
+
+footer p{
+margin-top:12px;
+color:#c8bbac;
+}
+
+footer .copyright{
+margin-top:25px;
+font-size:13px;
+}
+
+
+/* =========================================================
+   ADMIN
+   ========================================================= */
+
+.admin-button{
+position:fixed;
+bottom:20px;
+right:20px;
+z-index:5000;
+background:#2a1d15;
+color:white;
+border:none;
+padding:12px 18px;
+border-radius:6px;
+font-weight:bold;
+cursor:pointer;
+box-shadow:0 5px 20px rgba(0,0,0,.25);
+}
+
+.admin-panel{
+display:none;
+position:fixed;
+z-index:6000;
+inset:0;
+background:rgba(0,0,0,.70);
+padding:30px 15px;
+overflow:auto;
+}
+
+.admin-box{
+max-width:900px;
+margin:30px auto;
+background:#f4eee4;
+padding:30px;
+border-radius:12px;
+position:relative;
+}
+
+.admin-box h2{
+margin-bottom:10px;
+}
+
+.admin-box p{
+color:#75675b;
+margin-bottom:20px;
+}
+
+.close-admin{
+position:absolute;
+right:20px;
+top:20px;
+background:#2a1d15;
+color:white;
+border:none;
+padding:8px 12px;
+border-radius:4px;
+cursor:pointer;
+}
+
+.price-list{
+background:white;
+padding:25px;
+border-radius:10px;
+box-shadow:0 10px 30px rgba(0,0,0,.12);
+}
+
+.price-row{
+display:grid;
+grid-template-columns:1.5fr 1fr 1fr 1fr;
+gap:10px;
+align-items:center;
+padding:14px 0;
+border-bottom:1px solid #e5ddd2;
+}
+
+.price-row input{
+width:100%;
+padding:11px;
+border:1px solid #d5c8b8;
+border-radius:5px;
+font-size:14px;
+}
+
+.price-save{
+margin-top:20px;
+width:100%;
+padding:14px;
+border:none;
+border-radius:5px;
+background:#2a1d15;
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+.price-save:hover{
+background:#b38b52;
+}
+
+.saved-message{
+margin-top:12px;
+text-align:center;
+color:#52733f;
+font-weight:bold;
+display:none;
+}
+
+
+/* =========================================================
+   DETAIL MODAL
+   ========================================================= */
+
+.detail-modal{
+display:none;
+position:fixed;
+z-index:7000;
+inset:0;
+background:rgba(0,0,0,.75);
+padding:25px 15px;
+overflow:auto;
+}
+
+.detail-box{
+max-width:850px;
+margin:40px auto;
+background:#f4eee4;
+border-radius:12px;
+overflow:hidden;
+box-shadow:0 25px 70px rgba(0,0,0,.5);
+}
+
+.detail-image{
+height:280px;
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+}
+
+.detail-content{
+padding:30px;
+}
+
+.detail-content h2{
+font-size:34px;
+color:#33251b;
+margin-bottom:15px;
+}
+
+.detail-content p{
+color:#75675b;
+font-size:17px;
+line-height:1.8;
+margin-bottom:25px;
+}
+
+.detail-buttons{
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+}
+
+.detail-button{
+border:none;
+padding:14px 22px;
+border-radius:5px;
+font-weight:bold;
+cursor:pointer;
+background:#2a1d15;
+color:white;
+}
+
+.detail-button:hover{
+background:#b38b52;
+}
+
+.close-detail{
+background:#777;
+}
+
+
+/* =========================================================
+   BOOKING FORM
+   ========================================================= */
+
+.booking-form-box{
+background:white;
+padding:25px;
+border-radius:10px;
+margin-top:20px;
+}
+
+.form-title{
+font-size:24px;
+margin-bottom:20px;
+color:#33251b;
+}
+
+label{
+display:block;
+color:#33251b;
+font-weight:bold;
+font-size:14px;
+margin-bottom:7px;
+}
+
+input,
+select,
+textarea{
+width:100%;
+padding:13px;
+border:1px solid #d5c8b8;
+border-radius:5px;
+background:white;
+font-size:15px;
+outline:none;
+margin-bottom:18px;
+}
+
+.row{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+}
+
+.direction{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-bottom:25px;
+}
+
+.direction input{
+display:none;
+}
+
+.direction label{
+background:#f8f5ef;
+border:2px solid #ddd0bf;
+padding:17px;
+text-align:center;
+border-radius:6px;
+cursor:pointer;
+}
+
+.direction input:checked+label{
+background:#2a1d15;
+color:white;
+border-color:#2a1d15;
+}
+
+.price-box{
+background:#fff;
+border:2px solid #b38b52;
+border-radius:8px;
+padding:18px;
+margin:5px 0 22px;
+}
+
+.price-title{
+font-size:14px;
+color:#75675b;
+margin-bottom:7px;
+font-weight:bold;
+}
+
+.price-value{
+font-size:25px;
+font-weight:bold;
+color:#8b6a42;
+}
+
+.price-note{
+font-size:12px;
+color:#75675b;
+margin-top:5px;
+}
+
+.submit{
+width:100%;
+padding:16px;
+border:none;
+border-radius:5px;
+background:#2a1d15;
+color:white;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+margin-top:10px;
+}
+
+.submit:hover{
+background:#b38b52;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media(max-width:900px){
+
+.navbar nav{
+display:none;
+}
+
+.brand img{
+width:150px;
+height:150px;
+transform:translate(15px,15px);
+}
+
+.hero-content{
+margin-right:0;
+transform:translateY(60px);
+}
+
+.tour-container{
+grid-template-columns:1fr;
+}
+
+.cairo-options{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media(max-width:600px){
+
+.hero{
+padding:130px 25px 70px;
+min-height:700px;
+}
+
+.hero h1{
+font-size:48px;
+}
+
+.hero-text{
+font-size:17px;
+}
+
+.brand img{
+width:120px;
+height:120px;
+transform:translate(10px,15px);
+}
+
+.tours{
+padding:70px 20px;
+}
+
+.section-title h2{
+font-size:34px;
+}
+
+.about{
+padding:70px 25px;
+}
+
+.about h2{
+font-size:40px;
+}
+
+.contact h2{
+font-size:34px;
+}
+
+.price-row{
+grid-template-columns:1fr;
+}
+
+.row{
+grid-template-columns:1fr;
+gap:0;
+}
+
+.direction{
+grid-template-columns:1fr;
+}
+
+.detail-image{
+height:210px;
+}
+
+.detail-content h2{
+font-size:27px;
+}
+
+.cairo-options{
+grid-template-columns:1fr;
+}
+
+.cairo-option-image{
+height:230px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+
+<div class="brand">
+<img src="logo.png" alt="Teti Tour Logo">
+</div>
+
+<nav>
+<a href="#home">Home</a>
+<a href="#tours">Tours</a>
+<a href="#about">About Us</a>
+<a href="#contact">Contact</a>
+<h1>
+</nav>
+</header>
+
+<section class="hero" id="home">
+
+    <div class="hero-slideshow">
+
+        <div class="hero-slide slide-1"></div>
+        <div class="hero-slide slide-2"></div>
+        <div class="hero-slide slide-3"></div>
+        <div class="hero-slide slide-4"></div>
+        <div class="hero-slide slide-5"></div>
+        <div class="hero-slide slide-6"></div>
+
+    </div>
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+
+        <p class="small-title">
+            WELCOME TO EGYPT
+        </p>
+
+        <h1>
+            Discover Egypt<br>
+            With Teti Tour
+        </h1>
+
+<p class="hero-text">
+Private tours, airport transfers and unforgettable
+experiences across Egypt.
+</p>
+
+<div class="hero-buttons">
+
+<a href="#tours" class="main-button">
+Explore Our Tours
+</a>
+
+<a href="#contact" class="second-button">
+Contact Us
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     MAIN TOURS
+     ========================================================= -->
+
+<section class="tours" id="tours">
+
+<div class="section-title">
+
+<p>
+EXPLORE EGYPT
+</p>
+
+<h2>
+Our Tours & Transfers
+</h2>
+
+<span>
+Discover Egypt with private tours, comfortable transfers
+and unforgettable experiences.
+</span>
+
+</div>
+
+<div class="tour-container">
+
+
+<!-- AIRPORT -->
+
+<div class="tour-card">
+
+<div class="tour-image airport-image">
+
+<div class="tour-label">
+PRIVATE TRANSFER
+</div>
+
+</div>
+
+<div class="tour-content">
+
+<h3>
+Airport Transfers
+</h3>
+
+<p>
+Private Cairo Airport or Sphinx Airport transfer
+to or from your hotel.
+</p>
+
+<div class="tour-bottom">
+
+<span>
+Cairo & Giza
+</span>
+
+<button
+onclick="openTour('Airport-transfer')">
+View Details
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- CAIRO -->
+
+<div class="tour-card">
+
+<div class="tour-image cairo-image">
+
+<div class="tour-label">
+PRIVATE TOUR
+</div>
+
+</div>
+
+<div class="tour-content">
+
+<h3>
+Cairo & Giza
+</h3>
+
+<p>
+Explore the Pyramids, Sphinx, Grand Egyptian Museum
+and the highlights of Cairo.
+</p>
+
+<div class="tour-bottom">
+
+<span>
+Cairo & Giza
+</span>
+
+<button
+onclick="openTour('Cairo Giza')">
+View Details
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- FAYOUM -->
+
+<div class="tour-card">
+
+<div class="tour-image fayoum-image">
+
+<div class="tour-label">
+DAY TRIP
+</div>
+
+</div>
+
+<div class="tour-content">
+
+<h3>
+Fayoum Day Trip
+</h3>
+
+<p>
+Discover Wadi El Hitan, Wadi El Rayan
+and Magic Lake.
+</p>
+
+<div class="tour-bottom">
+
+<span>
+Fayoum
+</span>
+
+<button
+onclick="openTour('Fayoum')">
+View Details
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ALEXANDRIA -->
+
+<div class="tour-card">
+
+<div class="tour-image alex-image">
+
+<div class="tour-label">
+DAY TRIP
+</div>
+
+</div>
+
+<div class="tour-content">
+
+<h3>
+Alexandria Day Trip
+</h3>
+
+<p>
+Visit the Catacombs, Qaitbay Citadel
+and Bibliotheca Alexandrina.
+</p>
+
+<div class="tour-bottom">
+
+<span>
+Alexandria
+</span>
+
+<button
+onclick="openTour('Alexandria')">
+View Details
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+<!-- =========================================================
+     CAIRO & GIZA OPTIONS
+     ========================================================= -->
+
+<section
+class="tours"
+id="cairoOptions"
+style="display:none;">
+
+<div class="section-title">
+
+<p>
+CAIRO & GIZA
+</p>
+
+<h2>
+Choose Your Experience
+</h2>
+
+<span>
+Select the private tour that you would like to book.
+</span>
+
+</div>
+
+<div class="cairo-options">
+
+
+<!-- 1 -->
+
+<div class="cairo-option-card">
+
+<div class="cairo-option-image image-gem">
+</div>
+
+<div class="cairo-option-content">
+
+<h3>
+Grand Egyptian Museum & Pyramids
+</h3>
+
+<p>
+Visit the Pyramids of Giza and the Grand Egyptian Museum.
+</p>
+
+<button
+class="cairo-option-button"
+onclick="openCairoOption('GEM-Pyramids')">
+View Details
+</button>
+
+</div>
+
+</div>
+
+
+<!-- 2 -->
+
+<div class="cairo-option-card">
+
+<div class="cairo-option-image image-saqqara">
+</div>
+
+<div class="cairo-option-content">
+
+<h3>
+Giza Pyramids, Saqqara & Memphis
+</h3>
+
+<p>
+Explore the famous Giza Pyramids, the Step Pyramid of Djoser at Saqqara and ancient Memphis.
+</p>
+
+<button
+class="cairo-option-button"
+onclick="openCairoOption('Saqqara-Memphis')">
+View Details
+</button>
+
+</div>
+
+</div>
+
+
+<!-- 3 -->
+
+<div class="cairo-option-card">
+
+<div class="cairo-option-image image-dahshur">
+</div>
+
+<div class="cairo-option-content">
+
+<h3>
+Saqqara, Dahshur & Memphis
+</h3>
+
+<p>
+Discover Saqqara, Dahshur pyramids and Memphis.
+</p>
+
+<button
+class="cairo-option-button"
+onclick="openCairoOption('Saqqara-Dahshur-Memphis')">
+View Details
+</button>
+
+</div>
+
+</div>
+
+
+<!-- 4 -->
+
+<div class="cairo-option-card">
+
+<div class="cairo-option-image image-citadel">
+</div>
+
+<div class="cairo-option-content">
+
+<h3>
+Citadel & Old Cairo + Civilization Museum
+</h3>
+
+<p>
+Discover Islamic Cairo, the Citadel and NMEC.
+</p>
+
+<button
+class="cairo-option-button"
+onclick="openCairoOption('Citadel-NMEC')">
+View Details
+</button>
+
+</div>
+
+</div>
+
+
+<!-- 5 -->
+
+<div class="cairo-option-card">
+
+<div class="cairo-option-image image-giza">
+</div>
+
+<div class="cairo-option-content">
+
+<h3>
+Half Day Giza Pyramids
+</h3>
+
+<p>
+A private half-day visit to the famous Giza Pyramids.
+</p>
+
+<button
+class="cairo-option-button"
+onclick="openCairoOption('Half-Giza')">
+View Details
+</button>
+
+</div>
+
+</div>
+
+
+<!-- 6 -->
+
+<div class="cairo-option-card">
+
+<div class="cairo-option-image image-gem-half">
+</div>
+
+<div class="cairo-option-content">
+
+<h3>
+Half Day Grand Egyptian Museum
+</h3>
+
+<p>
+Spend a half day exploring the Grand Egyptian Museum.
+</p>
+
+<button
+class="cairo-option-button"
+onclick="openCairoOption('Half-GEM')">
+View Details
+</button>
+
+</div>
+
+</div>
+
+
+<!-- 7 -->
+
+<div class="cairo-option-card">
+
+<div class="cairo-option-image image-nile-cruise">
+</div>
+
+<div class="cairo-option-content">
+
+<h3>
+Dinner Nile Cruise
+</h3>
+
+<p>
+Enjoy an evening dinner experience on the Nile.
+</p>
+
+<button
+class="cairo-option-button"
+onclick="openCairoOption('Nile-Cruise')">
+View Details
+</button>
+
+</div>
+
+</div>
+
+
+<!-- 8 -->
+
+<div class="cairo-option-card">
+
+<div class="cairo-option-image image-felucca-vip">
+</div>
+
+<div class="cairo-option-content">
+
+<h3>
+VIP Felucca with Lunch
+</h3>
+
+<p>
+Enjoy a private sailing experience on a traditional felucca.
+</p>
+
+<button
+class="cairo-option-button"
+onclick="openCairoOption('VIP-Felucca-Lunch')">
+View Details
+</button>
+
+</div>
+
+</div>
+
+
+<!-- 9 -->
+
+<div class="cairo-option-card">
+
+<div class="cairo-option-image image-felucca-hour">
+</div>
+
+<div class="cairo-option-content">
+
+<h3>
+Felucca One Hour
+</h3>
+
+<p>
+Relax on the Nile with a one-hour traditional felucca ride.
+</p>
+
+<button
+class="cairo-option-button"
+onclick="openCairoOption('Felucca-One-Hour')">
+View Details
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     ABOUT
+     ========================================================= -->
+
+<section class="about" id="about">
+
+<div class="about-content">
+
+<p class="small-title">
+WHY TETI TOUR?
+</p>
+
+<h2>
+Your Journey.<br>
+Our Experience.
+</h2>
+
+<p>
+We provide comfortable private transportation
+and carefully organized tours to help you discover
+the beauty and history of Egypt.
+</p>
+
+<p>
+From airport pickup to unforgettable day trips,
+we make your journey simple, comfortable and memorable.
+</p>
+
+<p>
+Our team includes experienced and highly skilled local tour guides
+who are passionate about Egypt's history, culture and hidden gems.
+</p>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     CONTACT
+     ========================================================= -->
+
+<section class="contact" id="contact">
+
+<p class="small-title">
+READY TO EXPLORE?
+</p>
+
+<h2>
+Let's Discover Egypt Together 🇪🇬
+</h2>
+
+<p>
+Contact us and start planning your Egyptian adventure.
+</p>
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
+<button class="admin-button" type="button" onclick="openAdmin()">Admin</button>
+
+<footer>
+
+<div class="footer-logo">
+
+<img
+src="logo.png"
+alt="Teti Tour Logo">
+
+</div>
+
+<p>
+Egypt Tours & Private Transfers
+</p>
+
+<p class="copyright">
+© 2026 Teti Tour. All Rights Reserved.
+</p>
+
+</footer>
+
+
+<!-- =========================================================
+     ADMIN PANEL
+     ========================================================= -->
+
+<div
+class="admin-panel"
+id="adminPanel">
+
+<div class="admin-box">
+
+<button
+class="close-admin"
+type="button"
+onclick="closeAdmin()">
+
+Close
+
+</button>
+
+<h2>
+Price List
+</h2>
+
+<p>
+Manage your tour prices.
+</p>
+
+<div
+class="price-list"
+id="priceList">
+
+Loading prices...
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =========================================================
+     DETAIL MODAL
+     ========================================================= -->
+
+<div
+class="detail-modal"
+id="detailModal">
+
+<div class="detail-box">
+
+<div
+class="detail-image"
+id="detailImage">
+</div>
+
+<div class="detail-content">
+
+<h2 id="detailTitle">
+Tour Details
+</h2>
+
+<p id="detailDescription">
+</p>
+
+<div class="detail-buttons">
+
+<button
+class="detail-button close-detail"
+type="button"
+onclick="closeDetails()">
+
+Close
+
+</button>
+
+</div>
+
+
+<!-- BOOKING AREA -->
+
+<div
+id="bookingFormArea"
+style="display:none;">
+
+<div class="booking-form-box">
+
+<h3
+class="form-title"
+id="formTitle">
+
+Booking Details
+
+</h3>
+
+<form id="bookingForm">
+
+
+<!-- AIRPORT FIELDS -->
+
+<div id="airportFields">
+
+<label>
+Transfer Direction
+</label>
+
+<div class="direction">
+
+<div>
+
+<input
+type="radio"
+name="direction"
+value="Airport → Hotel"
+id="toHotel">
+
+<label for="toHotel">
+✈️ Airport → Hotel
+</label>
+
+</div>
+
+<div>
+
+<input
+type="radio"
+name="direction"
+value="Hotel → Airport"
+id="fromHotel">
+
+<label for="fromHotel">
+🏨 Hotel → Airport
+</label>
+
+</div>
+
+</div>
+
+
+<label>
+Choose Airport
+</label>
+
+<select id="airport">
+
+<option value="">
+Select Airport
+</option>
+
+<option value="Cairo International Airport">
+Cairo International Airport
+</option>
+
+<option value="Sphinx International Airport">
+Sphinx International Airport
+</option>
+
+</select>
+
+
+<div class="row">
+
+<div>
+
+<label>
+Flight Number
+</label>
+
+<input
+type="text"
+id="flight"
+placeholder="e.g. MS985">
+
+</div>
+
+<div>
+
+<label>
+Pickup Time
+</label>
+
+<input
+type="time"
+id="time"
+required>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- TOUR FIELDS -->
+
+<div id="tourFields">
+
+<label>
+Tour Date
+</label>
+
+<input
+type="date"
+id="tourDate"
+required>
+
+<label>
+Pickup Time
+</label>
+
+<input
+type="time"
+id="tourTime"
+required>
+
+</div>
+
+
+<!-- GUEST INFO -->
+
+<div class="row">
+
+<div>
+
+<label>
+Guest Name
+</label>
+
+<input
+type="text"
+id="name"
+placeholder="Full name"
+required>
+
+</div>
+
+<div>
+
+<label>
+Guest Phone
+</label>
+
+<input
+type="tel"
+id="phone"
+placeholder="Your WhatsApp number"
+required>
+
+</div>
+
+</div>
+
+
+<label>
+Number of Guests
+</label>
+
+<select
+id="guests"
+required>
+
+<option value="">
+Select Guests
+</option>
+
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+<option value="13">13</option>
+<option value="14">14</option>
+<option value="15">15</option>
+<option value="16">16</option>
+<option value="17">17</option>
+<option value="18">18</option>
+<option value="19">19</option>
+<option value="20">20</option>
+<option value="21">21</option>
+<option value="22">22</option>
+<option value="23">23</option>
+<option value="24">24</option>
+<option value="25">25</option>
+
+</select>
+
+
+<!-- PRICE -->
+
+<div class="price-box">
+
+<div class="price-title">
+TOUR PRICE
+</div>
+
+<div
+class="price-value"
+id="displayPrice">
+
+Select number of guests
+
+</div>
+
+<div class="price-note">
+Final price according to number of guests.
+</div>
+
+</div>
+
+
+<!-- BAGS -->
+
+<div id="bagsField">
+
+<label>
+Number of Bags
+</label>
+
+<select id="bags">
+
+<option value="">
+Select
+</option>
+
+<option value="0">0</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8+">8+</option>
+
+</select>
+
+</div>
+
+
+<label>
+Hotel / Pickup Location
+</label>
+
+<input
+type="text"
+id="pickup"
+placeholder="Hotel name or pickup location"
+required>
+
+
+<label>
+Additional Message
+</label>
+
+<textarea
+id="message"
+rows="4"
+placeholder="Any special requests?"></textarea>
+
+
+<button
+class="submit"
+type="submit">
+
+Continue Booking on WhatsApp
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   SUPABASE
+   ========================================================= */
+
+const SUPABASE_URL =
+"https://rzwzkndabcmiyuzzwnts.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_oQXE8doEKIJeFK7KLUm3kQ_H_gDhERh";
+
+
+/* =========================================================
+   TOUR DATA
+   ========================================================= */
+
+const TOUR_DATA = {
+
+"Cairo Giza":{
+
+name:"Cairo & Giza Tour",
+
+description:
+"Choose from our private Cairo and Giza experiences including pyramids, museums, Saqqara, Dahshur, Memphis, Old Cairo and Nile experiences.",
+
+icon:"🏛️",
+
+location:"Cairo & Giza",
+
+image:
+"https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&w=1200&q=85"
+
+},
+
+
+"Fayoum":{
+
+name:"Fayoum Day Trip",
+
+description:
+"Discover Wadi El Hitan, Wadi El Rayan and Magic Lake.",
+
+icon:"🏜️",
+
+location:"Fayoum",
+
+image:
+"https://commons.wikimedia.org/wiki/Special:Redirect/file/Wadi%20elhitan%20museum%20%2820%29.jpg"
+
+},
+
+
+"Alexandria":{
+
+name:"Alexandria Day Trip",
+
+description:
+"Visit the Catacombs, Qaitbay Citadel and Bibliotheca Alexandrina.",
+
+icon:"🌊",
+
+location:"Alexandria",
+
+image:
+"https://commons.wikimedia.org/wiki/Special:Redirect/file/Citadel%20of%20Qaitbay%2C%20Alexandria.jpg"
+
+},
+
+
+"Airport-transfer":{
+
+name:
+"Private Cairo Airport or Sphinx Airport Transfer to or from Hotel",
+description:
+"Comfortable private transfers between Cairo International Airport or Sphinx International Airport and your hotel.",
+
+icon:"✈️",
+
+location:"Cairo & Sphinx",
+
+image:
+"assets/airport.jpg"
+
+}
+
+};
+
+
+/* =========================================================
+   CAIRO OPTION DATA
+   ========================================================= */
+
+const CAIRO_OPTIONS = {
+
+"GEM-Pyramids":{
+
+name:
+"Grand Egyptian Museum & Pyramids",
+
+description:
+"Visit the Pyramids of Giza and the Grand Egyptian Museum in one unforgettable private tour.",
+
+location:"Giza & Cairo",
+
+image:
+"https://commons.wikimedia.org/wiki/Special:Redirect/file/Grand%20Egyptian%20Museum%202025.jpg"
+
+},
+
+
+"Saqqara-Memphis":{
+
+name:
+"Saqqara Pyramid & Memphis",
+
+description:
+"Explore the Step Pyramid of Djoser at Saqqara and the ancient city of Memphis.",
+
+location:"Saqqara & Memphis",
+
+image:
+"https://commons.wikimedia.org/wiki/Special:Redirect/file/Saqqara%20Pyramid%20Djoser.jpg"
+
+},
+
+
+"Saqqara-Dahshur-Memphis":{
+
+name:
+"Saqqara, Dahshur & Memphis",
+
+description:
+"Discover the Step Pyramid, the Bent Pyramid of Dahshur and the ancient city of Memphis.",
+
+location:"Saqqara, Dahshur & Memphis",
+
+image:
+"https://commons.wikimedia.org/wiki/Special:Redirect/file/Snefru%27s%20Bent%20Pyramid%20in%20Dahshur.jpg"
+
+},
+
+
+"Citadel-NMEC":{
+
+name:
+"Citadel & Old Cairo + Civilization Museum",
+
+description:
+"Discover the historic Citadel of Saladin, Old Cairo and the National Museum of Egyptian Civilization.",
+
+location:"Old Cairo",
+
+image:
+"https://commons.wikimedia.org/wiki/Special:Redirect/file/Citadel%20of%20Saladin%20in%20Cairo.jpg"
+
+},
+
+
+"Half-Giza":{
+
+name:
+"Half Day Giza Pyramids",
+
+description:
+"Enjoy a private half-day tour of the Great Pyramids of Giza and the surrounding ancient monuments.",
+
+location:"Giza",
+
+image:
+"https://commons.wikimedia.org/wiki/Special:Redirect/file/Great%20Pyramid%20%28Pyramid%20of%20Cheops%20Khufu%29%2C%20Giza%2C%20GG%2C%20EGY%20%2840936250113%29.jpg"
+
+},
+
+
+"Half-GEM":{
+
+name:
+"Half Day Grand Egyptian Museum",
+
+description:
+"Spend a half day exploring the Grand Egyptian Museum and its remarkable collection.",
+
+location:"Giza",
+
+image:
+"https://commons.wikimedia.org/wiki/Special:Redirect/file/Grand%20Egyptian%20Museum%202025.jpg"
+
+},
+
+
+"Nile-Cruise":{
+
+name:
+"Dinner Nile Cruise",
+
+description:
+"Enjoy an evening dinner experience aboard a Nile cruise with beautiful Cairo views.",
+
+location:"Cairo Nile",
+
+image:
+"https://commons.wikimedia.org/wiki/Special:Redirect/file/Nile%20Cruise.jpg"
+
+},
+
+
+"VIP-Felucca-Lunch":{
+
+name:
+"VIP Felucca with Lunch",
+
+description:
+"Enjoy a private traditional felucca sailing experience on the Nile with lunch.",
+
+location:"Nile",
+
+image:
+"https://commons.wikimedia.org/wiki/Special:Redirect/file/Felucca%20on%20the%20Nile%20%2853709847874%29.jpg"
+
+},
+
+
+"Felucca-One-Hour":{
+
+name:
+"Felucca One Hour",
+
+description:
+"Relax and enjoy a one-hour traditional felucca sailing experience on the Nile.",
+
+location:"Nile",
+
+image:
+"felucca.jpg"
+
+}
+
+};
+
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+window.tourPrices = [];
+
+window.currentTour = null;
+
+window.currentCairoOption = null;
+
+
+/* =========================================================
+   SUPABASE HELPERS
+   ========================================================= */
+
+function getTourId(row){
+
+return String(
+row.Tour_id ??
+row.tour_id ??
+""
+).trim();
+
+}
+
+
+function getTourName(row){
+
+return row.Tour_name ??
+row.tour_name ??
+getTourId(row);
+
+}
+
+
+/* =========================================================
+   GET PRICES
+   ========================================================= */
+
+async function getTourPrices(){
+
+try{
+
+const url =
+SUPABASE_URL +
+"/rest/v1/tour_prices?select=*&order=Tour_id.asc";
+
+const response =
+await fetch(
+url,
+{
+method:"GET",
+
+headers:{
+"apikey":SUPABASE_KEY,
+"Authorization":"Bearer "+SUPABASE_KEY,
+"Content-Type":"application/json"
+}
+
+}
+);
+
+
+if(!response.ok){
+
+const errorText =
+await response.text();
+
+console.error(
+"SUPABASE GET ERROR:",
+response.status,
+errorText
+);
+
+throw new Error(
+"Supabase HTTP " +
+response.status +
+" - " +
+errorText
+);
+
+}
+
+
+const data =
+await response.json();
+
+console.log(
+"Supabase prices loaded:",
+data
+);
+
+return Array.isArray(data)
+? data
+: [];
+
+}
+
+catch(error){
+
+console.error(
+"Could not load prices:",
+error
+);
+
+return [];
+
+}
+
+}
+
+
+/* =========================================================
+   LOAD TOURS
+   ========================================================= */
+
+async function loadTours(){
+
+console.log("Loading prices...");
+
+window.tourPrices =
+await getTourPrices();
+
+renderAdminPrices();
+
+console.log(
+"Total prices:",
+window.tourPrices.length
+);
+
+}
+
+
+/* =========================================================
+   FIND TOUR
+   ========================================================= */
+
+function findTour(tourId){
+
+return window.tourPrices.find(
+
+row =>
+
+getTourId(row)
+.toLowerCase()
+===
+
+String(tourId)
+.trim()
+.toLowerCase()
+
+);
+
+}
+
+
+/* =========================================================
+   PRICE BY GUESTS
+   ========================================================= */
+
+function getPriceForGuests(
+tour,
+guests
+){
+
+if(!tour){
+
+return "";
+
+}
+
+guests =
+Number(guests);
+
+
+if(guests >= 1 && guests <= 2){
+
+return tour.price_1_2 ?? "";
+
+}
+
+
+if(guests >= 3 && guests <= 14){
+
+return tour.price_3_14 ?? "";
+
+}
+
+
+if(guests >= 15 && guests <= 25){
+
+return tour.price_15_25 ?? "";
+
+}
+
+
+return "";
+
+}
+
+
+/* =========================================================
+   CURRENCY
+   ========================================================= */
+
+function getCurrency(tour){
+
+if(!tour){
+
+return "USD";
+
+}
+
+return tour.currency || "USD";
+
+}
+
+
+/* =========================================================
+   OPEN TOUR
+   ========================================================= */
+
+function openTour(tourId){
+
+if(tourId === "Cairo-Giza" || tourId === "Cairo Giza"){
+
+const options = document.getElementById("cairoOptions");
+const tours = document.getElementById("tours");
+
+if(options && tours){
+tours.style.display = "none";
+options.style.display = "block";
+options.scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+return;
+}
+
+openTourDetails(tourId);
+}
+
+
+/* =========================================================
+   OPEN TOUR IN NEW TAB
+   ========================================================= */
+
+function openTourInNewTab(tourId){
+
+const newUrl =
+window.location.pathname +
+"?tour=" +
+encodeURIComponent(tourId);
+
+window.open(
+newUrl,
+"_blank"
+);
+
+}
+
+
+/* =========================================================
+   OPEN CAIRO OPTION
+   ========================================================= */
+
+function openCairoOption(optionId){
+
+const option =
+CAIRO_OPTIONS[optionId];
+
+if(!option){
+
+console.error(
+"Cairo option not found:",
+optionId
+);
+
+return;
+
+}
+
+window.currentCairoOption =
+optionId;
+
+window.currentTour =
+optionId;
+
+
+const modal =
+document.getElementById(
+"detailModal"
+);
+
+const title =
+document.getElementById(
+"detailTitle"
+);
+
+const description =
+document.getElementById(
+"detailDescription"
+);
+
+const image =
+document.getElementById(
+"detailImage"
+);
+
+const bookingArea =
+document.getElementById(
+"bookingFormArea"
+);
+
+const formTitle =
+document.getElementById(
+"formTitle"
+);
+
+const airportFields =
+document.getElementById(
+"airportFields"
+);
+
+const tourFields =
+document.getElementById(
+"tourFields"
+);
+
+const bagsField =
+document.getElementById(
+"bagsField"
+);
+
+
+title.textContent =
+option.name;
+
+description.textContent =
+option.description;
+
+image.style.backgroundImage =
+'url("' +
+option.image +
+'")';
+
+bookingArea.style.display =
+"block";
+
+airportFields.style.display =
+"none";
+
+tourFields.style.display =
+"block";
+
+bagsField.style.display =
+"none";
+
+formTitle.textContent =
+option.name +
+" Booking";
+
+setAirportRequired(false);
+
+document.getElementById(
+"bookingForm"
+).reset();
+
+document.getElementById(
+"displayPrice"
+).textContent =
+"Select number of guests";
+
+modal.style.display =
+"block";
+
+document.body.style.overflow =
+"hidden";
+
+}
+
+
+/* =========================================================
+   OPEN NORMAL TOUR
+   ========================================================= */
+
+function openTourDetails(tourId){
+
+console.log(
+"Opening tour:",
+tourId
+);
+
+const tour =
+TOUR_DATA[tourId];
+
+if(!tour){
+
+console.error(
+"Tour not found:",
+tourId
+);
+
+return;
+
+}
+
+window.currentTour =
+tourId;
+
+window.currentCairoOption =
+null;
+
+
+const modal =
+document.getElementById(
+"detailModal"
+);
+
+const title =
+document.getElementById(
+"detailTitle"
+);
+
+const description =
+document.getElementById(
+"detailDescription"
+);
+
+const image =
+document.getElementById(
+"detailImage"
+);
+
+const bookingArea =
+document.getElementById(
+"bookingFormArea"
+);
+
+const formTitle =
+document.getElementById(
+"formTitle"
+);
+
+const airportFields =
+document.getElementById(
+"airportFields"
+);
+
+const tourFields =
+document.getElementById(
+"tourFields"
+);
+
+const bagsField =
+document.getElementById(
+"bagsField"
+);
+
+
+title.textContent =
+tour.name;
+
+description.textContent =
+tour.description;
+
+image.style.backgroundImage =
+'url("' +
+tour.image +
+'")';
+
+bookingArea.style.display =
+"block";
+
+
+if(tourId === "Airport-transfer"){
+
+airportFields.style.display =
+"block";
+
+tourFields.style.display =
+"none";
+
+bagsField.style.display =
+"block";
+
+formTitle.textContent =
+"Transfer Details";
+
+setAirportRequired(true);
+
+}else{
+
+airportFields.style.display =
+"none";
+
+tourFields.style.display =
+"block";
+
+bagsField.style.display =
+"none";
+
+formTitle.textContent =
+tour.name +
+" Booking";
+
+setAirportRequired(false);
+
+}
+
+
+document.getElementById(
+"bookingForm"
+).reset();
+
+document.getElementById(
+"displayPrice"
+).textContent =
+"Select number of guests";
+
+modal.style.display =
+"block";
+
+document.body.style.overflow =
+"hidden";
+
+}
+
+
+/* =========================================================
+   AIRPORT REQUIRED
+   ========================================================= */
+
+function setAirportRequired(required){
+
+const airport =
+document.getElementById("airport");
+
+const flight =
+document.getElementById("flight");
+
+const direction =
+document.querySelectorAll(
+'input[name="direction"]'
+);
+
+airport.required =
+required;
+
+flight.required =
+required;
+
+direction.forEach(
+radio => {
+
+radio.required =
+required &&
+radio.id === "toHotel";
+
+});
+
+}
+
+
+/* =========================================================
+   CLOSE DETAILS
+   ========================================================= */
+
+function closeDetails(){
+
+const modal =
+document.getElementById(
+"detailModal"
+);
+
+modal.style.display =
+"none";
+
+document.body.style.overflow =
+"auto";
+
+}
+
+
+/* =========================================================
+   SHOW PRICE
+   ========================================================= */
+
+function showCurrentTourPrice(){
+
+const guests =
+document.getElementById(
+"guests"
+).value;
+
+const display =
+document.getElementById(
+"displayPrice"
+);
+
+if(!guests){
+
+display.textContent =
+"Select number of guests";
+
+return;
+
+}
+
+const tour =
+findTour(
+window.currentTour
+);
+
+const price =
+getPriceForGuests(
+tour,
+guests
+);
+
+const currency =
+getCurrency(tour);
+
+
+if(
+price !== "" &&
+price !== null &&
+price !== undefined
+){
+
+display.textContent =
+price +
+" " +
+currency;
+
+}else{
+
+display.textContent =
+"Price on request";
+
+}
+
+}
+
+
+/* =========================================================
+   ADMIN
+   ========================================================= */
+
+function openAdmin(){
+
+const panel =
+document.getElementById(
+"adminPanel"
+);
+
+panel.style.display =
+"block";
+
+renderAdminPrices();
+
+document.body.style.overflow =
+"hidden";
+
+}
+
+
+function closeAdmin(){
+
+const panel =
+document.getElementById(
+"adminPanel"
+);
+
+panel.style.display =
+"none";
+
+document.body.style.overflow =
+"auto";
+
+}
+
+
+/* =========================================================
+   RENDER PRICE LIST
+   ========================================================= */
+
+function renderAdminPrices(){
+
+const container =
+document.getElementById(
+"priceList"
+);
+
+if(!container){
+
+return;
+
+}
+
+
+if(
+!window.tourPrices ||
+window.tourPrices.length === 0
+){
+
+container.innerHTML = `
+
+<div style="
+padding:20px;
+text-align:center;
+color:#75675b;
+">
+
+<strong>No prices available.</strong>
+
+<br><br>
+
+Supabase did not return any rows from
+<strong>tour_prices</strong>.
+
+<br><br>
+
+Open F12 → Console to check the Supabase response.
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+let html = `
+
+<div class="price-row">
+
+<strong>Tour</strong>
+
+<strong>1–2 Guests</strong>
+
+<strong>3–14 Guests</strong>
+
+<strong>15–25 Guests</strong>
+
+</div>
+
+`;
+
+
+window.tourPrices.forEach(
+tour => {
+
+const id =
+getTourId(tour);
+
+const name =
+getTourName(tour);
+
+
+html += `
+
+<div class="price-row">
+
+<strong>
+${name}
+</strong>
+
+<input
+type="number"
+min="0"
+step="0.01"
+value="${tour.price_1_2 ?? ""}"
+data-id="${id}"
+data-field="price_1_2">
+
+<input
+type="number"
+min="0"
+step="0.01"
+value="${tour.price_3_14 ?? ""}"
+data-id="${id}"
+data-field="price_3_14">
+
+<input
+type="number"
+min="0"
+step="0.01"
+value="${tour.price_15_25 ?? ""}"
+data-id="${id}"
+data-field="price_15_25">
+
+</div>
+
+`;
+
+});
+
+
+html += `
+
+<button
+class="price-save"
+type="button"
+onclick="savePrices()">
+
+Save Prices
+
+</button>
+
+<div
+class="saved-message"
+id="savedMessage">
+
+Prices saved successfully.
+
+</div>
+
+`;
+
+container.innerHTML =
+html;
+
+}
+
+
+/* =========================================================
+   SAVE PRICES
+   ========================================================= */
+
+async function savePrices(){
+
+const inputs =
+document.querySelectorAll(
+"#priceList input"
+);
+
+if(!inputs.length){
+
+alert(
+"No price fields found."
+);
+
+return;
+
+}
+
+const grouped = {};
+
+
+inputs.forEach(
+input => {
+
+const id =
+input.dataset.id;
+
+const field =
+input.dataset.field;
+
+if(!grouped[id]){
+
+grouped[id] = {};
+
+}
+
+grouped[id][field] =
+input.value === ""
+? null
+: Number(input.value);
+
+});
+
+
+try{
+
+for(
+const tourId in grouped
+){
+
+const response =
+await fetch(
+
+SUPABASE_URL +
+"/rest/v1/tour_prices?Tour_id=eq." +
+encodeURIComponent(tourId),
+
+{
+
+method:"PATCH",
+
+headers:{
+
+"apikey":
+SUPABASE_KEY,
+
+"Authorization":
+"Bearer " +
+SUPABASE_KEY,
+
+"Content-Type":
+"application/json",
+
+"Prefer":
+"return=minimal"
+
+},
+
+body:
+JSON.stringify(
+grouped[tourId]
+)
+
+}
+
+);
+
+
+if(!response.ok){
+
+const errorText =
+await response.text();
+
+console.error(
+"SUPABASE SAVE ERROR:",
+response.status,
+errorText
+);
+
+throw new Error(
+"Supabase HTTP " +
+response.status +
+": " +
+errorText
+);
+
+}
+
+}
+
+
+window.tourPrices =
+await getTourPrices();
+
+renderAdminPrices();
+
+
+const message =
+document.getElementById(
+"savedMessage"
+);
+
+if(message){
+
+message.style.display =
+"block";
+
+setTimeout(
+function(){
+
+message.style.display =
+"none";
+
+},
+2500
+);
+
+}
+
+}
+
+catch(error){
+
+console.error(
+"Save error:",
+error
+);
+
+alert(
+"Could not save prices.\n\n" +
+error.message
+);
+
+}
+
+}
+
+
+/* =========================================================
+   BOOKING
+   ========================================================= */
+
+document.getElementById(
+"bookingForm"
+).addEventListener(
+"submit",
+function(event){
+
+event.preventDefault();
+
+
+let tourName = "";
+let tourLocation = "";
+let tourImage = "";
+
+
+if(
+window.currentCairoOption &&
+CAIRO_OPTIONS[
+window.currentCairoOption
+]
+){
+
+const option =
+CAIRO_OPTIONS[
+window.currentCairoOption
+];
+
+tourName =
+option.name;
+
+tourLocation =
+option.location;
+
+tourImage =
+option.image;
+
+}else{
+
+const tour =
+TOUR_DATA[
+window.currentTour
+];
+
+if(!tour){
+
+alert(
+"Tour information not found."
+);
+
+return;
+
+}
+
+tourName =
+tour.name;
+
+tourLocation =
+tour.location;
+
+tourImage =
+tour.image;
+
+}
+
+
+const name =
+document.getElementById(
+"name"
+).value.trim();
+
+const phone =
+document.getElementById(
+"phone"
+).value.trim();
+
+const guests =
+document.getElementById(
+"guests"
+).value;
+
+const bags =
+document.getElementById(
+"bags"
+).value;
+
+const pickup =
+document.getElementById(
+"pickup"
+).value.trim();
+
+const message =
+document.getElementById(
+"message"
+).value.trim();
+
+
+const databaseTour =
+findTour(
+window.currentTour
+);
+
+const price =
+getPriceForGuests(
+databaseTour,
+guests
+);
+
+const currency =
+getCurrency(
+databaseTour
+);
+
+
+let whatsappMessage =
+
+"Hello Teti Tour 👋\n\n" +
+
+"I would like to book:\n\n" +
+
+"Tour: " +
+tourName +
+"\n" +
+
+"Location: " +
+tourLocation +
+"\n\n";
+
+
+if(
+window.currentTour ===
+"Airport-transfer"
+){
+
+const directionElement =
+document.querySelector(
+'input[name="direction"]:checked'
+);
+
+const direction =
+directionElement
+?
+directionElement.value
+:
+"Not selected";
+
+const airport =
+document.getElementById(
+"airport"
+).value;
+
+const flight =
+document.getElementById(
+"flight"
+).value;
+
+const time =
+document.getElementById(
+"time"
+).value;
+
+
+whatsappMessage +=
+
+"Transfer Direction: " +
+direction +
+"\n" +
+
+"Airport: " +
+airport +
+"\n" +
+
+"Flight Number: " +
+flight +
+"\n" +
+
+"Pickup Time: " +
+time +
+"\n\n";
+
+}else{
+
+const tourDate =
+document.getElementById(
+"tourDate"
+).value;
+
+const tourTime =
+document.getElementById(
+"tourTime"
+).value;
+
+
+whatsappMessage +=
+
+"Tour Date: " +
+tourDate +
+"\n" +
+
+"Pickup Time: " +
+tourTime +
+"\n\n";
+
+}
+
+
+whatsappMessage +=
+
+"Guest Name: " +
+name +
+"\n" +
+
+"Guest Phone: " +
+phone +
+"\n" +
+
+"Guests: " +
+guests +
+"\n" +
+
+"Price: " +
+
+(
+price !== ""
+?
+price +
+" " +
+currency
+:
+"Price on request"
+) +
+
+"\n";
+
+
+if(
+window.currentTour ===
+"Airport-transfer"
+){
+
+whatsappMessage +=
+
+"Bags: " +
+bags +
+"\n";
+
+}
+
+
+whatsappMessage +=
+
+"Hotel / Pickup: " +
+pickup +
+"\n\n" +
+
+"Additional Message: " +
+
+(
+message ||
+"None"
+);
+
+
+const url =
+
+"https://wa.me/201117360020?text=" +
+
+encodeURIComponent(
+whatsappMessage
+);
+
+
+window.open(
+url,
+"_blank"
+);
+
+});
+
+
+/* =========================================================
+   BUTTON EVENTS
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", function(){
+
+const guests = document.getElementById("guests");
+if(guests){
+    guests.addEventListener("change", showCurrentTourPrice);
+}
+
+const params = new URLSearchParams(window.location.search);
+const selectedTour = params.get("tour");
+
+if(selectedTour === "Cairo Giza" || selectedTour === "Cairo-Giza"){
+    const options = document.getElementById("cairoOptions");
+    const tours = document.getElementById("tours");
+    if(options && tours){
+        tours.style.display = "none";
+        options.style.display = "block";
+    }
+}else if(selectedTour && TOUR_DATA[selectedTour]){
+    openTourDetails(selectedTour);
+}
+
+loadTours();
+
+});
+
+
+/* =========================================================
+   CLOSE DETAIL MODAL
+   ========================================================= */
+
+document.getElementById(
+"detailModal"
+).addEventListener(
+"click",
+function(event){
+
+if(event.target === this){
+
+closeDetails();
+
+}
+
+});
+
+
+/* =========================================================
+   CLOSE ADMIN
+   ========================================================= */
+
+document.getElementById(
+"adminPanel"
+).addEventListener(
+"click",
+function(event){
+
+if(event.target === this){
+
+closeAdmin();
+
+}
+
+});
+
+
+/* =========================================================
+   START
+   ========================================================= */
+
+loadTours();
+
+</script>
+
+</body>
+</html>
