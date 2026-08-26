@@ -397,6 +397,21 @@ Loading...
 
 </div>
 
+<div class="reviews-section">
+
+<h2>Approved Reviews</h2>
+<span id="approvedCount" style="color:#75675b;font-size:13px;"></span>
+
+<div class="admin-box">
+
+<div id="approvedReviews">
+Loading...
+</div>
+
+</div>
+
+</div>
+
 </div>
 
 
@@ -702,6 +717,7 @@ return;
 }
 
 loadPendingReviews();
+loadApprovedReviews();
 
 }
 
@@ -728,6 +744,103 @@ loadPendingReviews();
 
 
 /* =========================================================
+   APPROVED REVIEWS
+   (already live on the site — kept here so a review can be
+   removed later if needed)
+   ========================================================= */
+
+async function loadApprovedReviews(){
+
+const container = document.getElementById("approvedReviews");
+const countLabel = document.getElementById("approvedCount");
+
+if(!container){ return; }
+
+const { data, error } =
+await supabaseClient
+.from("reviews")
+.select("*")
+.eq("approved", true)
+.order("created_at", { ascending:false });
+
+if(error){
+console.error("loadApprovedReviews error:", error);
+container.innerHTML =
+'<p style="color:#75675b;">Could not load approved reviews.</p>';
+return;
+}
+
+if(countLabel){
+countLabel.textContent =
+data.length + " live on the site";
+}
+
+if(data.length === 0){
+container.innerHTML =
+'<p style="color:#75675b;">No approved reviews yet.</p>';
+return;
+}
+
+let html = "";
+
+data.forEach(review => {
+
+const stars =
+"★".repeat(review.rating) + "☆".repeat(5 - review.rating);
+
+const safeName = escapeAdminHtml(review.name);
+const safeMessage = escapeAdminHtml(review.message);
+const date = new Date(review.created_at).toLocaleDateString();
+
+const photoHtml =
+review.photo_url
+? `<img class="pending-review-photo" src="${escapeAdminHtml(review.photo_url)}" alt="Photo submitted by ${safeName}" loading="lazy" onclick="window.open('${escapeAdminHtml(review.photo_url)}','_blank')">`
+: "";
+
+html += `
+<div class="pending-review-card">
+${photoHtml}
+<div class="pending-review-stars">${stars}</div>
+<div class="pending-review-message">${safeMessage}</div>
+<div class="pending-review-meta">
+<span class="pending-review-name">${safeName}</span>
+<span class="pending-review-date">${date}</span>
+</div>
+<div class="pending-review-actions">
+<button class="reject-btn" type="button" onclick="deleteApprovedReview(${review.id})">Delete</button>
+</div>
+</div>
+`;
+
+});
+
+container.innerHTML = html;
+
+}
+
+async function deleteApprovedReview(id){
+
+if(!confirm("Remove this review from the live site? This cannot be undone.")){
+return;
+}
+
+const { error } =
+await supabaseClient
+.from("reviews")
+.delete()
+.eq("id", id);
+
+if(error){
+alert("Could not delete review.\n\n" + error.message);
+return;
+}
+
+loadApprovedReviews();
+
+}
+
+
+/* =========================================================
    AUTH — SHOW ADMIN PANEL ONLY WHEN SIGNED IN
    ========================================================= */
 
@@ -742,6 +855,7 @@ window.tourPrices = await getTourPrices();
 renderAdminPrices();
 
 loadPendingReviews();
+loadApprovedReviews();
 
 }
 
