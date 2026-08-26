@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+
+<title>Teti Tour | Admin</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,sans-serif;
+background:#f4eee4;
+color:#33251b;
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+
+/* =========================================================
+   LOGIN CARD
+   ========================================================= */
+
+.login-box{
+background:white;
+max-width:380px;
+width:100%;
+padding:36px 30px;
+border-radius:12px;
+box-shadow:0 10px 30px rgba(0,0,0,.09);
+}
+
+.login-box h1{
+font-size:22px;
+color:#33251b;
+margin-bottom:6px;
+text-align:center;
+}
+
+.login-box p.subtitle{
+color:#75675b;
+font-size:14px;
+text-align:center;
+margin-bottom:26px;
+}
+
+label{
+display:block;
+color:#33251b;
+font-weight:bold;
+font-size:14px;
+margin-bottom:7px;
+}
+
+input{
+width:100%;
+padding:13px;
+border:1px solid #d5c8b8;
+border-radius:5px;
+background:white;
+font-size:15px;
+outline:none;
+margin-bottom:18px;
+}
+
+.login-submit{
+width:100%;
+padding:14px;
+border:none;
+border-radius:5px;
+background:#2a1d15;
+color:white;
+font-size:15px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.login-submit:hover{
+background:#b38b52;
+}
+
+.login-submit:disabled{
+opacity:.6;
+cursor:default;
+}
+
+.login-error{
+margin-top:14px;
+text-align:center;
+color:#a83b3b;
+font-size:13px;
+font-weight:bold;
+display:none;
+}
+
+.back-link{
+display:block;
+text-align:center;
+margin-top:20px;
+color:#8b6a42;
+font-size:13px;
+text-decoration:none;
+}
+
+.back-link:hover{
+color:#b38b52;
+}
+
+/* =========================================================
+   ADMIN PANEL (same visual language as the main site)
+   ========================================================= */
+
+.admin-wrap{
+display:none;
+width:100%;
+max-width:900px;
+}
+
+.admin-topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.admin-topbar h1{
+font-size:24px;
+color:#33251b;
+}
+
+.admin-topbar span{
+color:#75675b;
+font-size:13px;
+}
+
+.logout-button{
+background:#2a1d15;
+color:white;
+border:none;
+padding:10px 16px;
+border-radius:5px;
+font-size:13px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.logout-button:hover{
+background:#b38b52;
+}
+
+.admin-box{
+background:#f4eee4;
+padding:30px;
+border-radius:12px;
+}
+
+.admin-box p{
+color:#75675b;
+margin-bottom:20px;
+}
+
+.price-list{
+background:white;
+padding:25px;
+border-radius:10px;
+box-shadow:0 10px 30px rgba(0,0,0,.12);
+}
+
+.price-row{
+display:grid;
+grid-template-columns:1.5fr 1fr 1fr 1fr;
+gap:10px;
+align-items:center;
+padding:14px 0;
+border-bottom:1px solid #e5ddd2;
+}
+
+.price-row input{
+width:100%;
+padding:11px;
+border:1px solid #d5c8b8;
+border-radius:5px;
+font-size:14px;
+margin-bottom:0;
+}
+
+.price-save{
+margin-top:20px;
+width:100%;
+padding:14px;
+border:none;
+border-radius:5px;
+background:#2a1d15;
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+.price-save:hover{
+background:#b38b52;
+}
+
+.saved-message{
+margin-top:12px;
+text-align:center;
+color:#52733f;
+font-weight:bold;
+display:none;
+}
+
+@media(max-width:600px){
+.price-row{
+grid-template-columns:1fr;
+}
+}
+
+/* =========================================================
+   PENDING REVIEWS
+   ========================================================= */
+
+.reviews-section{
+margin-top:36px;
+}
+
+.reviews-section h2{
+font-size:22px;
+color:#33251b;
+margin-bottom:6px;
+}
+
+.reviews-section .admin-box{
+margin-top:14px;
+}
+
+.pending-review-card{
+background:white;
+border-radius:10px;
+padding:20px;
+margin-bottom:14px;
+box-shadow:0 6px 18px rgba(0,0,0,.06);
+}
+
+.pending-review-stars{
+color:#d6b77a;
+font-size:16px;
+margin-bottom:8px;
+}
+
+.pending-review-message{
+color:#5a4c40;
+font-size:14px;
+line-height:1.6;
+margin-bottom:8px;
+}
+
+.pending-review-meta{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:14px;
+}
+
+.pending-review-name{
+font-weight:bold;
+color:#2a1d15;
+font-size:14px;
+}
+
+.pending-review-date{
+color:#a4826a;
+font-size:12px;
+}
+
+.pending-review-actions{
+display:flex;
+gap:10px;
+}
+
+.pending-review-actions button{
+flex:1;
+padding:10px;
+border:none;
+border-radius:5px;
+font-weight:bold;
+font-size:13px;
+cursor:pointer;
+}
+
+.approve-btn{
+background:#52733f;
+color:white;
+}
+
+.approve-btn:hover{
+background:#3f5930;
+}
+
+.reject-btn{
+background:#a83b3b;
+color:white;
+}
+
+.reject-btn:hover{
+background:#8a2f2f;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     LOGIN
+     ========================================================= -->
+
+<div class="login-box" id="loginBox">
+
+<h1>Teti Tour Admin</h1>
+<p class="subtitle">Sign in to manage tour prices.</p>
+
+<form id="loginForm">
+
+<label for="email">Email</label>
+<input type="email" id="email" required autocomplete="username">
+
+<label for="password">Password</label>
+<input type="password" id="password" required autocomplete="current-password">
+
+<button class="login-submit" type="submit" id="loginSubmit">Sign In</button>
+
+<div class="login-error" id="loginError"></div>
+
+</form>
+
+<a class="back-link" href="index.html">← Back to site</a>
+
+</div>
+
+<!-- =========================================================
+     ADMIN PANEL (shown only after successful sign-in)
+     ========================================================= -->
+
+<div class="admin-wrap" id="adminWrap">
+
+<div class="admin-topbar">
+
+<div>
+<h1>Price List</h1>
+<span id="signedInAs"></span>
+</div>
+
+<button class="logout-button" type="button" onclick="signOut()">Sign Out</button>
+
+</div>
+
+<div class="admin-box">
+
+<p>Manage your tour prices. Changes save directly to Supabase.</p>
+
+<div class="price-list" id="priceList">
+Loading prices...
+</div>
+
+</div>
+
+<div class="reviews-section">
+
+<h2>Pending Reviews</h2>
+<span id="pendingCount" style="color:#75675b;font-size:13px;"></span>
+
+<div class="admin-box">
+
+<div id="pendingReviews">
+Loading...
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+
+/* =========================================================
+   SUPABASE
+   (same URL / publishable key already used on index.html —
+   unchanged)
+   ========================================================= */
+
+const SUPABASE_URL =
+"https://rzwzkndabcmiyuzzwnts.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_oQXE8doEKIJeFK7KLUm3kQ_H_gDhERh";
+
+const supabaseClient =
+supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+window.tourPrices = [];
+
+
+/* =========================================================
+   TOUR ID / NAME HELPERS
+   (same logic as index.html)
+   ========================================================= */
+
+function getTourId(row){
+return String(row.Tour_id ?? row.tour_id ?? "").trim();
+}
+
+function getTourName(row){
+return row.Tour_name ?? row.tour_name ?? getTourId(row);
+}
+
+
+/* =========================================================
+   GET PRICES
+   ========================================================= */
+
+async function getTourPrices(){
+
+try{
+
+const url =
+SUPABASE_URL +
+"/rest/v1/tour_prices?select=*&order=Tour_id.asc";
+
+const response =
+await fetch(url,{
+method:"GET",
+headers:{
+"apikey":SUPABASE_KEY,
+"Authorization":"Bearer "+SUPABASE_KEY,
+"Content-Type":"application/json"
+}
+});
+
+if(!response.ok){
+const errorText = await response.text();
+console.error("SUPABASE GET ERROR:", response.status, errorText);
+throw new Error("Supabase HTTP " + response.status + " - " + errorText);
+}
+
+const data = await response.json();
+console.log("Supabase prices loaded:", data);
+
+return Array.isArray(data) ? data : [];
+
+}catch(error){
+console.error("getTourPrices error:", error);
+return [];
+}
+
+}
+
+
+/* =========================================================
+   RENDER PRICE LIST
+   (same markup / logic as index.html admin panel)
+   ========================================================= */
+
+function renderAdminPrices(){
+
+const container = document.getElementById("priceList");
+if(!container){ return; }
+
+if(!window.tourPrices || window.tourPrices.length === 0){
+container.innerHTML = `
+<div style="padding:20px;text-align:center;color:#75675b;">
+<strong>No prices available.</strong>
+<br><br>
+Supabase did not return any rows from <strong>tour_prices</strong>.
+<br><br>
+Open F12 → Console to check the Supabase response.
+</div>
+`;
+return;
+}
+
+let html = `
+<div class="price-row">
+<strong>Tour</strong>
+<strong>1–2 Guests</strong>
+<strong>3–14 Guests</strong>
+<strong>15–25 Guests</strong>
+</div>
+`;
+
+window.tourPrices.forEach(tour => {
+
+const id = getTourId(tour);
+const name = getTourName(tour);
+
+html += `
+<div class="price-row">
+<strong>${name}</strong>
+<input type="number" min="0" step="0.01" value="${tour.price_1_2 ?? ""}" data-id="${id}" data-field="price_1_2">
+<input type="number" min="0" step="0.01" value="${tour.price_3_14 ?? ""}" data-id="${id}" data-field="price_3_14">
+<input type="number" min="0" step="0.01" value="${tour.price_15_25 ?? ""}" data-id="${id}" data-field="price_15_25">
+</div>
+`;
+
+});
+
+html += `
+<button class="price-save" type="button" onclick="savePrices()">Save Prices</button>
+<div class="saved-message" id="savedMessage">Prices saved successfully.</div>
+`;
+
+container.innerHTML = html;
+
+}
+
+
+/* =========================================================
+   SAVE PRICES
+   (same logic as index.html admin panel)
+   ========================================================= */
+
+async function savePrices(){
+
+const inputs = document.querySelectorAll("#priceList input");
+
+if(!inputs.length){
+alert("No price fields found.");
+return;
+}
+
+const grouped = {};
+
+inputs.forEach(input => {
+const id = input.dataset.id;
+const field = input.dataset.field;
+if(!grouped[id]){ grouped[id] = {}; }
+grouped[id][field] = input.value === "" ? null : Number(input.value);
+});
+
+try{
+
+for(const tourId in grouped){
+
+const response = await fetch(
+SUPABASE_URL + "/rest/v1/tour_prices?Tour_id=eq." + encodeURIComponent(tourId),
+{
+method:"PATCH",
+headers:{
+"apikey":SUPABASE_KEY,
+"Authorization":"Bearer "+SUPABASE_KEY,
+"Content-Type":"application/json",
+"Prefer":"return=minimal"
+},
+body: JSON.stringify(grouped[tourId])
+}
+);
+
+if(!response.ok){
+const errorText = await response.text();
+console.error("SUPABASE SAVE ERROR:", response.status, errorText);
+throw new Error("Supabase HTTP " + response.status + ": " + errorText);
+}
+
+}
+
+window.tourPrices = await getTourPrices();
+renderAdminPrices();
+
+const message = document.getElementById("savedMessage");
+if(message){
+message.style.display = "block";
+setTimeout(function(){ message.style.display = "none"; }, 2500);
+}
+
+}catch(error){
+console.error("Save error:", error);
+alert("Could not save prices.\n\n" + error.message);
+}
+
+}
+
+
+/* =========================================================
+   PENDING REVIEWS
+   (uses supabaseClient — automatically sends the signed-in
+   admin's session token, matching the "authenticated" RLS
+   policies on the reviews table)
+   ========================================================= */
+
+async function loadPendingReviews(){
+
+const container = document.getElementById("pendingReviews");
+const countLabel = document.getElementById("pendingCount");
+
+if(!container){ return; }
+
+const { data, error } =
+await supabaseClient
+.from("reviews")
+.select("*")
+.eq("approved", false)
+.order("created_at", { ascending:false });
+
+if(error){
+console.error("loadPendingReviews error:", error);
+container.innerHTML =
+'<p style="color:#75675b;">Could not load pending reviews.</p>';
+return;
+}
+
+if(countLabel){
+countLabel.textContent =
+data.length + " waiting for review";
+}
+
+if(data.length === 0){
+container.innerHTML =
+'<p style="color:#75675b;">No pending reviews right now.</p>';
+return;
+}
+
+let html = "";
+
+data.forEach(review => {
+
+const stars =
+"★".repeat(review.rating) + "☆".repeat(5 - review.rating);
+
+const safeName = escapeAdminHtml(review.name);
+const safeMessage = escapeAdminHtml(review.message);
+const date = new Date(review.created_at).toLocaleDateString();
+
+html += `
+<div class="pending-review-card">
+<div class="pending-review-stars">${stars}</div>
+<div class="pending-review-message">${safeMessage}</div>
+<div class="pending-review-meta">
+<span class="pending-review-name">${safeName}</span>
+<span class="pending-review-date">${date}</span>
+</div>
+<div class="pending-review-actions">
+<button class="approve-btn" type="button" onclick="approveReview(${review.id})">Approve</button>
+<button class="reject-btn" type="button" onclick="rejectReview(${review.id})">Reject</button>
+</div>
+</div>
+`;
+
+});
+
+container.innerHTML = html;
+
+}
+
+function escapeAdminHtml(text){
+const div = document.createElement("div");
+div.textContent = text ?? "";
+return div.innerHTML;
+}
+
+async function approveReview(id){
+
+const { error } =
+await supabaseClient
+.from("reviews")
+.update({ approved:true })
+.eq("id", id);
+
+if(error){
+alert("Could not approve review.\n\n" + error.message);
+return;
+}
+
+loadPendingReviews();
+
+}
+
+async function rejectReview(id){
+
+if(!confirm("Delete this review? This cannot be undone.")){
+return;
+}
+
+const { error } =
+await supabaseClient
+.from("reviews")
+.delete()
+.eq("id", id);
+
+if(error){
+alert("Could not delete review.\n\n" + error.message);
+return;
+}
+
+loadPendingReviews();
+
+}
+
+
+/* =========================================================
+   AUTH — SHOW ADMIN PANEL ONLY WHEN SIGNED IN
+   ========================================================= */
+
+async function showAdminPanel(session){
+
+document.getElementById("loginBox").style.display = "none";
+document.getElementById("adminWrap").style.display = "block";
+document.getElementById("signedInAs").textContent =
+"Signed in as " + session.user.email;
+
+window.tourPrices = await getTourPrices();
+renderAdminPrices();
+
+loadPendingReviews();
+
+}
+
+function showLoginBox(){
+document.getElementById("loginBox").style.display = "block";
+document.getElementById("adminWrap").style.display = "none";
+}
+
+async function signOut(){
+await supabaseClient.auth.signOut();
+showLoginBox();
+}
+
+
+document.getElementById("loginForm").addEventListener("submit", async function(event){
+
+event.preventDefault();
+
+const email = document.getElementById("email").value.trim();
+const password = document.getElementById("password").value;
+const submitButton = document.getElementById("loginSubmit");
+const errorBox = document.getElementById("loginError");
+
+errorBox.style.display = "none";
+submitButton.disabled = true;
+submitButton.textContent = "Signing In...";
+
+const { data, error } =
+await supabaseClient.auth.signInWithPassword({ email, password });
+
+submitButton.disabled = false;
+submitButton.textContent = "Sign In";
+
+if(error){
+errorBox.textContent = "Incorrect email or password.";
+errorBox.style.display = "block";
+return;
+}
+
+await showAdminPanel(data.session);
+
+});
+
+
+/* =========================================================
+   ON LOAD — check for an existing session
+   ========================================================= */
+
+(async function init(){
+
+const { data } = await supabaseClient.auth.getSession();
+
+if(data.session){
+await showAdminPanel(data.session);
+}else{
+showLoginBox();
+}
+
+})();
+
+</script>
+
+</body>
+</html>

@@ -85,14 +85,72 @@ background:#17100c;
 }
 
 .hero-video{
-position:absolute;
-inset:0;
-width:100%;
-height:100%;
-object-fit:cover;
-z-index:0;
+
+    position:absolute;
+
+    inset:0;
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    z-index:0;
+
 }
 
+.hero-video-wrap{
+
+    position:absolute;
+
+    inset:0;
+
+    z-index:0;
+
+}
+
+.sound-button{
+
+    position:absolute;
+
+    right:25px;
+
+    bottom:25px;
+
+    z-index:5;
+
+    width:48px;
+
+    height:48px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:rgba(0,0,0,.55);
+
+    color:white;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    backdrop-filter:blur(5px);
+
+}
+
+.sound-button:hover{
+
+    background:rgba(0,0,0,.75);
+
+}
 .hero-slideshow{
 position:absolute;
 inset:0;
@@ -121,7 +179,7 @@ animation-delay:5s;
 }
 
 .slide-3{
-background-image:url("alexandria-citadel.jpg");
+background-image:url("assets/alexandria-citadel.jpg");
 animation-delay:10s;
 }
 
@@ -195,6 +253,76 @@ margin-bottom:38px;
 display:flex;
 gap:15px;
 flex-wrap:wrap;
+align-items:center;
+}
+
+/* --- compact social icons next to the hero Contact Us button --- */
+
+.hero-social{
+display:flex;
+gap:10px;
+}
+
+.hero-social a{
+width:44px;
+height:44px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+text-decoration:none;
+font-size:19px;
+color:white;
+}
+
+.hero-social a svg{
+width:22px;
+height:22px;
+fill:white;
+}
+
+.hero-social .whatsapp{
+background:#25D366;
+}
+
+.hero-social .whatsapp:hover{
+background:#1ebe5a;
+}
+
+.hero-social .facebook{
+background:#1877F2;
+}
+
+.hero-social .facebook:hover{
+background:#1465d1;
+}
+
+.hero-social .instagram{
+background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
+}
+
+.hero-social .instagram:hover{
+opacity:.88;
+}
+
+.hero-social-wrap{
+display:flex;
+flex-direction:column;
+}
+
+.hero-email{
+display:block;
+margin-top:10px;
+color:rgba(255,255,255,.9);
+text-decoration:none;
+font-size:14px;
+font-weight:500;
+letter-spacing:.3px;
+}
+
+.hero-email:hover{
+color:#d6b77a;
+text-decoration:underline;
 }
 
 .main-button,
@@ -291,7 +419,7 @@ url("assets/airport.jpg");
 .cairo-image{
     background-image:
     linear-gradient(rgba(0,0,0,.10),rgba(0,0,0,.10)),
-    url("great-pyramid.jpg");
+    url("assets/great-pyramid.jpg");
 }
 
 .fayoum-image{
@@ -408,8 +536,8 @@ linear-gradient(
 rgba(0,0,0,.05),
 rgba(0,0,0,.05)
 ),
-url("https://commons.wikimedia.org/wiki/Special:Redirect/file/Grand%20Egyptian%20Museum%202025.jpg"),
-url("https://commons.wikimedia.org/wiki/Special:Redirect/file/Great%20Pyramid%20%28Pyramid%20of%20Cheops%20Khufu%29%2C%20Giza%2C%20GG%2C%20EGY%20%2840936250113%29.jpg");
+url("assets/gem-gallery.jpg"),
+url("assets/great-pyramid.jpg");
 
 background-size:
 50% 100%,
@@ -430,7 +558,7 @@ no-repeat;
 .image-saqqara{
 background-image:
 linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.05)),
-url("https://commons.wikimedia.org/wiki/Special:Redirect/file/Saqqara%20Pyramid%20Djoser.jpg");
+url("assets/saqqara-pyramid.jpg");
 
 background-size:cover;
 background-position:center 42%;
@@ -440,7 +568,7 @@ background-repeat:no-repeat;
 .image-dahshur{
 background-image:
 linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.05)),
-url("https://commons.wikimedia.org/wiki/Special:Redirect/file/Snefru%27s%20Bent%20Pyramid%20in%20Dahshur.jpg");
+url("assets/bent-pyramid.jpg");
 
 background-size:cover;
 background-position:center 45%;
@@ -450,7 +578,7 @@ background-repeat:no-repeat;
 .image-citadel{
 background-image:
 linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.05)),
-url("https://commons.wikimedia.org/wiki/Special:Redirect/file/Citadel%20of%20Saladin%20in%20Cairo.jpg");
+url("assets/cairo-mosque.jpg");
 
 background-size:cover;
 background-position:center 45%;
@@ -460,7 +588,7 @@ background-repeat:no-repeat;
 .image-giza{
 background-image:
 linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.05)),
-url("https://commons.wikimedia.org/wiki/Special:Redirect/file/Great%20Pyramid%20%28Pyramid%20of%20Cheops%20Khufu%29%2C%20Giza%2C%20GG%2C%20EGY%20%2840936250113%29.jpg");
+url("assets/great-pyramid.jpg");
 
 background-size:cover;
 background-position:center 48%;
@@ -470,7 +598,7 @@ background-repeat:no-repeat;
 .image-gem-half{
 background-image:
 linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.05)),
-url("https://commons.wikimedia.org/wiki/Special:Redirect/file/Grand%20Egyptian%20Museum%202025.jpg");
+url("assets/gem-gallery.jpg");
 
 background-size:cover;
 background-position:center;
@@ -480,7 +608,7 @@ background-repeat:no-repeat;
 .image-nile-cruise{
 background-image:
 linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.05)),
-url("https://commons.wikimedia.org/wiki/Special:Redirect/file/Nile%20Cruise.jpg");
+url("assets/nile-boat.jpg");
 
 background-size:cover;
 background-position:center;
@@ -495,7 +623,7 @@ background-repeat:no-repeat;
 .image-felucca-vip{
 background-image:
 linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.05)),
-url("assets/felucca.jpg");
+url("assets/felucca-vip.jpg");
 
 background-size:cover;
 background-position:center 45%;
@@ -605,6 +733,365 @@ margin-bottom:20px;
 color:#75675b;
 font-size:18px;
 margin-bottom:30px;
+}
+
+/* =========================================================
+   SOCIAL BUTTONS
+   ========================================================= */
+
+.social-buttons{
+display:flex;
+justify-content:center;
+gap:14px;
+flex-wrap:wrap;
+}
+
+.social-button{
+display:inline-flex;
+align-items:center;
+gap:8px;
+padding:12px 22px;
+border-radius:6px;
+text-decoration:none;
+font-size:14px;
+font-weight:bold;
+color:white;
+}
+
+.social-button .icon{
+font-size:17px;
+}
+
+.social-button.whatsapp{
+background:#25D366;
+}
+
+.social-button.whatsapp:hover{
+background:#1ebe5a;
+}
+
+.social-button.facebook{
+background:#1877F2;
+}
+
+.social-button.facebook:hover{
+background:#1465d1;
+}
+
+.social-button.instagram{
+background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
+}
+
+.social-button.instagram:hover{
+opacity:.88;
+}
+
+.footer-social{
+display:flex;
+justify-content:center;
+gap:16px;
+margin-top:20px;
+}
+
+.footer-social a{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+width:40px;
+height:40px;
+border-radius:50%;
+background:rgba(255,255,255,.08);
+color:white;
+text-decoration:none;
+font-size:17px;
+}
+
+.footer-social a:hover{
+background:#b38b52;
+}
+
+
+/* =========================================================
+   GUEST REVIEWS
+   ========================================================= */
+
+.reviews{
+padding:100px 20px;
+background:#f4eee4;
+text-align:center;
+}
+
+.reviews h2{
+font-size:42px;
+margin-bottom:20px;
+}
+
+.reviews>p.section-intro{
+color:#75675b;
+font-size:18px;
+margin-bottom:50px;
+max-width:600px;
+margin-left:auto;
+margin-right:auto;
+}
+
+/* --- screenshot reviews --- */
+
+.review-screens{
+max-width:1100px;
+max-height:640px;
+margin:0 auto 60px;
+column-count:5;
+column-gap:14px;
+overflow-y:auto;
+overflow-x:hidden;
+padding:6px 20px 20px;
+}
+
+.review-screens::-webkit-scrollbar{
+width:8px;
+}
+
+.review-screens::-webkit-scrollbar-thumb{
+background:#d5c8b8;
+border-radius:10px;
+}
+
+.review-screens img{
+width:100%;
+display:block;
+border-radius:10px;
+box-shadow:0 10px 25px rgba(0,0,0,.10);
+margin-bottom:14px;
+break-inside:avoid;
+cursor:pointer;
+}
+
+/* --- lightbox (full screenshot viewer) --- */
+
+.lightbox{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(15,10,7,.92);
+z-index:2000;
+align-items:center;
+justify-content:center;
+padding:30px;
+}
+
+.lightbox.open{
+display:flex;
+}
+
+.lightbox img{
+max-width:90vw;
+max-height:85vh;
+border-radius:8px;
+box-shadow:0 20px 50px rgba(0,0,0,.4);
+}
+
+.lightbox-close{
+position:absolute;
+top:20px;
+right:30px;
+color:white;
+font-size:36px;
+background:none;
+border:none;
+cursor:pointer;
+line-height:1;
+}
+
+.lightbox-prev,
+.lightbox-next{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+background:rgba(255,255,255,.12);
+color:white;
+border:none;
+font-size:30px;
+width:50px;
+height:50px;
+border-radius:50%;
+cursor:pointer;
+}
+
+.lightbox-prev{
+left:20px;
+}
+
+.lightbox-next{
+right:20px;
+}
+
+.lightbox-prev:hover,
+.lightbox-next:hover,
+.lightbox-close:hover{
+background:rgba(255,255,255,.25);
+}
+
+/* --- live approved reviews (loaded from Supabase) --- */
+
+.live-reviews{
+max-width:1000px;
+margin:0 auto 60px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+text-align:left;
+}
+
+.review-card{
+background:white;
+padding:24px;
+border-radius:10px;
+box-shadow:0 10px 25px rgba(0,0,0,.06);
+}
+
+.review-stars{
+color:#d6b77a;
+font-size:16px;
+margin-bottom:10px;
+}
+
+.review-message{
+color:#5a4c40;
+font-size:14px;
+line-height:1.6;
+margin-bottom:12px;
+}
+
+.review-name{
+font-weight:bold;
+color:#2a1d15;
+font-size:14px;
+}
+
+.review-tour{
+display:inline-block;
+background:#e5ddd2;
+color:#8b6a42;
+font-size:11px;
+font-weight:bold;
+letter-spacing:.5px;
+padding:4px 9px;
+border-radius:4px;
+margin-bottom:8px;
+}
+
+.review-empty{
+grid-column:1/-1;
+color:#a4826a;
+font-size:14px;
+}
+
+/* --- write a review form --- */
+
+.review-form-wrap{
+max-width:520px;
+margin:0 auto;
+background:white;
+padding:36px 30px;
+border-radius:12px;
+box-shadow:0 15px 40px rgba(0,0,0,.10);
+text-align:left;
+}
+
+.review-form-wrap h3{
+text-align:center;
+font-size:22px;
+margin-bottom:22px;
+color:#2a1d15;
+}
+
+.review-form-wrap label{
+display:block;
+font-weight:bold;
+font-size:14px;
+margin-bottom:7px;
+color:#33251b;
+}
+
+.review-form-wrap input,
+.review-form-wrap select,
+.review-form-wrap textarea{
+width:100%;
+padding:12px;
+border:1px solid #d5c8b8;
+border-radius:5px;
+font-size:14px;
+margin-bottom:18px;
+font-family:inherit;
+resize:vertical;
+background:white;
+}
+
+.star-picker{
+display:flex;
+gap:6px;
+font-size:26px;
+margin-bottom:18px;
+cursor:pointer;
+}
+
+.star-picker span{
+color:#d5c8b8;
+}
+
+.star-picker span.selected{
+color:#d6b77a;
+}
+
+.review-submit{
+width:100%;
+padding:14px;
+border:none;
+border-radius:5px;
+background:#2a1d15;
+color:white;
+font-weight:bold;
+font-size:15px;
+cursor:pointer;
+}
+
+.review-submit:hover{
+background:#b38b52;
+}
+
+.review-submit:disabled{
+opacity:.6;
+cursor:default;
+}
+
+.review-form-message{
+margin-top:14px;
+text-align:center;
+font-size:14px;
+font-weight:bold;
+display:none;
+}
+
+.review-form-message.success{
+color:#52733f;
+}
+
+.review-form-message.error{
+color:#a83b3b;
+}
+
+@media(max-width:800px){
+
+.review-screens{
+column-count:2;
+max-height:480px;
+}
+
+.live-reviews{
+grid-template-columns:1fr;
+}
+
 }
 
 
@@ -768,10 +1255,82 @@ box-shadow:0 25px 70px rgba(0,0,0,.5);
 }
 
 .detail-image{
-height:280px;
-background-size:cover;
+height:420px;
+background-color:#17100c;
+background-size:contain;
 background-position:center;
 background-repeat:no-repeat;
+transition:background-image .2s ease;
+position:relative;
+}
+
+.gallery-nav{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+width:42px;
+height:42px;
+border:none;
+border-radius:50%;
+background:rgba(0,0,0,.5);
+color:white;
+font-size:26px;
+line-height:1;
+cursor:pointer;
+display:none;
+align-items:center;
+justify-content:center;
+backdrop-filter:blur(4px);
+z-index:3;
+}
+
+.gallery-nav.active{
+display:flex;
+}
+
+.gallery-nav:hover{
+background:rgba(0,0,0,.75);
+}
+
+.gallery-nav-prev{
+left:12px;
+}
+
+.gallery-nav-next{
+right:12px;
+}
+
+.detail-gallery-thumbs{
+display:none;
+gap:8px;
+padding:10px 10px 0;
+overflow-x:auto;
+background:#e5ddd2;
+}
+
+.detail-gallery-thumbs.active{
+display:flex;
+}
+
+.detail-gallery-thumbs img{
+width:70px;
+height:52px;
+object-fit:cover;
+border-radius:6px;
+cursor:pointer;
+flex-shrink:0;
+opacity:.6;
+border:2px solid transparent;
+transition:opacity .15s ease, border-color .15s ease;
+}
+
+.detail-gallery-thumbs img:hover{
+opacity:.9;
+}
+
+.detail-gallery-thumbs img.active-thumb{
+opacity:1;
+border-color:#b38b52;
 }
 
 .detail-content{
@@ -1049,25 +1608,40 @@ height:230px;
 <a href="#home">Home</a>
 <a href="#tours">Tours</a>
 <a href="#about">About Us</a>
-<a href="#contact">Contact</a>
 <h1>
 </nav>
 </header>
 
 <section class="hero" id="home">
 
-    <div class="hero-slideshow">
+    <div class="hero-video-wrap">
 
-        <div class="hero-slide slide-1"></div>
-        <div class="hero-slide slide-2"></div>
-        <div class="hero-slide slide-3"></div>
-        <div class="hero-slide slide-4"></div>
-        <div class="hero-slide slide-5"></div>
-        <div class="hero-slide slide-6"></div>
+    <video
+        class="hero-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        poster="assets/great-pyramid.jpg">
 
-    </div>
+        <source
+            src="Teti_Tour_Hero_Video_NEW.mp4"
+            type="video/mp4">
 
+    </video>
+
+</div>
     <div class="hero-overlay"></div>
+
+    <button
+        class="sound-button"
+        id="soundButton"
+        type="button"
+        aria-label="Turn sound on">
+
+        🔇
+
+    </button>
 
     <div class="hero-content">
 
@@ -1091,9 +1665,46 @@ experiences across Egypt.
 Explore Our Tours
 </a>
 
-<a href="#contact" class="second-button">
+<span class="second-button" style="cursor:default;">
 Contact Us
+</span>
+
+<div class="hero-social-wrap">
+
+<div class="hero-social">
+
+<a
+class="whatsapp"
+href="https://wa.me/201117360020"
+target="_blank"
+rel="noopener"
+aria-label="WhatsApp">
+<svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m0 1.67c2.2 0 4.27.86 5.83 2.42a8.2 8.2 0 0 1 2.41 5.82c0 4.55-3.7 8.25-8.25 8.25a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.18 8.18 0 0 1-1.26-4.38c0-4.55 3.7-8.25 8.25-8.25M8.53 6.7c-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.03s.87 2.35.99 2.52c.12.16 1.7 2.72 4.2 3.71 2.07.82 2.49.66 2.94.62.45-.04 1.45-.59 1.65-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.46-.28-.24-.12-1.45-.72-1.68-.8-.22-.08-.39-.12-.55.12-.16.24-.63.8-.77.96-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.44-1.35-1.68-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.55-1.36-.76-1.86-.2-.48-.4-.42-.55-.42h-.47Z"/></svg>
 </a>
+
+<a
+class="facebook"
+href="#"
+target="_blank"
+rel="noopener"
+aria-label="Facebook">
+<svg viewBox="0 0 24 24"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.9h2.54V9.85c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.44 2.9h-2.34V22c4.78-.79 8.44-4.94 8.44-9.94Z"/></svg>
+</a>
+
+<a
+class="instagram"
+href="#"
+target="_blank"
+rel="noopener"
+aria-label="Instagram">
+<svg viewBox="0 0 24 24"><path d="M12 2c2.72 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47.66.26 1.22.6 1.77 1.15.5.5.9 1.11 1.15 1.77.25.64.42 1.37.47 2.43.05 1.06.06 1.4.06 4.12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 0 1-1.15 1.77 4.9 4.9 0 0 1-1.77 1.15c-.64.25-1.37.42-2.43.47-1.06.05-1.4.06-4.12.06s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 0 1-1.77-1.15 4.9 4.9 0 0 1-1.15-1.77c-.25-.64-.42-1.37-.47-2.43C2.01 15.06 2 14.72 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43.26-.66.6-1.22 1.15-1.77A4.9 4.9 0 0 1 5.45 2.53c.64-.25 1.37-.42 2.43-.47C8.94 2.01 9.28 2 12 2m0 1.8c-2.67 0-2.99.01-4.04.06-.87.04-1.34.18-1.65.3-.42.16-.72.36-1.03.67-.31.31-.51.61-.67 1.03-.12.31-.26.78-.3 1.65C4.26 8.75 4.24 9.07 4.24 12s.01 3.25.06 4.3c.04.87.18 1.34.3 1.65.16.42.36.72.67 1.03.31.31.61.51 1.03.67.31.12.78.26 1.65.3 1.05.05 1.37.06 4.05.06s3-.01 4.05-.06c.87-.04 1.34-.18 1.65-.3.42-.16.72-.36 1.03-.67.31-.31.51-.61.67-1.03.12-.31.26-.78.3-1.65.05-1.05.06-1.37.06-4.3s-.01-3.25-.06-4.3c-.04-.87-.18-1.34-.3-1.65a2.77 2.77 0 0 0-.67-1.03 2.77 2.77 0 0 0-1.03-.67c-.31-.12-.78-.26-1.65-.3C14.99 3.81 14.67 3.8 12 3.8m0 3.05a5.15 5.15 0 1 1 0 10.3 5.15 5.15 0 0 1 0-10.3m0 1.8a3.35 3.35 0 1 0 0 6.7 3.35 3.35 0 0 0 0-6.7m5.35-1.99a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0Z"/></svg>
+</a>
+
+</div>
+
+<a class="hero-email" href="mailto:info@tetitours.com">info@tetitours.com</a>
+
+</div>
 
 </div>
 
@@ -1316,6 +1927,13 @@ Choose Your Experience
 <span>
 Select the private tour that you would like to book.
 </span>
+
+<button
+type="button"
+onclick="closeCairoOptions()"
+style="margin-top:18px;background:none;border:1px solid #d5c8b8;color:#8b6a42;padding:10px 22px;border-radius:6px;font-size:14px;font-weight:bold;cursor:pointer;">
+← Back to All Tours
+</button>
 
 </div>
 
@@ -1638,10 +2256,125 @@ Contact us and start planning your Egyptian adventure.
 
 
 <!-- =========================================================
-     FOOTER
+     GUEST REVIEWS
      ========================================================= -->
 
-<button class="admin-button" type="button" onclick="openAdmin()">Admin</button>
+<section class="reviews" id="reviews">
+
+<p class="small-title">
+WHAT OUR GUESTS SAY
+</p>
+
+<h2>
+Real Trips, Real Reviews
+</h2>
+
+<p class="section-intro">
+Straight from travelers who booked with Teti Tour.
+</p>
+
+<!-- Screenshot reviews — real screenshots go in assets/ with
+     these exact filenames (review-1.jpg through review-45.jpg) -->
+<div class="review-screens">
+
+<img src="assets/review-1.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(0)">
+<img src="assets/review-2.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(1)">
+<img src="assets/review-3.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(2)">
+<img src="assets/review-4.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(3)">
+<img src="assets/review-5.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(4)">
+<img src="assets/review-6.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(5)">
+<img src="assets/review-7.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(6)">
+<img src="assets/review-8.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(7)">
+<img src="assets/review-9.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(8)">
+<img src="assets/review-10.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(9)">
+<img src="assets/review-11.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(10)">
+<img src="assets/review-12.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(11)">
+<img src="assets/review-13.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(12)">
+<img src="assets/review-14.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(13)">
+<img src="assets/review-15.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(14)">
+<img src="assets/review-16.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(15)">
+<img src="assets/review-17.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(16)">
+<img src="assets/review-18.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(17)">
+<img src="assets/review-19.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(18)">
+<img src="assets/review-20.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(19)">
+<img src="assets/review-21.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(20)">
+<img src="assets/review-22.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(21)">
+<img src="assets/review-23.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(22)">
+<img src="assets/review-24.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(23)">
+<img src="assets/review-25.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(24)">
+<img src="assets/review-26.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(25)">
+<img src="assets/review-27.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(26)">
+<img src="assets/review-28.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(27)">
+<img src="assets/review-29.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(28)">
+<img src="assets/review-30.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(29)">
+<img src="assets/review-31.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(30)">
+<img src="assets/review-32.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(31)">
+<img src="assets/review-33.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(32)">
+<img src="assets/review-34.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(33)">
+<img src="assets/review-35.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(34)">
+<img src="assets/review-36.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(35)">
+<img src="assets/review-37.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(36)">
+<img src="assets/review-38.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(37)">
+<img src="assets/review-39.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(38)">
+<img src="assets/review-40.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(39)">
+<img src="assets/review-41.jpg" alt="Guest review screenshot" loading="lazy" onclick="openLightbox(40)">
+
+</div>
+
+<!-- Lightbox: full-size viewer for the screenshot reviews -->
+<div class="lightbox" id="reviewLightbox">
+<button class="lightbox-close" type="button" onclick="closeLightbox()">&times;</button>
+<button class="lightbox-prev" type="button" onclick="changeLightbox(-1)">&#8249;</button>
+<img id="lightboxImage" src="" alt="Guest review screenshot">
+<button class="lightbox-next" type="button" onclick="changeLightbox(1)">&#8250;</button>
+</div>
+
+<!-- Approved guest reviews, loaded live from Supabase -->
+<div class="live-reviews" id="liveReviews">
+<p class="review-empty">Loading reviews...</p>
+</div>
+
+<div class="review-form-wrap">
+
+<h3>Share Your Experience</h3>
+
+<form id="reviewForm">
+
+<label for="reviewName">Your Name</label>
+<input type="text" id="reviewName" required maxlength="60">
+
+<label for="reviewTour">Which Tour?</label>
+<select id="reviewTour" required></select>
+
+<label for="reviewCountry">Your Country (optional)</label>
+<input type="text" id="reviewCountry" maxlength="60" placeholder="e.g. United Kingdom">
+
+<label>Your Rating</label>
+<div class="star-picker" id="starPicker">
+<span data-value="1">★</span>
+<span data-value="2">★</span>
+<span data-value="3">★</span>
+<span data-value="4">★</span>
+<span data-value="5">★</span>
+</div>
+
+<label for="reviewMessage">Your Review</label>
+<textarea id="reviewMessage" rows="4" required maxlength="600"></textarea>
+
+<button class="review-submit" type="submit" id="reviewSubmit">Submit Review</button>
+
+<div class="review-form-message" id="reviewFormMessage"></div>
+
+</form>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
 
 <footer>
 
@@ -1657,49 +2390,20 @@ alt="Teti Tour Logo">
 Egypt Tours & Private Transfers
 </p>
 
+<div class="footer-social">
+
+<a href="https://wa.me/201117360020" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" width="18" height="18" fill="white"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m0 1.67c2.2 0 4.27.86 5.83 2.42a8.2 8.2 0 0 1 2.41 5.82c0 4.55-3.7 8.25-8.25 8.25a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.18 8.18 0 0 1-1.26-4.38c0-4.55 3.7-8.25 8.25-8.25M8.53 6.7c-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.03s.87 2.35.99 2.52c.12.16 1.7 2.72 4.2 3.71 2.07.82 2.49.66 2.94.62.45-.04 1.45-.59 1.65-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.46-.28-.24-.12-1.45-.72-1.68-.8-.22-.08-.39-.12-.55.12-.16.24-.63.8-.77.96-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.44-1.35-1.68-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.55-1.36-.76-1.86-.2-.48-.4-.42-.55-.42h-.47Z"/></svg></a>
+<a href="#" target="_blank" rel="noopener" aria-label="Facebook">📘</a>
+<a href="#" target="_blank" rel="noopener" aria-label="Instagram">📷</a>
+
+</div>
+
 <p class="copyright">
 © 2026 Teti Tour. All Rights Reserved.
 </p>
 
 </footer>
 
-
-<!-- =========================================================
-     ADMIN PANEL
-     ========================================================= -->
-
-<div
-class="admin-panel"
-id="adminPanel">
-
-<div class="admin-box">
-
-<button
-class="close-admin"
-type="button"
-onclick="closeAdmin()">
-
-Close
-
-</button>
-
-<h2>
-Price List
-</h2>
-
-<p>
-Manage your tour prices.
-</p>
-
-<div
-class="price-list"
-id="priceList">
-
-Loading prices...
-
-</div>
-
-</div>
 
 </div>
 
@@ -1717,7 +2421,13 @@ id="detailModal">
 <div
 class="detail-image"
 id="detailImage">
+
+<button type="button" class="gallery-nav gallery-nav-prev" id="galleryPrev" aria-label="Previous photo">‹</button>
+<button type="button" class="gallery-nav gallery-nav-next" id="galleryNext" aria-label="Next photo">›</button>
+
 </div>
+
+<div class="detail-gallery-thumbs" id="detailGalleryThumbs"></div>
 
 <div class="detail-content">
 
@@ -2080,7 +2790,7 @@ icon:"🏛️",
 location:"Cairo & Giza",
 
 image:
-"https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&w=1200&q=85"
+"assets/great-pyramid.jpg"
 
 },
 
@@ -2097,7 +2807,22 @@ icon:"🏜️",
 location:"Fayoum",
 
 image:
-"https://commons.wikimedia.org/wiki/Special:Redirect/file/Wadi%20elhitan%20museum%20%2820%29.jpg"
+"assets/fayoum-fossils.jpg",
+
+images:[
+"assets/fayoum-01.jpg",
+"assets/fayoum-02.jpg",
+"assets/fayoum-03.jpg",
+"assets/fayoum-04.jpg",
+"assets/fayoum-05.jpg",
+"assets/fayoum-06.jpg",
+"assets/fayoum-07.jpg",
+"assets/fayoum-08.jpg",
+"assets/fayoum-09.jpg",
+"assets/fayoum-10.jpg",
+"assets/fayoum-11.jpg",
+"assets/fayoum-12.jpg"
+]
 
 },
 
@@ -2114,7 +2839,18 @@ icon:"🌊",
 location:"Alexandria",
 
 image:
-"https://commons.wikimedia.org/wiki/Special:Redirect/file/Citadel%20of%20Qaitbay%2C%20Alexandria.jpg"
+"assets/alexandria-citadel.jpg",
+
+images:[
+"assets/alexandria-01.jpg",
+"assets/alexandria-02.jpg",
+"assets/alexandria-03.jpg",
+"assets/alexandria-04.jpg",
+"assets/alexandria-05.jpg",
+"assets/alexandria-06.jpg",
+"assets/alexandria-07.jpg",
+"assets/alexandria-08.jpg"
+]
 
 },
 
@@ -2155,7 +2891,39 @@ description:
 location:"Giza & Cairo",
 
 image:
-"https://commons.wikimedia.org/wiki/Special:Redirect/file/Grand%20Egyptian%20Museum%202025.jpg"
+"assets/gem-gallery.jpg",
+
+images:[
+"assets/gem-01.jpg",
+"assets/gem-02.jpg",
+"assets/gem-03.jpg",
+"assets/gem-04.jpg",
+"assets/gem-05.jpg",
+"assets/gem-06.jpg",
+"assets/gem-07.jpg",
+"assets/gem-08.jpg",
+"assets/gem-09.jpg",
+"assets/gem-10.jpg",
+"assets/gem-11.jpg",
+"assets/giza-gem-01.jpg",
+"assets/giza-gem-02.jpg",
+"assets/giza-gem-03.jpg",
+"assets/giza-gem-04.jpg",
+"assets/giza-gem-05.jpg",
+"assets/giza-gem-06.jpg",
+"assets/giza-gem-07.jpg",
+"assets/giza-gem-08.jpg",
+"assets/giza-gem-09.jpg",
+"assets/giza-gem-10.jpg",
+"assets/giza-gem-11.jpg",
+"assets/giza-gem-12.jpg",
+"assets/giza-gem-13.jpg",
+"assets/giza-gem-14.jpg",
+"assets/giza-gem-15.jpg",
+"assets/giza-gem-16.jpg",
+"assets/giza-gem-17.jpg",
+"assets/giza-gem-18.jpg"
+]
 
 },
 
@@ -2171,7 +2939,16 @@ description:
 location:"Saqqara & Memphis",
 
 image:
-"https://commons.wikimedia.org/wiki/Special:Redirect/file/Saqqara%20Pyramid%20Djoser.jpg"
+"assets/saqqara-pyramid.jpg",
+
+images:[
+"assets/saqqara-01.jpg",
+"assets/saqqara-02.jpg",
+"assets/saqqara-03.jpg",
+"assets/saqqara-04.jpg",
+"assets/saqqara-05.jpg",
+"assets/memphis-01.jpg"
+]
 
 },
 
@@ -2187,7 +2964,24 @@ description:
 location:"Saqqara, Dahshur & Memphis",
 
 image:
-"https://commons.wikimedia.org/wiki/Special:Redirect/file/Snefru%27s%20Bent%20Pyramid%20in%20Dahshur.jpg"
+"assets/bent-pyramid.jpg",
+
+images:[
+"assets/saqqara-dahshur-01.jpg",
+"assets/saqqara-dahshur-02.jpg",
+"assets/saqqara-dahshur-03.jpg",
+"assets/saqqara-dahshur-04.jpg",
+"assets/saqqara-dahshur-05.jpg",
+"assets/saqqara-dahshur-06.jpg",
+"assets/saqqara-dahshur-07.jpg",
+"assets/saqqara-dahshur-08.jpg",
+"assets/saqqara-dahshur-09.jpg",
+"assets/saqqara-dahshur-10.jpg",
+"assets/saqqara-dahshur-11.jpg",
+"assets/saqqara-dahshur-12.jpg",
+"assets/saqqara-dahshur-13.jpg",
+"assets/saqqara-dahshur-14.jpg"
+]
 
 },
 
@@ -2203,7 +2997,34 @@ description:
 location:"Old Cairo",
 
 image:
-"https://commons.wikimedia.org/wiki/Special:Redirect/file/Citadel%20of%20Saladin%20in%20Cairo.jpg"
+"assets/cairo-mosque.jpg",
+
+images:[
+"assets/citadel-01.jpg",
+"assets/citadel-02.jpg",
+"assets/citadel-03.jpg",
+"assets/citadel-04.jpg",
+"assets/citadel-05.jpg",
+"assets/citadel-06.jpg",
+"assets/citadel-07.jpg",
+"assets/citadel-08.jpg",
+"assets/citadel-09.jpg",
+"assets/citadel-10.jpg",
+"assets/citadel-11.jpg",
+"assets/citadel-12.jpg",
+"assets/nmec-01.jpg",
+"assets/nmec-02.jpg",
+"assets/nmec-03.jpg",
+"assets/nmec-04.jpg",
+"assets/nmec-05.jpg",
+"assets/nmec-06.jpg",
+"assets/nmec-07.jpg",
+"assets/nmec-08.jpg",
+"assets/nmec-09.jpg",
+"assets/nmec-10.jpg",
+"assets/nmec-11.jpg",
+"assets/nmec-12.jpg"
+]
 
 },
 
@@ -2219,7 +3040,19 @@ description:
 location:"Giza",
 
 image:
-"https://commons.wikimedia.org/wiki/Special:Redirect/file/Great%20Pyramid%20%28Pyramid%20of%20Cheops%20Khufu%29%2C%20Giza%2C%20GG%2C%20EGY%20%2840936250113%29.jpg"
+"assets/great-pyramid.jpg",
+
+images:[
+"assets/giza-01.jpg",
+"assets/giza-02.jpg",
+"assets/giza-03.jpg",
+"assets/giza-04.jpg",
+"assets/giza-05.jpg",
+"assets/giza-06.jpg",
+"assets/giza-07.jpg",
+"assets/giza-08.jpg",
+"assets/giza-09.jpg"
+]
 
 },
 
@@ -2235,7 +3068,30 @@ description:
 location:"Giza",
 
 image:
-"https://commons.wikimedia.org/wiki/Special:Redirect/file/Grand%20Egyptian%20Museum%202025.jpg"
+"assets/gem-gallery.jpg",
+
+images:[
+"assets/gem-half-01.jpg",
+"assets/gem-half-02.jpg",
+"assets/gem-half-03.jpg",
+"assets/gem-half-04.jpg",
+"assets/gem-half-05.jpg",
+"assets/gem-half-06.jpg",
+"assets/gem-half-07.jpg",
+"assets/gem-half-08.jpg",
+"assets/gem-half-09.jpg",
+"assets/gem-half-10.jpg",
+"assets/gem-half-11.jpg",
+"assets/gem-half-12.jpg",
+"assets/gem-half-13.jpg",
+"assets/gem-half-14.jpg",
+"assets/gem-half-15.jpg",
+"assets/gem-half-16.jpg",
+"assets/gem-half-17.jpg",
+"assets/gem-half-18.jpg",
+"assets/gem-half-19.jpg",
+"assets/gem-half-20.jpg"
+]
 
 },
 
@@ -2251,7 +3107,31 @@ description:
 location:"Cairo Nile",
 
 image:
-"https://commons.wikimedia.org/wiki/Special:Redirect/file/Nile%20Cruise.jpg"
+"assets/nile-boat.jpg",
+
+images:[
+"assets/nile-cruise-01.jpg",
+"assets/nile-cruise-02.jpg",
+"assets/nile-cruise-03.jpg",
+"assets/nile-cruise-04.jpg",
+"assets/nile-cruise-05.jpg",
+"assets/nile-cruise-06.jpg",
+"assets/nile-cruise-07.jpg",
+"assets/nile-cruise-08.jpg",
+"assets/nile-cruise-09.jpg",
+"assets/nile-cruise-10.jpg",
+"assets/nile-cruise-11.jpg",
+"assets/nile-cruise-12.jpg",
+"assets/nile-cruise-13.jpg",
+"assets/nile-cruise-14.jpg",
+"assets/nile-cruise-15.jpg",
+"assets/nile-cruise-16.jpg",
+"assets/nile-cruise-17.jpg",
+"assets/nile-cruise-18.jpg",
+"assets/nile-cruise-19.jpg",
+"assets/nile-cruise-20.jpg",
+"assets/nile-cruise-21.jpg"
+]
 
 },
 
@@ -2267,7 +3147,18 @@ description:
 location:"Nile",
 
 image:
-"https://commons.wikimedia.org/wiki/Special:Redirect/file/Felucca%20on%20the%20Nile%20%2853709847874%29.jpg"
+"assets/felucca.jpg",
+
+images:[
+"assets/felucca-01.jpg",
+"assets/felucca-02.jpg",
+"assets/felucca-03.jpg",
+"assets/felucca-04.jpg",
+"assets/felucca-05.jpg",
+"assets/felucca-06.jpg",
+"assets/felucca-07.jpg",
+"assets/felucca-08.jpg"
+]
 
 },
 
@@ -2283,7 +3174,19 @@ description:
 location:"Nile",
 
 image:
-"assets/felucca.jpg"
+"assets/felucca.jpg",
+
+images:[
+"assets/felucca-hour-01.jpg",
+"assets/felucca-hour-02.jpg",
+"assets/felucca-hour-03.jpg",
+"assets/felucca-hour-04.jpg",
+"assets/felucca-hour-05.jpg",
+"assets/felucca-hour-06.jpg",
+"assets/felucca-hour-07.jpg",
+"assets/felucca-hour-08.jpg",
+"assets/felucca-hour-09.jpg"
+]
 
 }
 
@@ -2323,6 +3226,344 @@ row.tour_name ??
 getTourId(row);
 
 }
+
+
+/* =========================================================
+   GUEST REVIEWS
+   ========================================================= */
+
+async function loadApprovedReviews(){
+
+const container =
+document.getElementById("liveReviews");
+
+if(!container){
+return;
+}
+
+try{
+
+const url =
+SUPABASE_URL +
+"/rest/v1/reviews?select=*&approved=eq.true&order=created_at.desc&limit=9";
+
+const response =
+await fetch(url,{
+method:"GET",
+headers:{
+"apikey":SUPABASE_KEY,
+"Authorization":"Bearer "+SUPABASE_KEY,
+"Content-Type":"application/json"
+}
+});
+
+if(!response.ok){
+throw new Error("Supabase HTTP " + response.status);
+}
+
+const data = await response.json();
+renderApprovedReviews(Array.isArray(data) ? data : []);
+
+}catch(error){
+console.error("loadApprovedReviews error:", error);
+container.innerHTML =
+'<p class="review-empty">Reviews could not be loaded right now.</p>';
+}
+
+}
+
+
+function renderApprovedReviews(reviews){
+
+const container =
+document.getElementById("liveReviews");
+
+if(!container){
+return;
+}
+
+if(reviews.length === 0){
+container.innerHTML =
+'<p class="review-empty">Be the first to leave a review!</p>';
+return;
+}
+
+let html = "";
+
+reviews.forEach(review => {
+
+const stars =
+"★".repeat(review.rating) +
+"☆".repeat(5 - review.rating);
+
+const safeName =
+escapeHtml(review.name);
+
+const safeCountry =
+review.country ? escapeHtml(review.country) : "";
+
+const safeMessage =
+escapeHtml(review.message);
+
+const safeTour =
+review.tour_name ? escapeHtml(review.tour_name) : "";
+
+html += `
+<div class="review-card">
+<div class="review-stars">${stars}</div>
+${safeTour ? `<div class="review-tour">${safeTour}</div>` : ""}
+<div class="review-message">${safeMessage}</div>
+<div class="review-name">${safeName}${safeCountry ? " — " + safeCountry : ""}</div>
+</div>
+`;
+
+});
+
+container.innerHTML = html;
+
+}
+
+
+function escapeHtml(text){
+
+const div = document.createElement("div");
+div.textContent = text ?? "";
+return div.innerHTML;
+
+}
+
+
+/* populate the "Which Tour?" dropdown in the review form */
+
+function populateReviewTourSelect(){
+
+const select =
+document.getElementById("reviewTour");
+
+if(!select){
+return;
+}
+
+let optionsHtml =
+'<option value="" disabled selected>Choose a tour...</option>';
+
+Object.keys(TOUR_DATA).forEach(function(id){
+optionsHtml +=
+'<option value="' +
+escapeHtml(TOUR_DATA[id].name) +
+'">' +
+escapeHtml(TOUR_DATA[id].name) +
+'</option>';
+});
+
+Object.keys(CAIRO_OPTIONS).forEach(function(id){
+optionsHtml +=
+'<option value="' +
+escapeHtml(CAIRO_OPTIONS[id].name) +
+'">' +
+escapeHtml(CAIRO_OPTIONS[id].name) +
+'</option>';
+});
+
+optionsHtml +=
+'<option value="Other">Other</option>';
+
+select.innerHTML = optionsHtml;
+
+}
+
+
+/* star picker */
+
+let selectedRating = 0;
+
+const starPicker =
+document.getElementById("starPicker");
+
+if(starPicker){
+
+starPicker.querySelectorAll("span").forEach(starEl => {
+
+starEl.addEventListener("click", function(){
+
+selectedRating = Number(starEl.dataset.value);
+
+starPicker.querySelectorAll("span").forEach(s => {
+s.classList.toggle(
+"selected",
+Number(s.dataset.value) <= selectedRating
+);
+});
+
+});
+
+});
+
+}
+
+
+/* submit new review */
+
+const reviewForm =
+document.getElementById("reviewForm");
+
+if(reviewForm){
+
+reviewForm.addEventListener("submit", async function(event){
+
+event.preventDefault();
+
+const name =
+document.getElementById("reviewName").value.trim();
+
+const tourName =
+document.getElementById("reviewTour").value;
+
+const country =
+document.getElementById("reviewCountry").value.trim();
+
+const message =
+document.getElementById("reviewMessage").value.trim();
+
+const submitButton =
+document.getElementById("reviewSubmit");
+
+const messageBox =
+document.getElementById("reviewFormMessage");
+
+messageBox.style.display = "none";
+messageBox.className = "review-form-message";
+
+if(!tourName){
+messageBox.textContent = "Please choose which tour your review is about.";
+messageBox.classList.add("error");
+messageBox.style.display = "block";
+return;
+}
+
+if(selectedRating === 0){
+messageBox.textContent = "Please select a star rating.";
+messageBox.classList.add("error");
+messageBox.style.display = "block";
+return;
+}
+
+submitButton.disabled = true;
+submitButton.textContent = "Submitting...";
+
+try{
+
+const response =
+await fetch(SUPABASE_URL + "/rest/v1/reviews",{
+method:"POST",
+headers:{
+"apikey":SUPABASE_KEY,
+"Authorization":"Bearer "+SUPABASE_KEY,
+"Content-Type":"application/json",
+"Prefer":"return=minimal"
+},
+body: JSON.stringify({
+name: name,
+tour_name: tourName,
+country: country || null,
+rating: selectedRating,
+message: message,
+approved: false
+})
+});
+
+if(!response.ok){
+const errorText = await response.text();
+console.error("SUBMIT REVIEW ERROR:", response.status, errorText);
+throw new Error("Supabase HTTP " + response.status);
+}
+
+reviewForm.reset();
+selectedRating = 0;
+
+if(document.getElementById("reviewCountry")){
+document.getElementById("reviewCountry").value = "";
+}
+
+if(starPicker){
+starPicker.querySelectorAll("span").forEach(s => {
+s.classList.remove("selected");
+});
+}
+
+messageBox.textContent =
+"Thank you! Your review will appear once approved.";
+messageBox.classList.add("success");
+messageBox.style.display = "block";
+
+}catch(error){
+messageBox.textContent =
+"Something went wrong. Please try again.";
+messageBox.classList.add("error");
+messageBox.style.display = "block";
+}
+
+submitButton.disabled = false;
+submitButton.textContent = "Submit Review";
+
+});
+
+}
+
+
+/* =========================================================
+   REVIEW SCREENSHOTS LIGHTBOX
+   ========================================================= */
+
+const reviewScreenshotCount = 41;
+let currentLightboxIndex = 0;
+
+function openLightbox(index){
+
+currentLightboxIndex = index;
+
+document.getElementById("lightboxImage").src =
+"assets/review-" + (index + 1) + ".jpg";
+
+document.getElementById("reviewLightbox").classList.add("open");
+
+}
+
+function closeLightbox(){
+document.getElementById("reviewLightbox").classList.remove("open");
+}
+
+function changeLightbox(direction){
+
+currentLightboxIndex =
+(currentLightboxIndex + direction + reviewScreenshotCount) % reviewScreenshotCount;
+
+document.getElementById("lightboxImage").src =
+"assets/review-" + (currentLightboxIndex + 1) + ".jpg";
+
+}
+
+document.getElementById("reviewLightbox").addEventListener("click", function(event){
+if(event.target.id === "reviewLightbox"){
+closeLightbox();
+}
+});
+
+document.addEventListener("keydown", function(event){
+
+const lightbox = document.getElementById("reviewLightbox");
+if(!lightbox.classList.contains("open")){
+return;
+}
+
+if(event.key === "Escape"){ closeLightbox(); }
+if(event.key === "ArrowLeft"){ changeLightbox(-1); }
+if(event.key === "ArrowRight"){ changeLightbox(1); }
+
+});
+
+
+loadApprovedReviews();
 
 
 /* =========================================================
@@ -2412,8 +3653,6 @@ console.log("Loading prices...");
 
 window.tourPrices =
 await getTourPrices();
-
-renderAdminPrices();
 
 console.log(
 "Total prices:",
@@ -2533,6 +3772,24 @@ openTourDetails(tourId);
 
 
 /* =========================================================
+   BACK TO ALL TOURS (from Cairo & Giza options)
+   ========================================================= */
+
+function closeCairoOptions(){
+
+const options = document.getElementById("cairoOptions");
+const tours = document.getElementById("tours");
+
+if(options && tours){
+options.style.display = "none";
+tours.style.display = "block";
+tours.scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+}
+
+
+/* =========================================================
    OPEN TOUR IN NEW TAB
    ========================================================= */
 
@@ -2630,10 +3887,7 @@ option.name;
 description.textContent =
 option.description;
 
-image.style.backgroundImage =
-'url("' +
-option.image +
-'")';
+renderDetailGallery(option);
 
 bookingArea.style.display =
 "block";
@@ -2674,6 +3928,89 @@ document.body.style.overflow =
 /* =========================================================
    OPEN NORMAL TOUR
    ========================================================= */
+
+/* =========================================================
+   RENDER PHOTO GALLERY (main image + thumbnail strip)
+   Falls back gracefully to a single image when a tour has
+   no "images" array yet.
+   ========================================================= */
+
+function renderDetailGallery(tour){
+
+const mainImage =
+document.getElementById("detailImage");
+
+const thumbStrip =
+document.getElementById("detailGalleryThumbs");
+
+const prevBtn =
+document.getElementById("galleryPrev");
+
+const nextBtn =
+document.getElementById("galleryNext");
+
+const gallery =
+(tour.images && tour.images.length) ?
+tour.images :
+[tour.image];
+
+let currentIndex = 0;
+
+function showImage(index){
+
+currentIndex =
+(index + gallery.length) % gallery.length;
+
+mainImage.style.backgroundImage =
+'url("' + gallery[currentIndex] + '")';
+
+thumbStrip.querySelectorAll("img").forEach(function(t){
+t.classList.toggle(
+"active-thumb",
+Number(t.dataset.index) === currentIndex
+);
+});
+
+}
+
+showImage(0);
+
+if(gallery.length < 2){
+thumbStrip.classList.remove("active");
+thumbStrip.innerHTML = "";
+prevBtn.classList.remove("active");
+nextBtn.classList.remove("active");
+return;
+}
+
+thumbStrip.classList.add("active");
+prevBtn.classList.add("active");
+nextBtn.classList.add("active");
+
+prevBtn.onclick = function(){
+showImage(currentIndex - 1);
+};
+
+nextBtn.onclick = function(){
+showImage(currentIndex + 1);
+};
+
+thumbStrip.innerHTML =
+gallery.map(function(src, i){
+return '<img src="' + src + '" data-index="' + i +
+'" loading="lazy" class="' + (i === 0 ? "active-thumb" : "") + '">';
+}).join("");
+
+thumbStrip.querySelectorAll("img").forEach(function(thumb){
+
+thumb.addEventListener("click", function(){
+showImage(Number(thumb.dataset.index));
+});
+
+});
+
+}
+
 
 function openTourDetails(tourId){
 
@@ -2755,10 +4092,7 @@ tour.name;
 description.textContent =
 tour.description;
 
-image.style.backgroundImage =
-'url("' +
-tour.image +
-'")';
+renderDetailGallery(tour);
 
 bookingArea.style.display =
 "block";
@@ -3565,6 +4899,8 @@ url,
 
 document.addEventListener("DOMContentLoaded", function(){
 
+populateReviewTourSelect();
+
 const guests = document.getElementById("guests");
 if(guests){
     guests.addEventListener("change", showCurrentTourPrice);
@@ -3612,27 +4948,47 @@ closeDetails();
    CLOSE ADMIN
    ========================================================= */
 
-document.getElementById(
-"adminPanel"
-).addEventListener(
-"click",
-function(event){
+const adminPanel = document.getElementById("adminPanel");
 
-if(event.target === this){
-
-closeAdmin();
-
+if(adminPanel){
+    adminPanel.addEventListener(
+        "click",
+        function(event){
+            if(event.target === this){
+                closeAdmin();
+            }
+        }
+    );
 }
-
-});
 
 
 /* =========================================================
    START
    ========================================================= */
 
-loadTours();
+const heroVideo = document.querySelector(".hero-video");
+const soundButton = document.getElementById("soundButton");
 
+if (heroVideo && soundButton) {
+
+    soundButton.addEventListener("click", function () {
+
+        heroVideo.muted = !heroVideo.muted;
+
+        soundButton.textContent = heroVideo.muted ? "🔇" : "🔊";
+
+        soundButton.setAttribute(
+            "aria-label",
+            heroVideo.muted ? "Turn sound on" : "Mute sound"
+        );
+
+        if (!heroVideo.muted) {
+            heroVideo.play().catch(() => {});
+        }
+
+    });
+
+}
 </script>
 
 </body>

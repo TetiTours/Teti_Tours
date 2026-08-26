@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>About Us | Teti Tour</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:Arial,sans-serif;
+background:#f4eee4;
+color:#33251b;
+}
+
+/* =========================================================
+   NAVBAR
+   (solid dark bar — this page has no hero video behind it,
+   so the navbar can't be transparent like on the homepage)
+   ========================================================= */
+
+.navbar{
+background:#2a1d15;
+width:100%;
+padding:14px 25px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.brand img{
+width:64px;
+height:64px;
+object-fit:contain;
+display:block;
+}
+
+.navbar nav{
+display:flex;
+gap:35px;
+}
+
+.navbar nav a{
+color:white;
+text-decoration:none;
+font-size:16px;
+font-weight:500;
+}
+
+.navbar nav a:hover{
+color:#d6b77a;
+}
+
+.navbar nav a.active{
+color:#d6b77a;
+}
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.page-header{
+background:#2a1d15;
+color:white;
+text-align:center;
+padding:70px 20px 90px;
+}
+
+.small-title{
+color:#d6b77a;
+font-size:14px;
+font-weight:bold;
+letter-spacing:4px;
+margin-bottom:18px;
+}
+
+.page-header h1{
+font-size:clamp(36px,6vw,56px);
+line-height:1.15;
+}
+
+/* =========================================================
+   STORY SECTION
+   ========================================================= */
+
+.story{
+max-width:900px;
+margin:-50px auto 0;
+background:white;
+padding:50px 40px;
+border-radius:12px;
+box-shadow:0 15px 40px rgba(0,0,0,.10);
+text-align:center;
+}
+
+.story h2{
+font-size:32px;
+margin-bottom:22px;
+}
+
+.story p{
+color:#5a4c40;
+font-size:17px;
+line-height:1.8;
+margin-bottom:16px;
+}
+
+.story p:last-child{
+margin-bottom:0;
+}
+
+.edit-note{
+display:inline-block;
+margin-top:22px;
+font-size:12px;
+color:#a4826a;
+background:#f4eee4;
+padding:6px 14px;
+border-radius:20px;
+}
+
+/* =========================================================
+   DIVIDER (small Egyptian-motif accent, reused from the logo's
+   gold tone — not a stock icon set, just a simple glyph rule)
+   ========================================================= */
+
+.divider{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:14px;
+margin:60px auto 0;
+color:#c9a876;
+}
+
+.divider::before,
+.divider::after{
+content:"";
+height:1px;
+width:70px;
+background:#d5c8b8;
+}
+
+.divider span{
+font-size:20px;
+}
+
+/* =========================================================
+   WHY CHOOSE US
+   ========================================================= */
+
+.why{
+max-width:1100px;
+margin:50px auto 0;
+padding:0 20px;
+text-align:center;
+}
+
+.why .small-title{
+color:#a4826a;
+}
+
+.why h2{
+font-size:32px;
+margin-bottom:40px;
+color:#2a1d15;
+}
+
+.why-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:22px;
+}
+
+.why-card{
+background:white;
+padding:32px 20px;
+border-radius:12px;
+box-shadow:0 10px 25px rgba(0,0,0,.06);
+transition:transform .2s ease;
+}
+
+.why-card:hover{
+transform:translateY(-4px);
+}
+
+.why-icon{
+font-size:30px;
+margin-bottom:14px;
+}
+
+.why-card h3{
+font-size:16px;
+color:#2a1d15;
+margin-bottom:8px;
+}
+
+.why-card p{
+font-size:13px;
+color:#75675b;
+line-height:1.6;
+}
+
+/* =========================================================
+   STATS
+   ========================================================= */
+
+.stats{
+max-width:900px;
+margin:50px auto;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+padding:0 20px;
+}
+
+.stat-box{
+background:white;
+border-radius:12px;
+padding:32px 20px;
+text-align:center;
+box-shadow:0 10px 25px rgba(0,0,0,.06);
+}
+
+.stat-box .stat-number{
+font-size:40px;
+font-weight:bold;
+color:#2a1d15;
+}
+
+.stat-box .stat-label{
+margin-top:8px;
+font-size:14px;
+color:#75675b;
+letter-spacing:.5px;
+}
+
+/* =========================================================
+   TEAM / GUIDES
+   ========================================================= */
+
+.team{
+max-width:1100px;
+margin:70px auto;
+padding:0 20px;
+text-align:center;
+}
+
+.team .small-title{
+color:#a4826a;
+}
+
+.team h2{
+font-size:32px;
+margin-bottom:14px;
+color:#2a1d15;
+}
+
+.team-intro{
+max-width:600px;
+margin:0 auto 40px;
+color:#75675b;
+font-size:16px;
+line-height:1.7;
+}
+
+.team-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:28px;
+}
+
+.team-card{
+background:white;
+border-radius:12px;
+overflow:hidden;
+box-shadow:0 10px 25px rgba(0,0,0,.07);
+}
+
+.team-photo{
+width:100%;
+aspect-ratio:1/1;
+background:#e5ddd2 url("assets/team-placeholder.jpg") center/cover no-repeat;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#a4826a;
+font-size:13px;
+}
+
+.team-card-body{
+padding:20px;
+}
+
+.team-card-body h3{
+font-size:18px;
+color:#2a1d15;
+}
+
+.team-card-body span{
+display:block;
+margin-top:4px;
+font-size:13px;
+color:#a4826a;
+letter-spacing:.5px;
+}
+
+.team-card-body p{
+margin-top:12px;
+font-size:14px;
+color:#75675b;
+line-height:1.6;
+}
+
+/* =========================================================
+   CTA
+   ========================================================= */
+
+.about-cta{
+background:#2a1d15;
+color:white;
+text-align:center;
+padding:60px 20px;
+margin-top:60px;
+}
+
+.about-cta h2{
+font-size:28px;
+margin-bottom:16px;
+}
+
+.about-cta p{
+color:#c8bbac;
+margin-bottom:26px;
+}
+
+.about-cta a{
+display:inline-block;
+background:#b38b52;
+color:white;
+text-decoration:none;
+font-weight:bold;
+padding:14px 32px;
+border-radius:6px;
+}
+
+.about-cta a:hover{
+background:#d6b77a;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer{
+background:#17100c;
+color:white;
+text-align:center;
+padding:40px 20px;
+}
+
+.footer-logo img{
+width:65px;
+height:65px;
+object-fit:contain;
+}
+
+footer p{
+margin-top:12px;
+color:#c8bbac;
+}
+
+footer .copyright{
+margin-top:25px;
+font-size:13px;
+}
+
+.footer-social{
+display:flex;
+justify-content:center;
+gap:16px;
+margin-top:20px;
+}
+
+.footer-social a{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+width:40px;
+height:40px;
+border-radius:50%;
+background:rgba(255,255,255,.08);
+color:white;
+text-decoration:none;
+font-size:17px;
+}
+
+.footer-social a:hover{
+background:#b38b52;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media(max-width:800px){
+
+.stats{
+grid-template-columns:1fr;
+}
+
+.why-grid{
+grid-template-columns:1fr 1fr;
+}
+
+.team-grid{
+grid-template-columns:1fr;
+}
+
+.navbar nav{
+gap:18px;
+}
+
+.navbar nav a{
+font-size:14px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+
+<div class="brand">
+<img src="logo.png" alt="Teti Tour Logo">
+</div>
+
+<nav>
+<a href="index.html#home">Home</a>
+<a href="index.html#tours">Tours</a>
+<a href="about.html" class="active">About Us</a>
+<a href="index.html#contact">Contact</a>
+</nav>
+
+</header>
+
+
+<!-- =========================================================
+     PAGE HEADER
+     ========================================================= -->
+
+<section class="page-header">
+
+<p class="small-title">ABOUT TETI TOUR</p>
+
+<h1>
+In The Footsteps<br>
+Of King Teti
+</h1>
+
+</section>
+
+
+<!-- =========================================================
+     STORY / MISSION
+     (DRAFT — replace with your real story, dates, and details)
+     ========================================================= -->
+
+<section class="story">
+
+<h2>Our Story</h2>
+
+<p>
+Teti Tour was founded by a small team of Egypt-based guides and
+drivers who wanted to offer something different from the typical
+group tour: private, unhurried journeys that let travelers actually
+experience Egypt, not just check landmarks off a list.
+</p>
+
+<p>
+Named after King Teti, the founder of Egypt's Sixth Dynasty, our
+mission is simple — to walk our guests through thousands of years
+of history with the same care and attention we'd want for our own
+family, from the moment they land to the moment they say goodbye
+to the Nile.
+</p>
+
+<p>
+Every itinerary is planned around comfort, safety, and genuine
+local knowledge, whether it's a first-time trip to the Pyramids of
+Giza or a deeper dive into Saqqara, Dahshur, and beyond.
+</p>
+
+<span class="edit-note">✏️ Draft text — replace with your real story</span>
+
+</section>
+
+
+<!-- =========================================================
+     DIVIDER
+     ========================================================= -->
+
+<div class="divider"><span>𓋹</span></div>
+
+
+<!-- =========================================================
+     WHY CHOOSE US
+     (original points — not copied from any other tour site)
+     ========================================================= -->
+
+<section class="why">
+
+<p class="small-title">WHY CHOOSE US</p>
+<h2>What Makes Teti Tour Different</h2>
+
+<div class="why-grid">
+
+<div class="why-card">
+<div class="why-icon">🚐</div>
+<h3>Private, Not Grouped</h3>
+<p>Every tour is just you and your group — no joining strangers on a bus, no rushed group timing.</p>
+</div>
+
+<div class="why-card">
+<div class="why-icon">🧭</div>
+<h3>Local Guides</h3>
+<p>Guides who live and work in Egypt, who know the sites, the history, and how to time a visit around the crowds.</p>
+</div>
+
+<div class="why-card">
+<div class="why-icon">🕐</div>
+<h3>Flexible Pace</h3>
+<p>Start early to beat the heat, linger at the site you love, skip the one you don't — your day, your call.</p>
+</div>
+
+<div class="why-card">
+<div class="why-icon">💬</div>
+<h3>Easy To Reach</h3>
+<p>Book and ask questions directly on WhatsApp — a real person, not a call center.</p>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     STATS
+     (DRAFT — replace numbers with your real figures)
+     ========================================================= -->
+
+<section class="stats">
+
+<div class="stat-box">
+<div class="stat-number">X+</div>
+<div class="stat-label">YEARS OF EXPERIENCE</div>
+</div>
+
+<div class="stat-box">
+<div class="stat-number">X+</div>
+<div class="stat-label">TRIPS COMPLETED</div>
+</div>
+
+<div class="stat-box">
+<div class="stat-number">X+</div>
+<div class="stat-label">HAPPY TRAVELERS</div>
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     TEAM / GUIDES
+     (DRAFT — replace photos in assets/ and names/roles/bios)
+     ========================================================= -->
+
+<section class="team">
+
+<p class="small-title">MEET THE TEAM</p>
+<h2>Your Guides In Egypt</h2>
+
+<p class="team-intro" style="margin-bottom:0;">
+Behind every Teti Tour trip is a small team of licensed Egyptologist
+guides and experienced drivers, all based in Egypt and deeply
+familiar with the history, the sites, and the best way to move
+through them. They're the ones who make sure your day runs smoothly
+from pickup to drop-off.
+</p>
+
+</section>
+
+
+<!-- =========================================================
+     CTA
+     ========================================================= -->
+
+<section class="about-cta">
+
+<h2>Ready To Explore Egypt With Us?</h2>
+<p>Browse our tours and let's plan your trip.</p>
+<a href="index.html#tours">View Our Tours</a>
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
+<footer>
+
+<div class="footer-logo">
+<img src="logo.png" alt="Teti Tour Logo">
+</div>
+
+<p>Egypt Tours & Private Transfers</p>
+
+<div class="footer-social">
+<a href="https://wa.me/201117360020" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
+<a href="#" target="_blank" rel="noopener" aria-label="Facebook">📘</a>
+<a href="#" target="_blank" rel="noopener" aria-label="Instagram">📷</a>
+</div>
+
+<p class="copyright">© 2026 Teti Tour. All Rights Reserved.</p>
+
+</footer>
+
+</body>
+</html>
