@@ -249,6 +249,16 @@ margin-bottom:14px;
 box-shadow:0 6px 18px rgba(0,0,0,.06);
 }
 
+.pending-review-photo{
+width:100%;
+max-height:260px;
+object-fit:cover;
+border-radius:8px;
+margin-bottom:12px;
+display:block;
+cursor:pointer;
+}
+
 .pending-review-stars{
 color:#d6b77a;
 font-size:16px;
@@ -645,8 +655,14 @@ const safeName = escapeAdminHtml(review.name);
 const safeMessage = escapeAdminHtml(review.message);
 const date = new Date(review.created_at).toLocaleDateString();
 
+const photoHtml =
+review.photo_url
+? `<img class="pending-review-photo" src="${escapeAdminHtml(review.photo_url)}" alt="Photo submitted by ${safeName}" loading="lazy" onclick="window.open('${escapeAdminHtml(review.photo_url)}','_blank')">`
+: "";
+
 html += `
 <div class="pending-review-card">
+${photoHtml}
 <div class="pending-review-stars">${stars}</div>
 <div class="pending-review-message">${safeMessage}</div>
 <div class="pending-review-meta">
