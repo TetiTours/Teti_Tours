@@ -224,6 +224,181 @@ grid-template-columns:1fr;
 }
 
 /* =========================================================
+   PACKAGE MANAGEMENT
+   ========================================================= */
+
+.package-group{
+background:white;
+border-radius:10px;
+box-shadow:0 10px 30px rgba(0,0,0,.12);
+padding:22px;
+margin-bottom:22px;
+}
+
+.package-group-title{
+font-size:16px;
+font-weight:bold;
+color:#2a1d15;
+margin-bottom:16px;
+padding-bottom:12px;
+border-bottom:2px solid #e5ddd2;
+}
+
+.package-row{
+display:grid;
+grid-template-columns:1.3fr 1.6fr .8fr .8fr .8fr 70px 34px;
+gap:8px;
+align-items:center;
+padding:10px 0;
+border-bottom:1px solid #e5ddd2;
+}
+
+.package-row input{
+width:100%;
+padding:10px;
+border:1px solid #d5c8b8;
+border-radius:5px;
+font-size:13px;
+margin-bottom:0;
+}
+
+.package-row input.order-input{
+text-align:center;
+}
+
+.package-row-remove{
+background:#a83b3b;
+color:white;
+border:none;
+border-radius:5px;
+width:34px;
+height:34px;
+font-size:15px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.package-row-remove:hover{
+background:#8a2f2f;
+}
+
+.package-row-labels{
+display:grid;
+grid-template-columns:1.3fr 1.6fr .8fr .8fr .8fr 70px 34px;
+gap:8px;
+padding-bottom:8px;
+}
+
+.package-row-labels span{
+font-size:11px;
+font-weight:bold;
+color:#a4826a;
+text-transform:uppercase;
+letter-spacing:.5px;
+}
+
+.package-group-actions{
+display:flex;
+gap:10px;
+margin-top:16px;
+}
+
+.add-package-btn{
+flex:1;
+padding:12px;
+border:2px dashed #b38b52;
+border-radius:5px;
+background:none;
+color:#8b6a42;
+font-weight:bold;
+cursor:pointer;
+}
+
+.add-package-btn:hover{
+background:#f8f5ef;
+}
+
+.package-save-btn{
+flex:1;
+padding:12px;
+border:none;
+border-radius:5px;
+background:#2a1d15;
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+.package-save-btn:hover{
+background:#b38b52;
+}
+
+.package-saved-message{
+margin-top:10px;
+text-align:center;
+color:#52733f;
+font-weight:bold;
+display:none;
+font-size:13px;
+}
+
+.new-tour-box{
+background:white;
+border-radius:10px;
+box-shadow:0 10px 30px rgba(0,0,0,.12);
+padding:22px;
+margin-bottom:22px;
+display:flex;
+gap:10px;
+align-items:flex-end;
+}
+
+.new-tour-box > div{
+flex:1;
+}
+
+.new-tour-box label{
+margin-bottom:6px;
+}
+
+.new-tour-box input{
+margin-bottom:0;
+}
+
+.new-tour-box button{
+padding:13px 20px;
+border:none;
+border-radius:5px;
+background:#2a1d15;
+color:white;
+font-weight:bold;
+cursor:pointer;
+white-space:nowrap;
+}
+
+.new-tour-box button:hover{
+background:#b38b52;
+}
+
+@media(max-width:800px){
+
+.package-row,
+.package-row-labels{
+grid-template-columns:1fr 1fr;
+}
+
+.package-row-labels{
+display:none;
+}
+
+.new-tour-box{
+flex-direction:column;
+align-items:stretch;
+}
+
+}
+
+/* =========================================================
    PENDING REVIEWS
    ========================================================= */
 
@@ -374,10 +549,21 @@ background:#8a2f2f;
 
 <div class="admin-box">
 
-<p>Manage your tour prices. Changes save directly to Supabase.</p>
+<p>Manage each tour's packages (e.g. "Full Package", "Car &amp; Guide Only", "Car Only") and their prices per guest tier. Changes save directly to Supabase.</p>
 
-<div class="price-list" id="priceList">
-Loading prices...
+<div class="new-tour-box">
+
+<div>
+<label for="newTourId">Add Packages For A New Tour</label>
+<input type="text" id="newTourId" placeholder="Tour ID (must match the site's tour key, e.g. Fayoum)">
+</div>
+
+<button type="button" onclick="addNewTourGroup()">+ Add Tour</button>
+
+</div>
+
+<div id="packageAdmin">
+Loading packages...
 </div>
 
 </div>
@@ -438,34 +624,20 @@ supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
    GLOBAL
    ========================================================= */
 
-window.tourPrices = [];
+window.tourPackages = [];
 
 
 /* =========================================================
-   TOUR ID / NAME HELPERS
-   (same logic as index.html)
+   GET PACKAGES
    ========================================================= */
 
-function getTourId(row){
-return String(row.Tour_id ?? row.tour_id ?? "").trim();
-}
-
-function getTourName(row){
-return row.Tour_name ?? row.tour_name ?? getTourId(row);
-}
-
-
-/* =========================================================
-   GET PRICES
-   ========================================================= */
-
-async function getTourPrices(){
+async function getTourPackages(){
 
 try{
 
 const url =
 SUPABASE_URL +
-"/rest/v1/tour_prices?select=*&order=Tour_id.asc";
+"/rest/v1/tour_packages?select=*&order=tour_id.asc,display_order.asc";
 
 const response =
 await fetch(url,{
@@ -479,17 +651,17 @@ headers:{
 
 if(!response.ok){
 const errorText = await response.text();
-console.error("SUPABASE GET ERROR:", response.status, errorText);
+console.error("SUPABASE PACKAGES GET ERROR:", response.status, errorText);
 throw new Error("Supabase HTTP " + response.status + " - " + errorText);
 }
 
 const data = await response.json();
-console.log("Supabase prices loaded:", data);
+console.log("Supabase packages loaded:", data);
 
 return Array.isArray(data) ? data : [];
 
 }catch(error){
-console.error("getTourPrices error:", error);
+console.error("getTourPackages error:", error);
 return [];
 }
 
@@ -497,92 +669,311 @@ return [];
 
 
 /* =========================================================
-   RENDER PRICE LIST
-   (same markup / logic as index.html admin panel)
+   ESCAPE HELPER (declared early so render functions can use it)
    ========================================================= */
 
-function renderAdminPrices(){
+function escapeAdminHtml(text){
+const div = document.createElement("div");
+div.textContent = text ?? "";
+return div.innerHTML;
+}
 
-const container = document.getElementById("priceList");
+
+/* =========================================================
+   RENDER PACKAGE ADMIN
+   Groups every row in window.tourPackages by tour_id and
+   renders one editable card per tour.
+   ========================================================= */
+
+function renderPackageAdmin(){
+
+const container = document.getElementById("packageAdmin");
 if(!container){ return; }
 
-if(!window.tourPrices || window.tourPrices.length === 0){
+if(!window.tourPackages || window.tourPackages.length === 0){
 container.innerHTML = `
 <div style="padding:20px;text-align:center;color:#75675b;">
-<strong>No prices available.</strong>
+<strong>No packages yet.</strong>
 <br><br>
-Supabase did not return any rows from <strong>tour_prices</strong>.
-<br><br>
-Open F12 → Console to check the Supabase response.
+Either the <strong>tour_packages</strong> table is empty, or the migration
+hasn't been run. Use "Add Packages For A New Tour" above to create the
+first one, or check F12 → Console for a Supabase error.
 </div>
 `;
 return;
 }
 
-let html = `
-<div class="price-row">
-<strong>Tour</strong>
-<strong>1–2 Guests</strong>
-<strong>3–14 Guests</strong>
-<strong>15–25 Guests</strong>
-</div>
-`;
+const groups = {};
+const order = [];
 
-window.tourPrices.forEach(tour => {
-
-const id = getTourId(tour);
-const name = getTourName(tour);
-
-html += `
-<div class="price-row">
-<strong>${name}</strong>
-<input type="number" min="0" step="0.01" value="${tour.price_1_2 ?? ""}" data-id="${id}" data-field="price_1_2">
-<input type="number" min="0" step="0.01" value="${tour.price_3_14 ?? ""}" data-id="${id}" data-field="price_3_14">
-<input type="number" min="0" step="0.01" value="${tour.price_15_25 ?? ""}" data-id="${id}" data-field="price_15_25">
-</div>
-`;
-
+window.tourPackages.forEach(pkg => {
+const id = String(pkg.tour_id ?? "").trim();
+if(!groups[id]){ groups[id] = []; order.push(id); }
+groups[id].push(pkg);
 });
 
-html += `
-<button class="price-save" type="button" onclick="savePrices()">Save Prices</button>
-<div class="saved-message" id="savedMessage">Prices saved successfully.</div>
+container.innerHTML =
+order.map(tourId => renderPackageGroupHtml(tourId, groups[tourId])).join("");
+
+}
+
+
+function renderPackageRowHtml(pkg){
+
+const id = pkg.id ?? "";
+
+return `
+<div class="package-row" data-id="${id}">
+<input type="text" data-field="package_name" placeholder="Package name" value="${escapeAdminHtml(pkg.package_name ?? "")}">
+<input type="text" data-field="description" placeholder="Description (optional)" value="${escapeAdminHtml(pkg.description ?? "")}">
+<input type="number" min="0" step="0.01" data-field="price_1_2" placeholder="1–2" value="${pkg.price_1_2 ?? ""}">
+<input type="number" min="0" step="0.01" data-field="price_3_14" placeholder="3–14" value="${pkg.price_3_14 ?? ""}">
+<input type="number" min="0" step="0.01" data-field="price_15_25" placeholder="15–25" value="${pkg.price_15_25 ?? ""}">
+<input type="number" class="order-input" data-field="display_order" placeholder="#" value="${pkg.display_order ?? 0}">
+<button class="package-row-remove" type="button" onclick="removePackageRow(this)">✕</button>
+</div>
 `;
 
-container.innerHTML = html;
+}
+
+
+function renderPackageGroupHtml(tourId, packages){
+
+const rowsHtml =
+packages.map(pkg => renderPackageRowHtml(pkg)).join("");
+
+return `
+<div class="package-group" data-tour-id="${escapeAdminHtml(tourId)}">
+<div class="package-group-title">${escapeAdminHtml(tourId)}</div>
+<div class="package-row-labels">
+<span>Package Name</span>
+<span>Description</span>
+<span>1–2 Guests</span>
+<span>3–14 Guests</span>
+<span>15–25 Guests</span>
+<span>Order</span>
+<span></span>
+</div>
+<div class="package-rows">
+${rowsHtml}
+</div>
+<div class="package-group-actions">
+<button class="add-package-btn" type="button" onclick="addPackageRow(this)">+ Add Package</button>
+<button class="package-save-btn" type="button" onclick="savePackageGroup(this)">Save Changes</button>
+</div>
+<div class="package-saved-message">Saved successfully.</div>
+</div>
+`;
 
 }
 
 
 /* =========================================================
-   SAVE PRICES
-   (same logic as index.html admin panel)
+   ADD A NEW TOUR GROUP (for a tour_id with no packages yet)
    ========================================================= */
 
-async function savePrices(){
+function addNewTourGroup(){
 
-const inputs = document.querySelectorAll("#priceList input");
+const input = document.getElementById("newTourId");
+const tourId = input.value.trim();
 
-if(!inputs.length){
-alert("No price fields found.");
+if(!tourId){
+alert("Enter a tour ID first.");
 return;
 }
 
-const grouped = {};
+const existing =
+document.querySelector('.package-group[data-tour-id="' + CSS.escape(tourId) + '"]');
 
-inputs.forEach(input => {
-const id = input.dataset.id;
+if(existing){
+existing.scrollIntoView({behavior:"smooth", block:"center"});
+addPackageRow(existing.querySelector(".add-package-btn"));
+input.value = "";
+return;
+}
+
+const container = document.getElementById("packageAdmin");
+
+// Clear the "no packages yet" placeholder if that's all that's there.
+if(!container.querySelector(".package-group")){
+container.innerHTML = "";
+}
+
+container.insertAdjacentHTML(
+"beforeend",
+renderPackageGroupHtml(tourId, [{
+package_name:"",
+description:"",
+price_1_2:"",
+price_3_14:"",
+price_15_25:"",
+display_order:1
+}])
+);
+
+input.value = "";
+
+container.lastElementChild.scrollIntoView({behavior:"smooth", block:"center"});
+
+}
+
+
+/* =========================================================
+   ADD PACKAGE ROW (client-side only, until saved)
+   ========================================================= */
+
+function addPackageRow(button){
+
+const group = button.closest(".package-group");
+const rowsContainer = group.querySelector(".package-rows");
+
+const rowCount = rowsContainer.querySelectorAll(".package-row").length;
+
+rowsContainer.insertAdjacentHTML(
+"beforeend",
+renderPackageRowHtml({
+package_name:"",
+description:"",
+price_1_2:"",
+price_3_14:"",
+price_15_25:"",
+display_order: rowCount + 1
+})
+);
+
+}
+
+
+/* =========================================================
+   REMOVE PACKAGE ROW
+   (deletes immediately from Supabase if it already has an id;
+   just removes the unsaved row from the page otherwise)
+   ========================================================= */
+
+async function removePackageRow(button){
+
+const row = button.closest(".package-row");
+const id = row.dataset.id;
+
+if(!id){
+row.remove();
+return;
+}
+
+if(!confirm("Delete this package? This cannot be undone.")){
+return;
+}
+
+try{
+
+const response = await fetch(
+SUPABASE_URL + "/rest/v1/tour_packages?id=eq." + encodeURIComponent(id),
+{
+method:"DELETE",
+headers:{
+"apikey":SUPABASE_KEY,
+"Authorization":"Bearer "+SUPABASE_KEY,
+"Content-Type":"application/json",
+"Prefer":"return=minimal"
+}
+}
+);
+
+if(!response.ok){
+const errorText = await response.text();
+console.error("SUPABASE DELETE ERROR:", response.status, errorText);
+throw new Error("Supabase HTTP " + response.status + ": " + errorText);
+}
+
+row.remove();
+
+}catch(error){
+console.error("Delete error:", error);
+alert("Could not delete package.\n\n" + error.message);
+}
+
+}
+
+
+/* =========================================================
+   SAVE PACKAGE GROUP
+   New rows (no data-id) are inserted; existing rows are
+   patched by id.
+   ========================================================= */
+
+async function savePackageGroup(button){
+
+const group = button.closest(".package-group");
+const tourId = group.dataset.tourId;
+const rows = group.querySelectorAll(".package-row");
+
+if(!rows.length){
+alert("Add at least one package before saving.");
+return;
+}
+
+const newRows = [];
+const existingUpdates = [];
+
+rows.forEach(row => {
+
+const id = row.dataset.id;
+const fields = {};
+
+row.querySelectorAll("input[data-field]").forEach(input => {
+
 const field = input.dataset.field;
-if(!grouped[id]){ grouped[id] = {}; }
-grouped[id][field] = input.value === "" ? null : Number(input.value);
+
+if(field === "price_1_2" || field === "price_3_14" || field === "price_15_25" || field === "display_order"){
+fields[field] = input.value === "" ? null : Number(input.value);
+}else{
+fields[field] = input.value.trim();
+}
+
+});
+
+if(!fields.package_name){
+return;
+}
+
+if(id){
+existingUpdates.push({ id, fields });
+}else{
+newRows.push({ tour_id: tourId, ...fields });
+}
+
 });
 
 try{
 
-for(const tourId in grouped){
+if(newRows.length){
 
 const response = await fetch(
-SUPABASE_URL + "/rest/v1/tour_prices?Tour_id=eq." + encodeURIComponent(tourId),
+SUPABASE_URL + "/rest/v1/tour_packages",
+{
+method:"POST",
+headers:{
+"apikey":SUPABASE_KEY,
+"Authorization":"Bearer "+SUPABASE_KEY,
+"Content-Type":"application/json",
+"Prefer":"return=minimal"
+},
+body: JSON.stringify(newRows)
+}
+);
+
+if(!response.ok){
+const errorText = await response.text();
+console.error("SUPABASE INSERT ERROR:", response.status, errorText);
+throw new Error("Supabase HTTP " + response.status + ": " + errorText);
+}
+
+}
+
+for(const update of existingUpdates){
+
+const response = await fetch(
+SUPABASE_URL + "/rest/v1/tour_packages?id=eq." + encodeURIComponent(update.id),
 {
 method:"PATCH",
 headers:{
@@ -591,22 +982,26 @@ headers:{
 "Content-Type":"application/json",
 "Prefer":"return=minimal"
 },
-body: JSON.stringify(grouped[tourId])
+body: JSON.stringify(update.fields)
 }
 );
 
 if(!response.ok){
 const errorText = await response.text();
-console.error("SUPABASE SAVE ERROR:", response.status, errorText);
+console.error("SUPABASE PATCH ERROR:", response.status, errorText);
 throw new Error("Supabase HTTP " + response.status + ": " + errorText);
 }
 
 }
 
-window.tourPrices = await getTourPrices();
-renderAdminPrices();
+window.tourPackages = await getTourPackages();
+renderPackageAdmin();
 
-const message = document.getElementById("savedMessage");
+const savedGroup =
+document.querySelector('.package-group[data-tour-id="' + CSS.escape(tourId) + '"]');
+
+const message = savedGroup ? savedGroup.querySelector(".package-saved-message") : null;
+
 if(message){
 message.style.display = "block";
 setTimeout(function(){ message.style.display = "none"; }, 2500);
@@ -614,7 +1009,7 @@ setTimeout(function(){ message.style.display = "none"; }, 2500);
 
 }catch(error){
 console.error("Save error:", error);
-alert("Could not save prices.\n\n" + error.message);
+alert("Could not save packages.\n\n" + error.message);
 }
 
 }
@@ -695,12 +1090,6 @@ ${photoHtml}
 
 container.innerHTML = html;
 
-}
-
-function escapeAdminHtml(text){
-const div = document.createElement("div");
-div.textContent = text ?? "";
-return div.innerHTML;
 }
 
 async function approveReview(id){
@@ -851,8 +1240,8 @@ document.getElementById("adminWrap").style.display = "block";
 document.getElementById("signedInAs").textContent =
 "Signed in as " + session.user.email;
 
-window.tourPrices = await getTourPrices();
-renderAdminPrices();
+window.tourPackages = await getTourPackages();
+renderPackageAdmin();
 
 loadPendingReviews();
 loadApprovedReviews();
