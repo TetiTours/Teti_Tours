@@ -1432,6 +1432,165 @@ background:#777;
 
 
 /* =========================================================
+   DETAIL PAGE LAYOUT (two columns on desktop, like a full
+   product page: info on the left, booking box on the right)
+   ========================================================= */
+
+.detail-layout{
+display:block;
+}
+
+.detail-main{
+min-width:0;
+}
+
+.detail-sidebar{
+padding:0 30px 30px;
+}
+
+@media(min-width:1000px){
+
+.detail-layout{
+display:grid;
+grid-template-columns:1.6fr 1fr;
+align-items:start;
+gap:0;
+}
+
+.detail-sidebar{
+position:sticky;
+top:20px;
+padding:30px 30px 30px 0;
+}
+
+}
+
+
+/* =========================================================
+   INCLUDED / NOT INCLUDED
+   ========================================================= */
+
+.included-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+margin-bottom:30px;
+}
+
+.included-box,
+.notincluded-box{
+background:white;
+border-radius:10px;
+padding:20px;
+box-shadow:0 8px 20px rgba(0,0,0,.05);
+}
+
+.included-box h4,
+.notincluded-box h4{
+font-size:15px;
+margin-bottom:12px;
+color:#2a1d15;
+}
+
+.included-box ul,
+.notincluded-box ul{
+list-style:none;
+}
+
+.included-box li,
+.notincluded-box li{
+font-size:14px;
+color:#5a4c40;
+line-height:1.6;
+margin-bottom:8px;
+padding-left:22px;
+position:relative;
+}
+
+.included-box li::before{
+content:"✔";
+color:#4c7a3f;
+position:absolute;
+left:0;
+font-weight:bold;
+}
+
+.notincluded-box li::before{
+content:"✘";
+color:#a83b3b;
+position:absolute;
+left:0;
+font-weight:bold;
+}
+
+@media(max-width:600px){
+.included-grid{
+grid-template-columns:1fr;
+}
+}
+
+
+/* =========================================================
+   ITINERARY
+   ========================================================= */
+
+.itinerary-box{
+margin-bottom:30px;
+}
+
+.itinerary-box h4{
+font-size:15px;
+margin-bottom:16px;
+color:#2a1d15;
+}
+
+.itinerary-step{
+display:flex;
+gap:16px;
+padding-bottom:20px;
+position:relative;
+}
+
+.itinerary-step:not(:last-child)::before{
+content:"";
+position:absolute;
+left:15px;
+top:34px;
+bottom:0;
+width:2px;
+background:#e5ddd2;
+}
+
+.itinerary-step-num{
+flex-shrink:0;
+width:32px;
+height:32px;
+border-radius:50%;
+background:#2a1d15;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:bold;
+font-size:14px;
+z-index:1;
+}
+
+.itinerary-step-body h5{
+font-size:15px;
+color:#2a1d15;
+margin-bottom:4px;
+}
+
+.itinerary-step-body p{
+font-size:13px;
+color:#75675b;
+line-height:1.6;
+margin-bottom:0;
+}
+
+
+/* =========================================================
    BOOKING FORM
    ========================================================= */
 
@@ -2533,6 +2692,10 @@ id="detailModal">
 
 <div class="detail-box">
 
+<div class="detail-layout">
+
+<div class="detail-main">
+
 <div
 class="detail-image"
 id="detailImage">
@@ -2553,6 +2716,32 @@ Tour Details
 <p id="detailDescription">
 </p>
 
+
+<!-- WHAT'S INCLUDED / NOT INCLUDED -->
+
+<div class="included-grid">
+
+<div class="included-box">
+<h4>✔ What's Included</h4>
+<ul id="detailIncluded"></ul>
+</div>
+
+<div class="notincluded-box">
+<h4>✘ Not Included</h4>
+<ul id="detailNotIncluded"></ul>
+</div>
+
+</div>
+
+
+<!-- ITINERARY -->
+
+<div class="itinerary-box">
+<h4>Itinerary</h4>
+<div id="detailItinerary"></div>
+</div>
+
+
 <div class="detail-buttons">
 
 <button
@@ -2566,8 +2755,14 @@ Close
 
 </div>
 
+</div>
 
-<!-- BOOKING AREA -->
+</div>
+
+
+<!-- SIDEBAR: BOOKING AREA -->
+
+<div class="detail-sidebar">
 
 <div
 id="bookingFormArea"
@@ -2586,7 +2781,85 @@ Booking Details
 <form id="bookingForm">
 
 
-<!-- PACKAGE SELECTION -->
+<!-- GUEST NAME / PHONE -->
+
+<div class="row">
+
+<div>
+
+<label>
+Guest Name
+</label>
+
+<input
+type="text"
+id="name"
+placeholder="Full name"
+required>
+
+</div>
+
+<div>
+
+<label>
+Guest Phone
+</label>
+
+<input
+type="tel"
+id="phone"
+placeholder="Your WhatsApp number"
+required>
+
+</div>
+
+</div>
+
+
+<!-- NUMBER OF GUESTS (chosen first, so packages/prices can react to it) -->
+
+<label>
+Number of Guests
+</label>
+
+<select
+id="guests"
+required>
+
+<option value="">
+Select Guests
+</option>
+
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+<option value="13">13</option>
+<option value="14">14</option>
+<option value="15">15</option>
+<option value="16">16</option>
+<option value="17">17</option>
+<option value="18">18</option>
+<option value="19">19</option>
+<option value="20">20</option>
+<option value="21">21</option>
+<option value="22">22</option>
+<option value="23">23</option>
+<option value="24">24</option>
+<option value="25">25</option>
+
+</select>
+
+
+<!-- PACKAGE SELECTION (chosen after guest count) -->
 
 <div id="packageFields">
 
@@ -2720,82 +2993,6 @@ required>
 </div>
 
 
-<!-- GUEST INFO -->
-
-<div class="row">
-
-<div>
-
-<label>
-Guest Name
-</label>
-
-<input
-type="text"
-id="name"
-placeholder="Full name"
-required>
-
-</div>
-
-<div>
-
-<label>
-Guest Phone
-</label>
-
-<input
-type="tel"
-id="phone"
-placeholder="Your WhatsApp number"
-required>
-
-</div>
-
-</div>
-
-
-<label>
-Number of Guests
-</label>
-
-<select
-id="guests"
-required>
-
-<option value="">
-Select Guests
-</option>
-
-<option value="1">1</option>
-<option value="2">2</option>
-<option value="3">3</option>
-<option value="4">4</option>
-<option value="5">5</option>
-<option value="6">6</option>
-<option value="7">7</option>
-<option value="8">8</option>
-<option value="9">9</option>
-<option value="10">10</option>
-<option value="11">11</option>
-<option value="12">12</option>
-<option value="13">13</option>
-<option value="14">14</option>
-<option value="15">15</option>
-<option value="16">16</option>
-<option value="17">17</option>
-<option value="18">18</option>
-<option value="19">19</option>
-<option value="20">20</option>
-<option value="21">21</option>
-<option value="22">22</option>
-<option value="23">23</option>
-<option value="24">24</option>
-<option value="25">25</option>
-
-</select>
-
-
 <!-- PRICE -->
 
 <div class="price-box">
@@ -2878,6 +3075,10 @@ Continue Booking on WhatsApp
 </button>
 
 </form>
+
+</div>
+
+</div>
 
 </div>
 
@@ -4052,6 +4253,128 @@ pkg => String(pkg.id) === String(packageId)
 
 
 /* =========================================================
+   INCLUDED / NOT INCLUDED
+   ========================================================= */
+
+function renderIncludedList(tourId){
+
+const includedEl = document.getElementById("detailIncluded");
+const notIncludedEl = document.getElementById("detailNotIncluded");
+
+if(!includedEl || !notIncludedEl){
+return;
+}
+
+let included, notIncluded;
+
+if(tourId === "Airport-transfer"){
+
+included = [
+"Private air-conditioned vehicle",
+"Meet & greet at arrivals with a name sign",
+"Flight tracking — pickup adjusts automatically to delays",
+"Bottled water"
+];
+
+notIncluded = [
+"Gratuities (optional)"
+];
+
+}else{
+
+included = [
+"Hotel pickup and drop-off",
+"Private air-conditioned vehicle for the day",
+"Professional guide and inclusions per your selected package",
+"Bottled water",
+"All taxes and service charges"
+];
+
+notIncluded = [
+"Gratuities (tipping for guide and driver)",
+"Personal expenses",
+"Anything not listed in your selected package above"
+];
+
+}
+
+includedEl.innerHTML =
+included.map(item => "<li>" + item + "</li>").join("");
+
+notIncludedEl.innerHTML =
+notIncluded.map(item => "<li>" + item + "</li>").join("");
+
+}
+
+
+/* =========================================================
+   ITINERARY
+   ========================================================= */
+
+function renderItinerary(tourId, tour){
+
+const container = document.getElementById("detailItinerary");
+
+if(!container){
+return;
+}
+
+let steps;
+
+if(tourId === "Airport-transfer"){
+
+steps = [
+{
+title:"Flight Tracking",
+desc:"We track your flight in real time, so your pickup time automatically adjusts if it's early or delayed."
+},
+{
+title:"Meet Your Driver",
+desc:"Your driver will be waiting with a sign with your name, ready to help with your bags."
+},
+{
+title:"Private Transfer",
+desc:"A relaxed, direct ride in a private air-conditioned vehicle straight to your destination."
+}
+];
+
+}else{
+
+const placeName =
+(tour && (tour.location || tour.name)) || "the sites";
+
+steps = [
+{
+title:"Hotel Pickup",
+desc:"Your driver picks you up from your hotel in a private, air-conditioned vehicle."
+},
+{
+title:"Explore " + placeName,
+desc:"A private, guided visit at your own pace — no rushing, no joining a group tour."
+},
+{
+title:"Return To Your Hotel",
+desc:"Drop-off back at your hotel once the tour wraps up."
+}
+];
+
+}
+
+container.innerHTML =
+steps.map((step, index) =>
+'<div class="itinerary-step">' +
+'<div class="itinerary-step-num">' + (index + 1) + '</div>' +
+'<div class="itinerary-step-body">' +
+'<h5>' + step.title + '</h5>' +
+'<p>' + step.desc + '</p>' +
+'</div>' +
+'</div>'
+).join("");
+
+}
+
+
+/* =========================================================
    RENDER PACKAGE OPTIONS
    (called every time a tour's booking form opens)
    ========================================================= */
@@ -4270,6 +4593,10 @@ optionId;
 
 renderPackageOptions(optionId);
 
+renderIncludedList(optionId);
+
+renderItinerary(optionId, option);
+
 
 const modal =
 document.getElementById(
@@ -4476,6 +4803,10 @@ window.currentCairoOption =
 null;
 
 renderPackageOptions(tourId);
+
+renderIncludedList(tourId);
+
+renderItinerary(tourId, tour);
 
 
 const modal =
