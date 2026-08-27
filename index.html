@@ -4670,6 +4670,9 @@ option.name +
 
 setAirportRequired(false);
 
+document.getElementById("tourDate").required = true;
+document.getElementById("tourTime").required = true;
+
 document.getElementById(
 "bookingForm"
 ).reset();
@@ -4883,6 +4886,9 @@ formTitle.textContent =
 
 setAirportRequired(true);
 
+document.getElementById("tourDate").required = false;
+document.getElementById("tourTime").required = false;
+
 }else{
 
 airportFields.style.display =
@@ -4899,6 +4905,9 @@ tour.name +
 " Booking";
 
 setAirportRequired(false);
+
+document.getElementById("tourDate").required = true;
+document.getElementById("tourTime").required = true;
 
 }
 
