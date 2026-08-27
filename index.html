@@ -1628,6 +1628,69 @@ outline:none;
 margin-bottom:18px;
 }
 
+
+/* =========================================================
+   FIELD WITH CLEAR BUTTON (date / time)
+   ========================================================= */
+
+.field-with-clear{
+position:relative;
+}
+
+.field-with-clear input{
+padding-right:70px;
+}
+
+.field-clear-btn{
+position:absolute;
+right:8px;
+top:8px;
+background:#e5ddd2;
+border:none;
+border-radius:4px;
+padding:6px 10px;
+font-size:12px;
+color:#5a4c40;
+cursor:pointer;
+font-weight:bold;
+}
+
+.field-clear-btn:hover{
+background:#d5c8b8;
+}
+
+
+/* =========================================================
+   SHARE MY LOCATION
+   ========================================================= */
+
+.location-share{
+margin-top:-8px;
+margin-bottom:18px;
+}
+
+.location-share-btn{
+width:auto;
+background:#f4eee4;
+border:1px solid #d5c8b8;
+color:#5a4c40;
+padding:10px 16px;
+border-radius:5px;
+font-size:13px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.location-share-btn:hover{
+background:#e5ddd2;
+}
+
+.location-share-status{
+font-size:12px;
+margin-top:8px;
+line-height:1.5;
+}
+
 .row{
 display:grid;
 grid-template-columns:1fr 1fr;
@@ -2956,10 +3019,13 @@ placeholder="e.g. MS985">
 Pickup Time
 </label>
 
+<div class="field-with-clear">
 <input
 type="time"
 id="time"
 required>
+<button type="button" class="field-clear-btn" onclick="clearField('time')">Clear</button>
+</div>
 
 </div>
 
@@ -2976,19 +3042,25 @@ required>
 Tour Date
 </label>
 
+<div class="field-with-clear">
 <input
 type="date"
 id="tourDate"
 required>
+<button type="button" class="field-clear-btn" onclick="clearField('tourDate')">Clear</button>
+</div>
 
 <label>
 Pickup Time
 </label>
 
+<div class="field-with-clear">
 <input
 type="time"
 id="tourTime"
 required>
+<button type="button" class="field-clear-btn" onclick="clearField('tourTime')">Clear</button>
+</div>
 
 </div>
 
@@ -3054,6 +3126,21 @@ type="text"
 id="pickup"
 placeholder="Hotel name or pickup location"
 required>
+
+<div class="location-share">
+
+<button
+type="button"
+class="location-share-btn"
+onclick="shareMyLocation()">
+
+📍 Share My Exact Location (optional)
+
+</button>
+
+<div class="location-share-status" id="locationStatus"></div>
+
+</div>
 
 
 <label>
@@ -4677,6 +4764,8 @@ document.getElementById(
 "bookingForm"
 ).reset();
 
+resetLocationShare();
+
 document.getElementById(
 "displayPrice"
 ).textContent =
@@ -4916,6 +5005,8 @@ document.getElementById(
 "bookingForm"
 ).reset();
 
+resetLocationShare();
+
 document.getElementById(
 "displayPrice"
 ).textContent =
@@ -4926,6 +5017,116 @@ modal.style.display =
 
 document.body.style.overflow =
 "hidden";
+
+}
+
+
+/* =========================================================
+   SHARE MY LOCATION
+   ========================================================= */
+
+window.pickupLocationLink = "";
+
+function resetLocationShare(){
+
+window.pickupLocationLink = "";
+
+const statusEl =
+document.getElementById("locationStatus");
+
+if(statusEl){
+
+statusEl.textContent = "";
+
+}
+
+}
+
+function shareMyLocation(){
+
+const statusEl =
+document.getElementById("locationStatus");
+
+if(!navigator.geolocation){
+
+if(statusEl){
+
+statusEl.textContent =
+"Location sharing isn't supported on this browser — no problem, just type the hotel name above.";
+
+statusEl.style.color = "#a83b3b";
+
+}
+
+return;
+
+}
+
+if(statusEl){
+
+statusEl.textContent =
+"Getting your location...";
+
+statusEl.style.color = "#75675b";
+
+}
+
+navigator.geolocation.getCurrentPosition(
+
+function(position){
+
+const lat = position.coords.latitude;
+const lng = position.coords.longitude;
+
+window.pickupLocationLink =
+"https://www.google.com/maps?q=" + lat + "," + lng;
+
+if(statusEl){
+
+statusEl.textContent =
+"✓ Location added — it'll be shared with your booking.";
+
+statusEl.style.color = "#4c7a3f";
+
+}
+
+},
+
+function(){
+
+window.pickupLocationLink = "";
+
+if(statusEl){
+
+statusEl.textContent =
+"Couldn't get your location. No problem — just type the hotel name above.";
+
+statusEl.style.color = "#a83b3b";
+
+}
+
+}
+
+);
+
+}
+
+
+/* =========================================================
+   CLEAR FIELD (date/time inputs — mobile pickers don't
+   always offer a Clear button, so we add our own)
+   ========================================================= */
+
+function clearField(fieldId){
+
+const field =
+document.getElementById(fieldId);
+
+if(field){
+
+field.value = "";
+
+}
 
 }
 
@@ -5679,7 +5880,15 @@ whatsappMessage +=
 
 "Hotel / Pickup: " +
 pickup +
-"\n\n" +
+"\n" +
+
+(
+window.pickupLocationLink
+?
+"Location Pin: " + window.pickupLocationLink + "\n\n"
+:
+"\n"
+) +
 
 "Additional Message: " +
 
@@ -5741,20 +5950,6 @@ loadTours();
 /* =========================================================
    CLOSE DETAIL MODAL
    ========================================================= */
-
-document.getElementById(
-"detailModal"
-).addEventListener(
-"click",
-function(event){
-
-if(event.target === this){
-
-closeDetails();
-
-}
-
-});
 
 
 /* =========================================================
