@@ -1691,6 +1691,68 @@ margin-top:8px;
 line-height:1.5;
 }
 
+
+/* =========================================================
+   PICKUP AUTOCOMPLETE + MAP PREVIEW
+   ========================================================= */
+
+.pickup-autocomplete-wrap{
+position:relative;
+}
+
+.pickup-suggestions{
+display:none;
+position:absolute;
+top:100%;
+left:0;
+right:0;
+background:white;
+border:1px solid #d5c8b8;
+border-radius:5px;
+box-shadow:0 10px 25px rgba(0,0,0,.12);
+max-height:220px;
+overflow-y:auto;
+z-index:20;
+margin-top:-14px;
+}
+
+.pickup-suggestion-item{
+padding:11px 14px;
+font-size:13px;
+color:#33251b;
+cursor:pointer;
+border-bottom:1px solid #f0ebe2;
+line-height:1.4;
+}
+
+.pickup-suggestion-item:last-child{
+border-bottom:none;
+}
+
+.pickup-suggestion-item:hover{
+background:#f4eee4;
+}
+
+.pickup-suggestion-empty{
+padding:11px 14px;
+font-size:13px;
+color:#a4826a;
+}
+
+.pickup-map-preview{
+margin-bottom:18px;
+border-radius:8px;
+overflow:hidden;
+border:1px solid #d5c8b8;
+}
+
+.pickup-map-preview iframe{
+width:100%;
+height:180px;
+border:none;
+display:block;
+}
+
 .row{
 display:grid;
 grid-template-columns:1fr 1fr;
@@ -3019,13 +3081,11 @@ placeholder="e.g. MS985">
 Pickup Time
 </label>
 
-<div class="field-with-clear">
-<input
-type="time"
+<select
 id="time"
 required>
-<button type="button" class="field-clear-btn" onclick="clearField('time')">Clear</button>
-</div>
+<option value="">Select Time</option>
+</select>
 
 </div>
 
@@ -3054,13 +3114,11 @@ required>
 Pickup Time
 </label>
 
-<div class="field-with-clear">
-<input
-type="time"
+<select
 id="tourTime"
 required>
-<button type="button" class="field-clear-btn" onclick="clearField('tourTime')">Clear</button>
-</div>
+<option value="">Select Time</option>
+</select>
 
 </div>
 
@@ -3121,11 +3179,22 @@ Select
 Hotel / Pickup Location
 </label>
 
+<div class="pickup-autocomplete-wrap">
+
 <input
 type="text"
 id="pickup"
-placeholder="Hotel name or pickup location"
+placeholder="Start typing your hotel name..."
+autocomplete="off"
 required>
+
+<div class="pickup-suggestions" id="pickupSuggestions"></div>
+
+</div>
+
+<div class="pickup-map-preview" id="pickupMapPreview" style="display:none;">
+<iframe id="pickupMapFrame" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</div>
 
 <div class="location-share">
 
@@ -5022,6 +5091,239 @@ document.body.style.overflow =
 
 
 /* =========================================================
+   PICKUP AUTOCOMPLETE (type hotel name → pick from map
+   matches → GPS position filled in automatically)
+   ========================================================= */
+
+let pickupSearchTimeout = null;
+window.pickupSearchResults = [];
+
+function initPickupAutocomplete(){
+
+const input =
+document.getElementById("pickup");
+
+const suggestionsEl =
+document.getElementById("pickupSuggestions");
+
+if(!input || !suggestionsEl){
+
+return;
+
+}
+
+input.addEventListener("input", function(){
+
+const query =
+input.value.trim();
+
+clearTimeout(pickupSearchTimeout);
+
+if(query.length < 3){
+
+suggestionsEl.innerHTML = "";
+suggestionsEl.style.display = "none";
+
+return;
+
+}
+
+pickupSearchTimeout =
+setTimeout(function(){
+
+searchPickupPlaces(query);
+
+}, 450);
+
+});
+
+document.addEventListener("click", function(event){
+
+if(
+!suggestionsEl.contains(event.target) &&
+event.target !== input
+){
+
+suggestionsEl.style.display = "none";
+
+}
+
+});
+
+}
+
+
+async function searchPickupPlaces(query){
+
+const suggestionsEl =
+document.getElementById("pickupSuggestions");
+
+if(!suggestionsEl){
+
+return;
+
+}
+
+try{
+
+const url =
+"https://nominatim.openstreetmap.org/search?format=json&q=" +
+encodeURIComponent(query + ", Egypt") +
+"&limit=6&addressdetails=1";
+
+const response =
+await fetch(url);
+
+if(!response.ok){
+
+throw new Error("HTTP " + response.status);
+
+}
+
+const results =
+await response.json();
+
+window.pickupSearchResults = results;
+
+if(!results.length){
+
+suggestionsEl.innerHTML =
+'<div class="pickup-suggestion-empty">No matches found — you can keep typing it manually.</div>';
+
+suggestionsEl.style.display = "block";
+
+return;
+
+}
+
+suggestionsEl.innerHTML =
+results.map(function(place, index){
+
+return (
+'<div class="pickup-suggestion-item" data-index="' +
+index +
+'">' +
+place.display_name +
+'</div>'
+);
+
+}).join("");
+
+suggestionsEl.style.display = "block";
+
+suggestionsEl.querySelectorAll(
+".pickup-suggestion-item"
+).forEach(function(item){
+
+item.addEventListener("click", function(){
+
+const index =
+Number(item.dataset.index);
+
+selectPickupPlace(
+window.pickupSearchResults[index]
+);
+
+});
+
+});
+
+}catch(error){
+
+console.error(
+"Pickup search failed:",
+error
+);
+
+}
+
+}
+
+
+function selectPickupPlace(place){
+
+const input =
+document.getElementById("pickup");
+
+const suggestionsEl =
+document.getElementById("pickupSuggestions");
+
+if(!place || !input){
+
+return;
+
+}
+
+input.value =
+place.display_name;
+
+if(suggestionsEl){
+
+suggestionsEl.style.display = "none";
+suggestionsEl.innerHTML = "";
+
+}
+
+window.pickupLocationLink =
+"https://www.google.com/maps?q=" +
+place.lat +
+"," +
+place.lon;
+
+showPickupMapPreview(
+place.lat,
+place.lon
+);
+
+const statusEl =
+document.getElementById("locationStatus");
+
+if(statusEl){
+
+statusEl.textContent =
+"✓ Location matched on the map — the exact GPS position will be shared with your booking.";
+
+statusEl.style.color = "#4c7a3f";
+
+}
+
+}
+
+
+function showPickupMapPreview(lat, lon){
+
+const wrap =
+document.getElementById("pickupMapPreview");
+
+const frame =
+document.getElementById("pickupMapFrame");
+
+if(!wrap || !frame){
+
+return;
+
+}
+
+const delta = 0.01;
+
+const bbox =
+(Number(lon) - delta) + "," +
+(Number(lat) - delta) + "," +
+(Number(lon) + delta) + "," +
+(Number(lat) + delta);
+
+frame.src =
+"https://www.openstreetmap.org/export/embed.html?bbox=" +
+bbox +
+"&marker=" +
+lat + "," + lon;
+
+wrap.style.display = "block";
+
+}
+
+
+/* =========================================================
    SHARE MY LOCATION
    ========================================================= */
 
@@ -5040,7 +5342,140 @@ statusEl.textContent = "";
 
 }
 
+const mapWrap =
+document.getElementById("pickupMapPreview");
+
+if(mapWrap){
+
+mapWrap.style.display = "none";
+
 }
+
+const suggestionsEl =
+document.getElementById("pickupSuggestions");
+
+if(suggestionsEl){
+
+suggestionsEl.innerHTML = "";
+suggestionsEl.style.display = "none";
+
+}
+
+}
+
+/* =========================================================
+   FILL PICKUP FIELD FROM COORDINATES
+   (free reverse-geocoding via OpenStreetMap — GPS gives a
+   coordinate, this turns it into a readable place name.
+   It's an address lookup, not a hotel directory, so it
+   won't always return the exact hotel name.)
+   ========================================================= */
+
+async function fillPickupFromCoords(lat, lng, statusEl){
+
+try{
+
+const response =
+await fetch(
+"https://nominatim.openstreetmap.org/reverse?format=json&lat=" +
+lat +
+"&lon=" +
+lng +
+"&zoom=18&addressdetails=1"
+);
+
+if(!response.ok){
+
+throw new Error(
+"HTTP " + response.status
+);
+
+}
+
+const data =
+await response.json();
+
+const address =
+data.address || {};
+
+const placeName =
+data.name ||
+address.tourism ||
+address.building ||
+address.amenity ||
+"";
+
+const streetArea =
+[
+address.road,
+address.suburb || address.neighbourhood,
+address.city || address.town
+]
+.filter(Boolean)
+.join(", ");
+
+const label =
+placeName ||
+streetArea ||
+data.display_name ||
+"";
+
+const pickupField =
+document.getElementById("pickup");
+
+if(pickupField && label){
+
+const wasEmpty =
+!pickupField.value.trim();
+
+if(wasEmpty){
+
+pickupField.value = label;
+
+}
+
+if(statusEl){
+
+statusEl.textContent =
+wasEmpty
+?
+"✓ Location added — we filled in \"" + label + "\" from your GPS position. Please double-check it and edit if it's not quite right."
+:
+"✓ Location added — the pin will be sent alongside the hotel name you already typed.";
+
+statusEl.style.color = "#4c7a3f";
+
+}
+
+}else if(statusEl){
+
+statusEl.textContent =
+"✓ Location added — couldn't find a place name for this spot, so please type the hotel name above.";
+
+statusEl.style.color = "#4c7a3f";
+
+}
+
+}catch(error){
+
+console.error(
+"Reverse geocoding failed:",
+error
+);
+
+if(statusEl){
+
+statusEl.textContent =
+"✓ Location added — couldn't look up the address automatically, so please type the hotel name above.";
+
+statusEl.style.color = "#4c7a3f";
+
+}
+
+}
+
+}
+
 
 function shareMyLocation(){
 
@@ -5073,7 +5508,7 @@ statusEl.style.color = "#75675b";
 
 navigator.geolocation.getCurrentPosition(
 
-function(position){
+async function(position){
 
 const lat = position.coords.latitude;
 const lng = position.coords.longitude;
@@ -5084,11 +5519,15 @@ window.pickupLocationLink =
 if(statusEl){
 
 statusEl.textContent =
-"✓ Location added — it'll be shared with your booking.";
+"✓ Location added. Looking up the address...";
 
 statusEl.style.color = "#4c7a3f";
 
 }
+
+showPickupMapPreview(lat, lng);
+
+await fillPickupFromCoords(lat, lng, statusEl);
 
 },
 
@@ -5113,7 +5552,67 @@ statusEl.style.color = "#a83b3b";
 
 
 /* =========================================================
-   CLEAR FIELD (date/time inputs — mobile pickers don't
+   POPULATE TIME DROPDOWNS
+   (native mobile time pickers are inconsistent across
+   devices — a plain <select> works identically everywhere)
+   ========================================================= */
+
+function populateTimeSelect(selectId){
+
+const select =
+document.getElementById(selectId);
+
+if(!select){
+
+return;
+
+}
+
+for(let hour = 0; hour < 24; hour++){
+
+for(let minute = 0; minute < 60; minute += 15){
+
+const value =
+String(hour).padStart(2, "0") +
+":" +
+String(minute).padStart(2, "0");
+
+const period =
+hour < 12 ? "AM" : "PM";
+
+let displayHour =
+hour % 12;
+
+if(displayHour === 0){
+
+displayHour = 12;
+
+}
+
+const label =
+displayHour +
+":" +
+String(minute).padStart(2, "0") +
+" " +
+period;
+
+const option =
+document.createElement("option");
+
+option.value = value;
+option.textContent = label;
+
+select.appendChild(option);
+
+}
+
+}
+
+}
+
+
+/* =========================================================
+   CLEAR FIELD (date inputs — mobile pickers don't
    always offer a Clear button, so we add our own)
    ========================================================= */
 
@@ -5922,6 +6421,11 @@ url,
 document.addEventListener("DOMContentLoaded", function(){
 
 populateReviewTourSelect();
+
+populateTimeSelect("time");
+populateTimeSelect("tourTime");
+
+initPickupAutocomplete();
 
 const guests = document.getElementById("guests");
 if(guests){
