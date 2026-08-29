@@ -402,6 +402,17 @@ margin:0 auto 40px;
 background:#20c98c;
 }
 
+.pickup-badge{
+display:inline-block;
+background:#e8f3e4;
+color:#3d6b31;
+font-size:11px;
+font-weight:bold;
+padding:5px 10px;
+border-radius:20px;
+margin-bottom:12px;
+}
+
 
 /* =========================================================
    TOURS
@@ -967,7 +978,7 @@ line-height:1;
 position:absolute;
 top:50%;
 transform:translateY(-50%);
-background:rgba(255,255,255,.12);
+background:#c0392b;
 color:white;
 border:none;
 font-size:30px;
@@ -975,6 +986,7 @@ width:50px;
 height:50px;
 border-radius:50%;
 cursor:pointer;
+z-index:2;
 }
 
 .lightbox-prev{
@@ -986,7 +998,10 @@ right:20px;
 }
 
 .lightbox-prev:hover,
-.lightbox-next:hover,
+.lightbox-next:hover{
+background:#a5301f;
+}
+
 .lightbox-close:hover{
 background:rgba(255,255,255,.25);
 }
@@ -2241,6 +2256,8 @@ Explore the Pyramids, Sphinx, Grand Egyptian Museum
 and the highlights of Cairo.
 </p>
 
+<div class="pickup-badge">✓ Pickup &amp; Drop-off Included</div>
+
 <div class="tour-bottom">
 
 <span>
@@ -2282,6 +2299,8 @@ Discover Wadi El Hitan, Wadi El Rayan
 and Magic Lake.
 </p>
 
+<div class="pickup-badge">✓ Pickup &amp; Drop-off Included</div>
+
 <div class="tour-bottom">
 
 <span>
@@ -2322,6 +2341,8 @@ Alexandria Day Trip
 Visit the Catacombs, Qaitbay Citadel
 and Bibliotheca Alexandrina.
 </p>
+
+<div class="pickup-badge">✓ Pickup &amp; Drop-off Included</div>
 
 <div class="tour-bottom">
 
@@ -2395,6 +2416,8 @@ Grand Egyptian Museum & Pyramids
 Visit the Pyramids of Giza and the Grand Egyptian Museum.
 </p>
 
+<div class="pickup-badge">✓ Pickup &amp; Drop-off Included</div>
+
 <button
 class="cairo-option-button"
 onclick="openCairoOption('GEM-Pyramids')">
@@ -2422,6 +2445,8 @@ Giza Pyramids, Saqqara & Memphis
 <p>
 Explore the famous Giza Pyramids, the Step Pyramid of Djoser at Saqqara and ancient Memphis.
 </p>
+
+<div class="pickup-badge">✓ Pickup &amp; Drop-off Included</div>
 
 <button
 class="cairo-option-button"
@@ -2451,6 +2476,8 @@ Saqqara, Dahshur & Memphis
 Discover Saqqara, Dahshur pyramids and Memphis.
 </p>
 
+<div class="pickup-badge">✓ Pickup &amp; Drop-off Included</div>
+
 <button
 class="cairo-option-button"
 onclick="openCairoOption('Saqqara-Dahshur-Memphis')">
@@ -2478,6 +2505,8 @@ Citadel & Old Cairo + Civilization Museum
 <p>
 Discover Islamic Cairo, the Citadel and NMEC.
 </p>
+
+<div class="pickup-badge">✓ Pickup &amp; Drop-off Included</div>
 
 <button
 class="cairo-option-button"
@@ -2507,6 +2536,8 @@ Half Day Giza Pyramids
 A private half-day visit to the famous Giza Pyramids.
 </p>
 
+<div class="pickup-badge">✓ Pickup &amp; Drop-off Included</div>
+
 <button
 class="cairo-option-button"
 onclick="openCairoOption('Half-Giza')">
@@ -2534,6 +2565,8 @@ Half Day Grand Egyptian Museum
 <p>
 Spend a half day exploring the Grand Egyptian Museum.
 </p>
+
+<div class="pickup-badge">✓ Pickup &amp; Drop-off Included</div>
 
 <button
 class="cairo-option-button"
@@ -2563,6 +2596,8 @@ Cairo Nile River Dinner Cruise & Pickup
 Enjoy an evening dinner experience on the Nile.
 </p>
 
+<div class="pickup-badge">✓ Pickup &amp; Drop-off Included</div>
+
 <button
 class="cairo-option-button"
 onclick="openCairoOption('Nile-Cruise')">
@@ -2591,6 +2626,8 @@ VIP Felucca with Lunch
 Enjoy a private sailing experience on a traditional felucca.
 </p>
 
+<div class="pickup-badge">✓ Pickup &amp; Drop-off Included</div>
+
 <button
 class="cairo-option-button"
 onclick="openCairoOption('VIP-Felucca-Lunch')">
@@ -2618,6 +2655,8 @@ Felucca One Hour
 <p>
 Relax on the Nile with a one-hour traditional felucca ride.
 </p>
+
+<div class="pickup-badge">✓ Pickup &amp; Drop-off Included</div>
 
 <button
 class="cairo-option-button"
