@@ -4,37 +4,41 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Teti Tour | Egypt Tours & Private Transfers</title>
+<title>Teti Tour | Private Egypt Tours, Cairo & Sphinx Airport Transfers</title>
 
-<meta name="description" content="Teti Tour offers private, English-speaking guided tours in Cairo, Giza, Alexandria and Fayoum: the Pyramids, Grand Egyptian Museum, Saqqara, Nile cruises and airport transfers. Book a private Egypt tour today.">
+<meta name="description" content="Private Egypt tours with a trusted local tour operator. Giza Pyramids, Cairo & Alexandria day trips, Nile cruises, plus Cairo and Sphinx airport transfers. Book instantly on WhatsApp.">
 
-<meta name="keywords" content="Egypt tours, Cairo tours, Giza pyramids tour, private tours Egypt, Egypt travel, Cairo airport transfer, Alexandria day trip, Nile cruise, Grand Egyptian Museum tour">
+<meta name="keywords" content="Egypt tours, Cairo tours, Giza Pyramids tours, private Egypt tours, Cairo airport transfer, Sphinx airport transfer, Egypt tour operator, Alexandria day trip, Nile cruise, Grand Egyptian Museum tour">
 
 <link rel="canonical" href="https://www.tetitours.com/">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Teti Tour | Egypt Tours & Private Transfers">
-<meta property="og:description" content="Private, English-speaking guided tours in Cairo, Giza, Alexandria and Fayoum. Pyramids, Grand Egyptian Museum, Nile cruises and airport transfers.">
+<meta property="og:title" content="Teti Tour | Private Egypt Tours, Cairo & Sphinx Airport Transfers">
+<meta property="og:description" content="Private Egypt tours with a trusted local tour operator — Giza Pyramids, Cairo & Alexandria trips, Nile cruises, and Cairo/Sphinx airport transfers.">
 <meta property="og:image" content="https://www.tetitours.com/assets/great-pyramid.jpg">
 <meta property="og:url" content="https://www.tetitours.com/">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Teti Tour | Egypt Tours & Private Transfers">
-<meta name="twitter:description" content="Private, English-speaking guided tours in Cairo, Giza, Alexandria and Fayoum.">
+<meta name="twitter:title" content="Teti Tour | Private Egypt Tours & Airport Transfers">
+<meta name="twitter:description" content="Private Egypt tours with a trusted local tour operator — Giza Pyramids, Cairo & Alexandria trips, Nile cruises, and airport transfers.">
 <meta name="twitter:image" content="https://www.tetitours.com/assets/great-pyramid.jpg">
 
-<script type="application/ld+json">
+<script type="application/ld+json" id="businessSchema">
 {
 "@context": "https://schema.org",
 "@type": "TravelAgency",
 "name": "Teti Tour",
-"description": "Private guided tours and transfers across Cairo, Giza, Alexandria and Fayoum, Egypt.",
+"description": "Trusted private Egypt tour operator offering guided tours and airport transfers across Cairo, Giza, Alexandria and Fayoum.",
 "url": "https://www.tetitours.com/",
 "image": "https://www.tetitours.com/assets/great-pyramid.jpg",
 "areaServed": {
 "@type": "Country",
 "name": "Egypt"
 },
+"sameAs": [
+"https://www.instagram.com/teti_tour",
+"https://www.tripadvisor.com/Attraction_Review-g294201-d34435103-Reviews-Teti_Tour-Cairo_Cairo_Governorate.html"
+],
 "priceRange": "$$"
 }
 </script>
@@ -3846,12 +3850,70 @@ throw new Error("Supabase HTTP " + response.status);
 }
 
 const data = await response.json();
-renderApprovedReviews(Array.isArray(data) ? data : []);
+const reviews = Array.isArray(data) ? data : [];
+renderApprovedReviews(reviews);
+updateReviewSchema(reviews);
 
 }catch(error){
 console.error("loadApprovedReviews error:", error);
 container.innerHTML =
 '<p class="review-empty">Reviews could not be loaded right now.</p>';
+}
+
+}
+
+
+/* =========================================================
+   UPDATE REVIEW SCHEMA (SEO)
+   Adds aggregateRating + individual reviews to the
+   TravelAgency structured data, so search engines can show
+   star ratings next to the site in search results.
+   ========================================================= */
+
+function updateReviewSchema(reviews){
+
+const schemaTag =
+document.getElementById("businessSchema");
+
+if(!schemaTag || !reviews || reviews.length === 0){
+return;
+}
+
+try{
+
+const schema = JSON.parse(schemaTag.textContent);
+
+const totalStars =
+reviews.reduce((sum, r) => sum + (Number(r.rating) || 0), 0);
+
+const averageRating =
+(totalStars / reviews.length).toFixed(1);
+
+schema.aggregateRating = {
+"@type": "AggregateRating",
+"ratingValue": averageRating,
+"reviewCount": reviews.length
+};
+
+schema.review = reviews.slice(0, 10).map(r => ({
+"@type": "Review",
+"author": {
+"@type": "Person",
+"name": r.name || "Guest"
+},
+"reviewRating": {
+"@type": "Rating",
+"ratingValue": String(r.rating || 5)
+},
+"reviewBody": r.message || ""
+}));
+
+schemaTag.textContent = JSON.stringify(schema);
+
+}catch(error){
+
+console.error("updateReviewSchema error:", error);
+
 }
 
 }
