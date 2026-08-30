@@ -3048,16 +3048,20 @@ required>
 
 <!-- NUMBER OF GUESTS (chosen first, so packages/prices can react to it) -->
 
+<div class="row">
+
+<div>
+
 <label>
-Number of Guests
+Adults
 </label>
 
 <select
-id="guests"
+id="adults"
 required>
 
 <option value="">
-Select Guests
+Select
 </option>
 
 <option value="1">1</option>
@@ -3087,6 +3091,35 @@ Select Guests
 <option value="25">25</option>
 
 </select>
+
+</div>
+
+<div>
+
+<label>
+Children (5–9 yrs, half price)
+</label>
+
+<select
+id="children">
+
+<option value="0">0</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option value="10">10</option>
+
+</select>
+
+</div>
+
+</div>
 
 
 <!-- PACKAGE SELECTION (chosen after guest count) -->
@@ -4767,6 +4800,93 @@ showCurrentTourPrice();
    PRICE BY GUESTS
    ========================================================= */
 
+/* =========================================================
+   TIER RATE (raw stored rate for a given headcount — flat
+   group total for legacy tours, per-person for packages)
+   ========================================================= */
+
+function getTierRate(tour, totalHeadcount){
+
+if(!tour){
+
+return "";
+
+}
+
+totalHeadcount =
+Number(totalHeadcount);
+
+const isPackage =
+Object.prototype.hasOwnProperty.call(tour, "package_name");
+
+if(!isPackage){
+
+if(totalHeadcount >= 1 && totalHeadcount <= 2){
+
+return tour.price_1_2 ?? "";
+
+}
+
+if(totalHeadcount >= 3 && totalHeadcount <= 14){
+
+return tour.price_3_14 ?? "";
+
+}
+
+if(totalHeadcount >= 15 && totalHeadcount <= 25){
+
+return tour.price_15_25 ?? "";
+
+}
+
+return "";
+
+}
+
+if(totalHeadcount === 1){
+
+const hasSoloPrice =
+tour.price_solo !== null &&
+tour.price_solo !== undefined &&
+tour.price_solo !== "";
+
+return
+hasSoloPrice
+?
+tour.price_solo
+:
+tour.price_1_2;
+
+}
+
+if(totalHeadcount === 2){
+
+return tour.price_1_2;
+
+}
+
+if(totalHeadcount >= 3 && totalHeadcount <= 14){
+
+return tour.price_3_14;
+
+}
+
+if(totalHeadcount >= 15 && totalHeadcount <= 25){
+
+return tour.price_15_25;
+
+}
+
+return "";
+
+}
+
+
+/* =========================================================
+   PRICE FOR GUESTS (legacy — treats everyone as an adult;
+   kept so any old call sites still work)
+   ========================================================= */
+
 function getPriceForGuests(
 tour,
 guests
@@ -4781,84 +4901,76 @@ return "";
 guests =
 Number(guests);
 
-/* Packages (from tour_packages) store a PER-PERSON rate and
-   the total is calculated here by multiplying by the actual
-   number of guests. Tours still on the old flat-rate system
-   (tour_prices fallback — e.g. Airport Transfer, Felucca,
-   Nile Cruise) have no "package_name" field, so they keep
-   using the original flat total-per-bracket behavior. */
-
-const isPackage =
-Object.prototype.hasOwnProperty.call(tour, "package_name");
-
-if(!isPackage){
-
-if(guests >= 1 && guests <= 2){
-
-return tour.price_1_2 ?? "";
-
-}
-
-if(guests >= 3 && guests <= 14){
-
-return tour.price_3_14 ?? "";
-
-}
-
-if(guests >= 15 && guests <= 25){
-
-return tour.price_15_25 ?? "";
-
-}
-
-return "";
-
-}
-
-let perPerson = null;
-
-if(guests === 1){
-
-const hasSoloPrice =
-tour.price_solo !== null &&
-tour.price_solo !== undefined &&
-tour.price_solo !== "";
-
-perPerson =
-hasSoloPrice
-?
-tour.price_solo
-:
-tour.price_1_2;
-
-}else if(guests === 2){
-
-perPerson =
-tour.price_1_2;
-
-}else if(guests >= 3 && guests <= 14){
-
-perPerson =
-tour.price_3_14;
-
-}else if(guests >= 15 && guests <= 25){
-
-perPerson =
-tour.price_15_25;
-
-}
+const rate =
+getTierRate(tour, guests);
 
 if(
-perPerson === null ||
-perPerson === undefined ||
-perPerson === ""
+rate === "" ||
+rate === null ||
+rate === undefined
 ){
 
 return "";
 
 }
 
-return Number(perPerson) * guests;
+const isPackage =
+Object.prototype.hasOwnProperty.call(tour, "package_name");
+
+return
+isPackage
+?
+Number(rate) * guests
+:
+rate;
+
+}
+
+
+/* =========================================================
+   CALCULATE BOOKING PRICE (adults + children, children pay
+   half the per-person rate — packages only; legacy flat-rate
+   tours use the same flat group total regardless of the mix)
+   ========================================================= */
+
+function calculateBookingPrice(tour, adults, children){
+
+adults = Number(adults) || 0;
+children = Number(children) || 0;
+
+const totalHeadcount = adults + children;
+
+if(!tour || totalHeadcount <= 0){
+
+return "";
+
+}
+
+const rate =
+getTierRate(tour, totalHeadcount);
+
+if(
+rate === "" ||
+rate === null ||
+rate === undefined
+){
+
+return "";
+
+}
+
+const isPackage =
+Object.prototype.hasOwnProperty.call(tour, "package_name");
+
+if(!isPackage){
+
+return rate;
+
+}
+
+const rateNum = Number(rate);
+
+return (rateNum * adults) + (rateNum / 2 * children);
 
 }
 
@@ -5956,25 +6068,34 @@ document.body.style.overflow =
 
 function showCurrentTourPrice(){
 
-const guests =
+const adults =
+Number(
 document.getElementById(
-"guests"
-).value;
+"adults"
+).value
+) || 0;
+
+const children =
+Number(
+document.getElementById(
+"children"
+).value
+) || 0;
 
 const display =
 document.getElementById(
 "displayPrice"
 );
 
-if(!guests){
-
-display.textContent =
-"Select number of guests";
-
 const breakdownEl =
 document.getElementById(
 "priceBreakdown"
 );
+
+if(!adults){
+
+display.textContent =
+"Select number of guests";
 
 if(breakdownEl){
 
@@ -5998,18 +6119,14 @@ window.currentTour
 );
 
 const price =
-getPriceForGuests(
+calculateBookingPrice(
 tour,
-guests
+adults,
+children
 );
 
 const currency =
 getCurrency(tour);
-
-const breakdownEl =
-document.getElementById(
-"priceBreakdown"
-);
 
 
 if(
@@ -6019,7 +6136,7 @@ price !== undefined
 ){
 
 display.textContent =
-price +
+Number(price).toFixed(2) +
 " " +
 currency;
 
@@ -6029,18 +6146,37 @@ Object.prototype.hasOwnProperty.call(tour, "package_name");
 
 if(breakdownEl){
 
-if(isPackage && Number(guests) > 0){
+if(isPackage){
 
-const perPerson =
-(Number(price) / Number(guests)).toFixed(2);
+const rate =
+getTierRate(tour, adults + children);
 
-breakdownEl.textContent =
-guests +
-(Number(guests) === 1 ? " Guest" : " Guests") +
+const rateNum =
+Number(rate);
+
+let breakdownText =
+adults +
+(adults === 1 ? " Adult" : " Adults") +
 " × " +
-perPerson +
+rateNum.toFixed(2) +
 " " +
 currency;
+
+if(children > 0){
+
+breakdownText +=
+" + " +
+children +
+(children === 1 ? " Child" : " Children") +
+" × " +
+(rateNum / 2).toFixed(2) +
+" " +
+currency;
+
+}
+
+breakdownEl.textContent =
+breakdownText;
 
 }else{
 
@@ -6487,10 +6623,19 @@ document.getElementById(
 "phone"
 ).value.trim();
 
-const guests =
+const adults =
+Number(
 document.getElementById(
-"guests"
-).value;
+"adults"
+).value
+) || 0;
+
+const children =
+Number(
+document.getElementById(
+"children"
+).value
+) || 0;
 
 const bags =
 document.getElementById(
@@ -6520,9 +6665,10 @@ window.currentTour
 );
 
 const price =
-getPriceForGuests(
+calculateBookingPrice(
 databaseTour,
-guests
+adults,
+children
 );
 
 const currency =
@@ -6650,16 +6796,24 @@ name +
 phone +
 "\n" +
 
-"Guests: " +
-guests +
+"Adults: " +
+adults +
 "\n" +
+
+(
+children > 0
+?
+"Children (5–9 yrs): " + children + "\n"
+:
+""
+) +
 
 "Price: " +
 
 (
 price !== ""
 ?
-price +
+Number(price).toFixed(2) +
 " " +
 currency
 :
@@ -6735,9 +6889,14 @@ populateTimeSelect("tourTime");
 
 initPickupAutocomplete();
 
-const guests = document.getElementById("guests");
-if(guests){
-    guests.addEventListener("change", showCurrentTourPrice);
+const adultsSelect = document.getElementById("adults");
+if(adultsSelect){
+    adultsSelect.addEventListener("change", showCurrentTourPrice);
+}
+
+const childrenSelect = document.getElementById("children");
+if(childrenSelect){
+    childrenSelect.addEventListener("change", showCurrentTourPrice);
 }
 
 const params = new URLSearchParams(window.location.search);
