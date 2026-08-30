@@ -1858,6 +1858,12 @@ color:#75675b;
 margin-top:5px;
 }
 
+.price-breakdown{
+font-size:13px;
+color:#5a4c40;
+margin-top:6px;
+}
+
 /* =========================================================
    PACKAGE OPTIONS (choose service level before price shows)
    ========================================================= */
@@ -3237,6 +3243,8 @@ id="displayPrice">
 Select number of guests
 
 </div>
+
+<div class="price-breakdown" id="priceBreakdown"></div>
 
 <div class="price-note">
 Final price according to number of guests.
@@ -4773,6 +4781,17 @@ return "";
 guests =
 Number(guests);
 
+/* Packages (from tour_packages) store a PER-PERSON rate and
+   the total is calculated here by multiplying by the actual
+   number of guests. Tours still on the old flat-rate system
+   (tour_prices fallback — e.g. Airport Transfer, Felucca,
+   Nile Cruise) have no "package_name" field, so they keep
+   using the original flat total-per-bracket behavior. */
+
+const isPackage =
+Object.prototype.hasOwnProperty.call(tour, "package_name");
+
+if(!isPackage){
 
 if(guests >= 1 && guests <= 2){
 
@@ -4780,13 +4799,11 @@ return tour.price_1_2 ?? "";
 
 }
 
-
 if(guests >= 3 && guests <= 14){
 
 return tour.price_3_14 ?? "";
 
 }
-
 
 if(guests >= 15 && guests <= 25){
 
@@ -4794,8 +4811,54 @@ return tour.price_15_25 ?? "";
 
 }
 
+return "";
+
+}
+
+let perPerson = null;
+
+if(guests === 1){
+
+const hasSoloPrice =
+tour.price_solo !== null &&
+tour.price_solo !== undefined &&
+tour.price_solo !== "";
+
+perPerson =
+hasSoloPrice
+?
+tour.price_solo
+:
+tour.price_1_2;
+
+}else if(guests === 2){
+
+perPerson =
+tour.price_1_2;
+
+}else if(guests >= 3 && guests <= 14){
+
+perPerson =
+tour.price_3_14;
+
+}else if(guests >= 15 && guests <= 25){
+
+perPerson =
+tour.price_15_25;
+
+}
+
+if(
+perPerson === null ||
+perPerson === undefined ||
+perPerson === ""
+){
 
 return "";
+
+}
+
+return Number(perPerson) * guests;
 
 }
 
@@ -5908,6 +5971,17 @@ if(!guests){
 display.textContent =
 "Select number of guests";
 
+const breakdownEl =
+document.getElementById(
+"priceBreakdown"
+);
+
+if(breakdownEl){
+
+breakdownEl.textContent = "";
+
+}
+
 return;
 
 }
@@ -5932,6 +6006,11 @@ guests
 const currency =
 getCurrency(tour);
 
+const breakdownEl =
+document.getElementById(
+"priceBreakdown"
+);
+
 
 if(
 price !== "" &&
@@ -5944,10 +6023,43 @@ price +
 " " +
 currency;
 
+const isPackage =
+tour &&
+Object.prototype.hasOwnProperty.call(tour, "package_name");
+
+if(breakdownEl){
+
+if(isPackage && Number(guests) > 0){
+
+const perPerson =
+(Number(price) / Number(guests)).toFixed(2);
+
+breakdownEl.textContent =
+guests +
+(Number(guests) === 1 ? " Guest" : " Guests") +
+" × " +
+perPerson +
+" " +
+currency;
+
+}else{
+
+breakdownEl.textContent = "";
+
+}
+
+}
+
 }else{
 
 display.textContent =
 "Price on request";
+
+if(breakdownEl){
+
+breakdownEl.textContent = "";
+
+}
 
 }
 

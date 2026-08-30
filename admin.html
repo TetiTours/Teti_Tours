@@ -246,7 +246,7 @@ border-bottom:2px solid #e5ddd2;
 
 .package-row{
 display:grid;
-grid-template-columns:1.3fr 1.6fr .8fr .8fr .8fr 70px 34px;
+grid-template-columns:1.2fr 1.4fr .7fr .7fr .7fr .7fr 60px 34px 34px;
 gap:8px;
 align-items:center;
 padding:10px 0;
@@ -282,9 +282,85 @@ cursor:pointer;
 background:#8a2f2f;
 }
 
+.calc-toggle-btn{
+background:#e5ddd2;
+color:#5a4c40;
+border:none;
+border-radius:5px;
+width:34px;
+height:34px;
+font-size:15px;
+cursor:pointer;
+}
+
+.calc-toggle-btn:hover{
+background:#d5c8b8;
+}
+
+.calc-toggle-btn.active{
+background:#b38b52;
+color:white;
+}
+
+.package-calc{
+display:none;
+grid-column:1 / -1;
+background:#f8f5ef;
+border:1px dashed #d5c8b8;
+border-radius:6px;
+padding:12px 14px;
+margin-bottom:10px;
+align-items:center;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.package-calc.active{
+display:flex;
+}
+
+.package-calc label{
+font-size:12px;
+color:#75675b;
+margin-bottom:0;
+white-space:nowrap;
+}
+
+.package-calc input{
+width:80px;
+padding:8px;
+border:1px solid #d5c8b8;
+border-radius:5px;
+font-size:13px;
+margin-bottom:0;
+}
+
+.package-calc .calc-result{
+font-weight:bold;
+color:#2a1d15;
+font-size:14px;
+white-space:nowrap;
+}
+
+.package-calc button{
+padding:8px 12px;
+border:none;
+border-radius:5px;
+background:#2a1d15;
+color:white;
+font-size:12px;
+font-weight:bold;
+cursor:pointer;
+white-space:nowrap;
+}
+
+.package-calc button:hover{
+background:#b38b52;
+}
+
 .package-row-labels{
 display:grid;
-grid-template-columns:1.3fr 1.6fr .8fr .8fr .8fr 70px 34px;
+grid-template-columns:1.2fr 1.4fr .7fr .7fr .7fr .7fr 60px 34px 34px;
 gap:8px;
 padding-bottom:8px;
 }
@@ -726,11 +802,24 @@ return `
 <div class="package-row" data-id="${id}">
 <input type="text" data-field="package_name" placeholder="Package name" value="${escapeAdminHtml(pkg.package_name ?? "")}">
 <input type="text" data-field="description" placeholder="Description (optional)" value="${escapeAdminHtml(pkg.description ?? "")}">
-<input type="number" min="0" step="0.01" data-field="price_1_2" placeholder="1–2" value="${pkg.price_1_2 ?? ""}">
+<input type="number" min="0" step="0.01" data-field="price_solo" placeholder="Solo" value="${pkg.price_solo ?? ""}">
+<input type="number" min="0" step="0.01" data-field="price_1_2" placeholder="2 pax" value="${pkg.price_1_2 ?? ""}">
 <input type="number" min="0" step="0.01" data-field="price_3_14" placeholder="3–14" value="${pkg.price_3_14 ?? ""}">
 <input type="number" min="0" step="0.01" data-field="price_15_25" placeholder="15–25" value="${pkg.price_15_25 ?? ""}">
 <input type="number" class="order-input" data-field="display_order" placeholder="#" value="${pkg.display_order ?? 0}">
+<button class="calc-toggle-btn" type="button" onclick="togglePriceCalc(this)" title="Calculate from per-person price">🧮</button>
 <button class="package-row-remove" type="button" onclick="removePackageRow(this)">✕</button>
+</div>
+<div class="package-calc">
+<label>Per person ($)</label>
+<input type="number" min="0" step="0.01" class="calc-per-person" placeholder="e.g. 100">
+<label>× Guests</label>
+<input type="number" min="1" step="1" class="calc-guests" value="2">
+<span class="calc-result">= $0.00</span>
+<button type="button" onclick="fillPriceFromCalc(this, 'price_solo')">Fill Solo</button>
+<button type="button" onclick="fillPriceFromCalc(this, 'price_1_2')">Fill 2 pax</button>
+<button type="button" onclick="fillPriceFromCalc(this, 'price_3_14')">Fill 3–14</button>
+<button type="button" onclick="fillPriceFromCalc(this, 'price_15_25')">Fill 15–25</button>
 </div>
 `;
 
@@ -748,10 +837,12 @@ return `
 <div class="package-row-labels">
 <span>Package Name</span>
 <span>Description</span>
-<span>1–2 Guests</span>
-<span>3–14 Guests</span>
-<span>15–25 Guests</span>
+<span>Solo (1)</span>
+<span>2 Guests</span>
+<span>3–14 (ea.)</span>
+<span>15–25 (ea.)</span>
 <span>Order</span>
+<span></span>
 <span></span>
 </div>
 <div class="package-rows">
@@ -804,6 +895,7 @@ container.insertAdjacentHTML(
 renderPackageGroupHtml(tourId, [{
 package_name:"",
 description:"",
+price_solo:"",
 price_1_2:"",
 price_3_14:"",
 price_15_25:"",
@@ -834,12 +926,75 @@ rowsContainer.insertAdjacentHTML(
 renderPackageRowHtml({
 package_name:"",
 description:"",
+price_solo:"",
 price_1_2:"",
 price_3_14:"",
 price_15_25:"",
 display_order: rowCount + 1
 })
 );
+
+}
+
+
+/* =========================================================
+   PRICE CALCULATOR (per-person price → tier total)
+   ========================================================= */
+
+function togglePriceCalc(button){
+
+const row = button.closest(".package-row");
+const calc = row.nextElementSibling;
+
+if(!calc || !calc.classList.contains("package-calc")){
+return;
+}
+
+const isActive = calc.classList.toggle("active");
+button.classList.toggle("active", isActive);
+
+if(isActive){
+
+const perPersonInput = calc.querySelector(".calc-per-person");
+const guestsInput = calc.querySelector(".calc-guests");
+const resultEl = calc.querySelector(".calc-result");
+
+const updateResult = function(){
+
+const perPerson = Number(perPersonInput.value) || 0;
+const guests = Number(guestsInput.value) || 0;
+const total = perPerson * guests;
+
+resultEl.textContent = "= $" + total.toFixed(2);
+
+};
+
+perPersonInput.oninput = updateResult;
+guestsInput.oninput = updateResult;
+
+updateResult();
+
+}
+
+}
+
+
+function fillPriceFromCalc(button, field){
+
+const calc = button.closest(".package-calc");
+const row = calc.previousElementSibling;
+
+const perPerson = Number(calc.querySelector(".calc-per-person").value) || 0;
+const guests = Number(calc.querySelector(".calc-guests").value) || 0;
+const total = perPerson * guests;
+
+const targetInput = row.querySelector('input[data-field="' + field + '"]');
+
+if(targetInput){
+
+targetInput.value = total.toFixed(2);
+
+}
 
 }
 
@@ -853,10 +1008,14 @@ display_order: rowCount + 1
 async function removePackageRow(button){
 
 const row = button.closest(".package-row");
+const calc = row.nextElementSibling;
 const id = row.dataset.id;
 
 if(!id){
 row.remove();
+if(calc && calc.classList.contains("package-calc")){
+calc.remove();
+}
 return;
 }
 
@@ -886,6 +1045,10 @@ throw new Error("Supabase HTTP " + response.status + ": " + errorText);
 }
 
 row.remove();
+
+if(calc && calc.classList.contains("package-calc")){
+calc.remove();
+}
 
 }catch(error){
 console.error("Delete error:", error);
@@ -924,7 +1087,7 @@ row.querySelectorAll("input[data-field]").forEach(input => {
 
 const field = input.dataset.field;
 
-if(field === "price_1_2" || field === "price_3_14" || field === "price_15_25" || field === "display_order"){
+if(field === "price_solo" || field === "price_1_2" || field === "price_3_14" || field === "price_15_25" || field === "display_order"){
 fields[field] = input.value === "" ? null : Number(input.value);
 }else{
 fields[field] = input.value.trim();
