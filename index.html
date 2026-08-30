@@ -4928,9 +4928,12 @@ rate;
 
 
 /* =========================================================
-   CALCULATE BOOKING PRICE (adults + children, children pay
-   half the per-person rate — packages only; legacy flat-rate
-   tours use the same flat group total regardless of the mix)
+   CALCULATE BOOKING PRICE (adults + children — the adult
+   tier/bracket is based on the ADULT count only; children are
+   charged at the package's own "price_child" rate if the admin
+   set one, otherwise half the adult per-person rate. Legacy
+   flat-rate tours — Airport Transfer, Felucca, etc. — keep the
+   original flat group-total behavior based on total headcount)
    ========================================================= */
 
 function calculateBookingPrice(tour, adults, children){
@@ -4946,31 +4949,44 @@ return "";
 
 }
 
-const rate =
-getTierRate(tour, totalHeadcount);
+const isPackage =
+Object.prototype.hasOwnProperty.call(tour, "package_name");
+
+if(!isPackage){
+
+return getTierRate(tour, totalHeadcount);
+
+}
+
+const adultRate =
+getTierRate(tour, adults || totalHeadcount);
 
 if(
-rate === "" ||
-rate === null ||
-rate === undefined
+adultRate === "" ||
+adultRate === null ||
+adultRate === undefined
 ){
 
 return "";
 
 }
 
-const isPackage =
-Object.prototype.hasOwnProperty.call(tour, "package_name");
+const adultRateNum =
+Number(adultRate);
 
-if(!isPackage){
+const hasChildPrice =
+tour.price_child !== null &&
+tour.price_child !== undefined &&
+tour.price_child !== "";
 
-return rate;
+const childRate =
+hasChildPrice
+?
+Number(tour.price_child)
+:
+(adultRateNum / 2);
 
-}
-
-const rateNum = Number(rate);
-
-return (rateNum * adults) + (rateNum / 2 * children);
+return (adultRateNum * adults) + (childRate * children);
 
 }
 
@@ -6148,17 +6164,29 @@ if(breakdownEl){
 
 if(isPackage){
 
-const rate =
-getTierRate(tour, adults + children);
+const adultRate =
+getTierRate(tour, adults);
 
-const rateNum =
-Number(rate);
+const adultRateNum =
+Number(adultRate);
+
+const hasChildPrice =
+tour.price_child !== null &&
+tour.price_child !== undefined &&
+tour.price_child !== "";
+
+const childRateNum =
+hasChildPrice
+?
+Number(tour.price_child)
+:
+(adultRateNum / 2);
 
 let breakdownText =
 adults +
 (adults === 1 ? " Adult" : " Adults") +
 " × " +
-rateNum.toFixed(2) +
+adultRateNum.toFixed(2) +
 " " +
 currency;
 
@@ -6169,7 +6197,7 @@ breakdownText +=
 children +
 (children === 1 ? " Child" : " Children") +
 " × " +
-(rateNum / 2).toFixed(2) +
+childRateNum.toFixed(2) +
 " " +
 currency;
 
