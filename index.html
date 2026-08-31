@@ -4850,12 +4850,13 @@ tour.price_solo !== null &&
 tour.price_solo !== undefined &&
 tour.price_solo !== "";
 
-return
+return (
 hasSoloPrice
 ?
 tour.price_solo
 :
-tour.price_1_2;
+tour.price_1_2
+);
 
 }
 
@@ -4917,12 +4918,13 @@ return "";
 const isPackage =
 Object.prototype.hasOwnProperty.call(tour, "package_name");
 
-return
+return (
 isPackage
 ?
 Number(rate) * guests
 :
-rate;
+rate
+);
 
 }
 
