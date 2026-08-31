@@ -5099,6 +5099,8 @@ optionId;
 
 renderPackageOptions(optionId);
 
+setTourTimeOptions(optionId);
+
 renderIncludedList(optionId);
 
 renderItinerary(optionId, option);
@@ -5353,6 +5355,8 @@ window.currentCairoOption =
 null;
 
 renderPackageOptions(tourId);
+
+setTourTimeOptions(tourId);
 
 renderIncludedList(tourId);
 
@@ -5946,25 +5950,7 @@ statusEl.style.color = "#a83b3b";
    devices — a plain <select> works identically everywhere)
    ========================================================= */
 
-function populateTimeSelect(selectId){
-
-const select =
-document.getElementById(selectId);
-
-if(!select){
-
-return;
-
-}
-
-for(let hour = 0; hour < 24; hour++){
-
-for(let minute = 0; minute < 60; minute += 15){
-
-const value =
-String(hour).padStart(2, "0") +
-":" +
-String(minute).padStart(2, "0");
+function formatTimeLabel(hour, minute){
 
 const period =
 hour < 12 ? "AM" : "PM";
@@ -5978,22 +5964,138 @@ displayHour = 12;
 
 }
 
-const label =
+return
 displayHour +
 ":" +
 String(minute).padStart(2, "0") +
 " " +
 period;
 
+}
+
+
+function populateTimeSelect(selectId, startHour, endHour){
+
+const select =
+document.getElementById(selectId);
+
+if(!select){
+
+return;
+
+}
+
+select.innerHTML = "";
+
+if(startHour === undefined){
+
+startHour = 0;
+
+}
+
+if(endHour === undefined){
+
+endHour = 23.75;
+
+}
+
+for(let hour = 0; hour < 24; hour++){
+
+for(let minute = 0; minute < 60; minute += 15){
+
+const timeAsDecimal =
+hour + (minute / 60);
+
+if(timeAsDecimal < startHour || timeAsDecimal > endHour){
+
+continue;
+
+}
+
+const value =
+String(hour).padStart(2, "0") +
+":" +
+String(minute).padStart(2, "0");
+
 const option =
 document.createElement("option");
 
 option.value = value;
-option.textContent = label;
+option.textContent = formatTimeLabel(hour, minute);
 
 select.appendChild(option);
 
 }
+
+}
+
+}
+
+
+function populateFixedTimeSelect(selectId, times){
+
+const select =
+document.getElementById(selectId);
+
+if(!select){
+
+return;
+
+}
+
+select.innerHTML = "";
+
+times.forEach(function(time){
+
+const parts = time.split(":");
+const hour = Number(parts[0]);
+const minute = Number(parts[1]);
+
+const option =
+document.createElement("option");
+
+option.value = time;
+option.textContent = formatTimeLabel(hour, minute);
+
+select.appendChild(option);
+
+});
+
+}
+
+
+/* =========================================================
+   PICKUP TIME WINDOW PER TOUR
+   ========================================================= */
+
+function setTourTimeOptions(tourId){
+
+if(tourId === "Nile-Cruise"){
+
+populateFixedTimeSelect("tourTime", ["17:00", "19:00"]);
+
+}else if(tourId === "Fayoum" || tourId === "Alexandria"){
+
+populateFixedTimeSelect("tourTime", ["07:00"]);
+
+}else if(tourId === "VIP-Felucca-Lunch"){
+
+populateTimeSelect("tourTime", 12, 22);
+
+}else if(
+tourId === "GEM-Pyramids" ||
+tourId === "Saqqara-Memphis" ||
+tourId === "Saqqara-Dahshur-Memphis" ||
+tourId === "Citadel-NMEC" ||
+tourId === "Half-Giza" ||
+tourId === "Half-GEM"
+){
+
+populateTimeSelect("tourTime", 7.5, 11);
+
+}else{
+
+populateTimeSelect("tourTime");
 
 }
 
