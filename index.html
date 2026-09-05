@@ -4042,6 +4042,13 @@ let optionsHtml =
 '<option value="" disabled selected>Choose a tour...</option>';
 
 Object.keys(TOUR_DATA).forEach(function(id){
+
+if(id === "Cairo Giza" || id === "Cairo-Giza"){
+
+return;
+
+}
+
 optionsHtml +=
 '<option value="' +
 escapeHtml(TOUR_DATA[id].name) +
