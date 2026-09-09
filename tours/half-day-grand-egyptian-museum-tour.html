@@ -7275,7 +7275,11 @@ openCairoOption('Half-GEM');
 }, 250);
 });
 window.closeDetails = function(){
-window.location.href = "../index.html#tours";
+const modal = document.getElementById("detailModal");
+if(modal){
+modal.style.display = "none";
+}
+document.body.style.overflow = "auto";
 };
 </script>
 
