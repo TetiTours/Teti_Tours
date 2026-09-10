@@ -3265,6 +3265,34 @@ id="children">
 
 </div>
 
+<div>
+
+<label>
+Guide Language
+</label>
+
+<select
+id="guideLanguage">
+
+<option value="English">English</option>
+<option value="Spanish">Spanish</option>
+<option value="French">French</option>
+<option value="Italian">Italian</option>
+<option value="German">German</option>
+<option value="Russian">Russian</option>
+<option value="Portuguese">Portuguese</option>
+<option value="Dutch">Dutch</option>
+<option value="Chinese">Chinese</option>
+<option value="Japanese">Japanese</option>
+
+</select>
+
+<p style="font-size:12px;color:#75675b;margin-top:6px;">
+Prices shown are for an English-speaking guide. Other languages may have a different price — we will confirm on WhatsApp.
+</p>
+
+</div>
+
 </div>
 
 
@@ -6941,6 +6969,15 @@ document.getElementById(
 ).value
 ) || 0;
 
+const guideLanguageField =
+document.getElementById(
+"guideLanguage"
+);
+const guideLanguage =
+guideLanguageField ?
+guideLanguageField.value :
+"N/A (Airport Transfer)";
+
 const bags =
 document.getElementById(
 "bags"
@@ -7155,6 +7192,10 @@ window.pickupLocationLink
 "\n"
 ) +
 
+"Guide Language: " +
+guideLanguage +
+"\n" +
+
 "Additional Message: " +
 
 (
@@ -7182,6 +7223,7 @@ guest_name: name,
 guest_phone: phone,
 adults: adults,
 children: children,
+guide_language: guideLanguage,
 pickup: pickup,
 message: message || null,
 price: price,
@@ -7209,12 +7251,38 @@ url,
 
 const formArea = document.getElementById("bookingFormArea");
 if(formArea){
+const dateField = document.getElementById("tourDate");
+const displayDate = (dateField && dateField.value) ? dateField.value : "To be confirmed";
+const travelerText = adults + (adults === 1 ? " adult" : " adults") + (children > 0 ? (", " + children + (children === 1 ? " child" : " children")) : "");
 formArea.innerHTML =
-'<div class="booking-form-box" style="text-align:center;padding:40px 20px;">' +
-'<div style="font-size:48px;margin-bottom:16px;">✅</div>' +
-'<h3 style="color:#2a1d15;margin-bottom:12px;">Booking Confirmed!</h3>' +
-'<p style="color:#33251b;font-size:16px;margin-bottom:6px;">Reference: <strong>' + bookingRef + '</strong></p>' +
-'<p style="color:#5a4c40;font-size:14px;">We have received your booking instantly. A WhatsApp message has opened so you can share any final details, and our team will follow up shortly to confirm pickup arrangements.</p>' +
+'<div class="booking-form-box" style="padding:0;overflow:hidden;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.12);">' +
+'<div style="background:#2a1d15;padding:24px 20px;text-align:center;">' +
+'<img src="../logo.png" alt="Teti Tour Logo" style="width:70px;height:70px;object-fit:contain;margin-bottom:8px;">' +
+'<div style="color:#d6b77a;font-size:12px;letter-spacing:2px;font-weight:bold;">BOOKING CONFIRMED</div>' +
+'</div>' +
+'<div style="padding:28px 24px;background:white;">' +
+'<div style="text-align:center;margin-bottom:20px;">' +
+'<div style="font-size:40px;">✅</div>' +
+'</div>' +
+'<div style="border:1px solid #e5ddd2;border-radius:10px;padding:20px;">' +
+'<h3 style="color:#2a1d15;font-size:18px;margin-bottom:4px;">' + tourName + '</h3>' +
+(packageName ? '<p style="color:#75675b;font-size:13px;margin-bottom:16px;">' + packageName + '</p>' : '<div style="margin-bottom:16px;"></div>') +
+'<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;border-top:1px solid #f0ebe2;padding-top:14px;">' +
+'<div><div style="color:#a4826a;font-size:11px;text-transform:uppercase;">Date</div><div style="color:#33251b;font-weight:bold;font-size:14px;">' + displayDate + '</div></div>' +
+'<div><div style="color:#a4826a;font-size:11px;text-transform:uppercase;">Travelers</div><div style="color:#33251b;font-weight:bold;font-size:14px;">' + travelerText + '</div></div>' +
+'<div><div style="color:#a4826a;font-size:11px;text-transform:uppercase;">Language</div><div style="color:#33251b;font-weight:bold;font-size:14px;">' + guideLanguage + '</div></div>' +
+'</div>' +
+'<div style="border-top:1px solid #f0ebe2;margin-top:14px;padding-top:14px;">' +
+'<div style="color:#a4826a;font-size:11px;text-transform:uppercase;">Activity Provider</div>' +
+'<div style="color:#33251b;font-weight:bold;font-size:14px;">Teti Tour</div>' +
+'</div>' +
+'<div style="border-top:1px solid #f0ebe2;margin-top:14px;padding-top:14px;">' +
+'<div style="color:#a4826a;font-size:11px;text-transform:uppercase;">Booking Ref.</div>' +
+'<div style="color:#33251b;font-weight:bold;font-size:14px;">' + bookingRef + '</div>' +
+'</div>' +
+'</div>' +
+'<p style="color:#5a4c40;font-size:13px;text-align:center;margin-top:20px;">We have received your booking instantly. A WhatsApp message has opened so you can share any final details, and our team will follow up shortly to confirm pickup arrangements.</p>' +
+'</div>' +
 '</div>';
 }
 
