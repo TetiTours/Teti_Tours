@@ -536,6 +536,75 @@ color:#2a1d15;
 font-size:14px;
 }
 
+.booking-card{
+background:white;
+border-radius:10px;
+padding:20px;
+margin-bottom:14px;
+box-shadow:0 6px 18px rgba(0,0,0,.06);
+}
+
+.booking-card.cancelled{
+opacity:.55;
+}
+
+.booking-status-badge{
+display:inline-block;
+padding:4px 10px;
+border-radius:20px;
+font-size:11px;
+font-weight:bold;
+text-transform:uppercase;
+}
+
+.booking-status-confirmed{
+background:#e8f3e4;
+color:#2d5223;
+}
+
+.booking-status-cancelled{
+background:#fbe7e7;
+color:#8a2e2e;
+}
+
+.booking-row{
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:10px;
+margin-top:10px;
+padding-top:10px;
+border-top:1px solid #f0ebe2;
+}
+
+.booking-field-label{
+color:#a4826a;
+font-size:11px;
+text-transform:uppercase;
+}
+
+.booking-field-value{
+color:#33251b;
+font-weight:bold;
+font-size:14px;
+}
+
+.cancel-booking-btn{
+background:#8a2e2e;
+color:white;
+border:none;
+padding:8px 16px;
+border-radius:5px;
+font-size:13px;
+font-weight:bold;
+cursor:pointer;
+margin-top:14px;
+}
+
+.cancel-booking-btn:hover{
+background:#a83b3b;
+}
+
 .pending-review-date{
 color:#a4826a;
 font-size:12px;
@@ -640,6 +709,21 @@ background:#8a2f2f;
 
 <div id="packageAdmin">
 Loading packages...
+</div>
+
+</div>
+
+<div class="reviews-section">
+
+<h2>Bookings</h2>
+<span id="bookingsCount" style="color:#75675b;font-size:13px;"></span>
+
+<div class="admin-box">
+
+<div id="bookingsList">
+Loading...
+</div>
+
 </div>
 
 </div>
@@ -1190,6 +1274,117 @@ alert("Could not save packages.\n\n" + error.message);
    policies on the reviews table)
    ========================================================= */
 
+async function loadBookings(){
+
+const container = document.getElementById("bookingsList");
+const countLabel = document.getElementById("bookingsCount");
+
+if(!container){ return; }
+
+const { data, error } =
+await supabaseClient
+.from("bookings")
+.select("*")
+.order("created_at", { ascending:false });
+
+if(error){
+console.error("loadBookings error:", error);
+container.innerHTML =
+'<p style="color:#75675b;">Could not load bookings.</p>';
+return;
+}
+
+if(countLabel){
+countLabel.textContent =
+data.length + " total";
+}
+
+if(data.length === 0){
+container.innerHTML =
+'<p style="color:#75675b;">No bookings yet.</p>';
+return;
+}
+
+let html = "";
+
+data.forEach(booking => {
+
+const isCancelled = booking.status === "cancelled";
+
+const statusBadge =
+isCancelled
+?
+'<span class="booking-status-badge booking-status-cancelled">Cancelled</span>'
+:
+'<span class="booking-status-badge booking-status-confirmed">Confirmed</span>';
+
+const createdDate =
+new Date(booking.created_at).toLocaleString();
+
+html +=
+'<div class="booking-card' + (isCancelled ? ' cancelled' : '') + '">' +
+
+'<div style="display:flex;justify-content:space-between;align-items:flex-start;">' +
+'<div>' +
+'<strong style="color:#2a1d15;font-size:16px;">' + (booking.tour_name || "-") + '</strong>' +
+(booking.package_name ? '<div style="color:#75675b;font-size:13px;">' + booking.package_name + '</div>' : '') +
+'</div>' +
+statusBadge +
+'</div>' +
+
+'<div class="booking-row">' +
+'<div><div class="booking-field-label">Reference</div><div class="booking-field-value">' + (booking.reference || "-") + '</div></div>' +
+'<div><div class="booking-field-label">Guest</div><div class="booking-field-value">' + (booking.guest_name || "-") + '</div></div>' +
+'<div><div class="booking-field-label">Phone</div><div class="booking-field-value">' + (booking.guest_phone || "-") + '</div></div>' +
+'</div>' +
+
+'<div class="booking-row">' +
+'<div><div class="booking-field-label">Adults</div><div class="booking-field-value">' + (booking.adults ?? "-") + '</div></div>' +
+'<div><div class="booking-field-label">Children</div><div class="booking-field-value">' + (booking.children ?? 0) + '</div></div>' +
+'<div><div class="booking-field-label">Language</div><div class="booking-field-value">' + (booking.guide_language || "-") + '</div></div>' +
+'</div>' +
+
+'<div class="booking-row">' +
+'<div><div class="booking-field-label">Price</div><div class="booking-field-value">' + (booking.price != null ? Number(booking.price).toFixed(2) + " " + (booking.currency || "") : "On request") + '</div></div>' +
+'<div><div class="booking-field-label">Pickup</div><div class="booking-field-value">' + (booking.pickup || "-") + '</div></div>' +
+'<div><div class="booking-field-label">Booked On</div><div class="booking-field-value">' + createdDate + '</div></div>' +
+'</div>' +
+
+(booking.message ? '<div class="booking-row"><div><div class="booking-field-label">Message</div><div class="booking-field-value" style="font-weight:normal;">' + booking.message + '</div></div></div>' : "") +
+
+(isCancelled ? "" : '<button class="cancel-booking-btn" onclick="cancelBooking(' + booking.id + ')">Cancel Booking</button>') +
+
+'</div>';
+
+});
+
+container.innerHTML = html;
+
+}
+
+
+async function cancelBooking(id){
+
+if(!confirm("Cancel this booking? This cannot be undone from here.")){
+return;
+}
+
+const { error } =
+await supabaseClient
+.from("bookings")
+.update({ status: "cancelled" })
+.eq("id", id);
+
+if(error){
+alert("Could not cancel booking: " + error.message);
+return;
+}
+
+loadBookings();
+
+}
+
+
 async function loadPendingReviews(){
 
 const container = document.getElementById("pendingReviews");
@@ -1411,6 +1606,7 @@ document.getElementById("signedInAs").textContent =
 window.tourPackages = await getTourPackages();
 renderPackageAdmin();
 
+loadBookings();
 loadPendingReviews();
 loadApprovedReviews();
 
