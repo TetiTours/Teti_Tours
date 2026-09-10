@@ -7206,9 +7206,7 @@ window.pickupLocationLink
 "\n"
 ) +
 
-"Guide Language: " +
-guideLanguage +
-"\n" +
+(guideLanguageField ? ("Guide Language: " + guideLanguage + "\n") : ("Guide Language: English (driver)\n")) +
 
 "Additional Message: " +
 
@@ -7284,7 +7282,7 @@ formArea.innerHTML =
 '<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;border-top:1px solid #f0ebe2;padding-top:14px;">' +
 '<div><div style="color:#a4826a;font-size:11px;text-transform:uppercase;">Date</div><div style="color:#33251b;font-weight:bold;font-size:14px;">' + displayDate + '</div></div>' +
 '<div><div style="color:#a4826a;font-size:11px;text-transform:uppercase;">Travelers</div><div style="color:#33251b;font-weight:bold;font-size:14px;">' + travelerText + '</div></div>' +
-'<div><div style="color:#a4826a;font-size:11px;text-transform:uppercase;">Language</div><div style="color:#33251b;font-weight:bold;font-size:14px;">' + guideLanguage + '</div></div>' +
+(guideLanguageField ? '<div><div style="color:#a4826a;font-size:11px;text-transform:uppercase;">Language</div><div style="color:#33251b;font-weight:bold;font-size:14px;">' + guideLanguage + '</div></div>' : '<div><div style="color:#a4826a;font-size:11px;text-transform:uppercase;">Language</div><div style="color:#33251b;font-weight:bold;font-size:14px;">Driver speaks English</div></div>') +
 '</div>' +
 '<div style="background:#f4eee4;border-radius:8px;margin-top:14px;padding:14px;text-align:center;">' +
 '<div style="color:#a4826a;font-size:11px;text-transform:uppercase;">Total Price</div>' +
