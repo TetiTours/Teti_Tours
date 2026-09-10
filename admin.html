@@ -1285,6 +1285,7 @@ const { data, error } =
 await supabaseClient
 .from("bookings")
 .select("*")
+.neq("status", "cancelled")
 .order("created_at", { ascending:false });
 
 if(error){
