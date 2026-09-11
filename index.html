@@ -7163,24 +7163,25 @@ formArea.innerHTML =
 '<h3 style="color:#2a1d15;font-size:18px;margin-bottom:4px;">' + tourName + '</h3>' +
 (packageName ? '<p style="color:#75675b;font-size:13px;margin-bottom:16px;">' + packageName + '</p>' : '<div style="margin-bottom:16px;"></div>') +
 '<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;border-top:1px solid #f0ebe2;padding-top:14px;">' +
-'<div><div style="color:#a4826a;font-size:11px;text-transform:uppercase;">Date</div><div style="color:#33251b;font-weight:bold;font-size:14px;">' + displayDate + '</div></div>' +
-'<div><div style="color:#a4826a;font-size:11px;text-transform:uppercase;">Travelers</div><div style="color:#33251b;font-weight:bold;font-size:14px;">' + travelerText + '</div></div>' +
-(guideLanguageField ? '<div><div style="color:#a4826a;font-size:11px;text-transform:uppercase;">Language</div><div style="color:#33251b;font-weight:bold;font-size:14px;">' + guideLanguage + '</div></div>' : '<div><div style="color:#a4826a;font-size:11px;text-transform:uppercase;">Language</div><div style="color:#33251b;font-weight:bold;font-size:14px;">Driver speaks English</div></div>') +
+'<div><div style="color:#7a5a30;font-size:11px;text-transform:uppercase;">Date</div><div style="color:#33251b;font-weight:bold;font-size:14px;">' + displayDate + '</div></div>' +
+'<div><div style="color:#7a5a30;font-size:11px;text-transform:uppercase;">Travelers</div><div style="color:#33251b;font-weight:bold;font-size:14px;">' + travelerText + '</div></div>' +
+(guideLanguageField ? '<div><div style="color:#7a5a30;font-size:11px;text-transform:uppercase;">Language</div><div style="color:#33251b;font-weight:bold;font-size:14px;">' + guideLanguage + '</div></div>' : '<div><div style="color:#7a5a30;font-size:11px;text-transform:uppercase;">Language</div><div style="color:#33251b;font-weight:bold;font-size:14px;">Driver speaks English</div></div>') +
 '</div>' +
 '<div style="background:#f4eee4;border-radius:8px;margin-top:14px;padding:14px;text-align:center;">' +
-'<div style="color:#a4826a;font-size:11px;text-transform:uppercase;">Total Price</div>' +
+'<div style="color:#7a5a30;font-size:11px;text-transform:uppercase;">Total Price</div>' +
 '<div style="color:#2a1d15;font-weight:bold;font-size:22px;">' + (price !== "" ? Number(price).toFixed(2) + " " + currency : "Price on request") + '</div>' +
 '</div>' +
 '<div style="border-top:1px solid #f0ebe2;margin-top:14px;padding-top:14px;">' +
-'<div style="color:#a4826a;font-size:11px;text-transform:uppercase;">Activity Provider</div>' +
+'<div style="color:#7a5a30;font-size:11px;text-transform:uppercase;">Activity Provider</div>' +
 '<div style="color:#33251b;font-weight:bold;font-size:14px;">Teti Tour</div>' +
 '</div>' +
 '<div style="border-top:1px solid #f0ebe2;margin-top:14px;padding-top:14px;">' +
-'<div style="color:#a4826a;font-size:11px;text-transform:uppercase;">Booking Ref.</div>' +
+'<div style="color:#7a5a30;font-size:11px;text-transform:uppercase;">Booking Ref.</div>' +
 '<div style="color:#33251b;font-weight:bold;font-size:14px;">' + bookingRef + '</div>' +
 '</div>' +
 '</div>' +
 '<p style="color:#5a4c40;font-size:13px;text-align:center;margin-top:20px;">We have received your booking instantly. A WhatsApp message has opened in a new tab or app so you can share any final details. Come back to this tab any time to see this confirmation again, and our team will follow up shortly to confirm pickup arrangements.</p>' +
+'<p style="color:#5a4c40;font-size:13px;text-align:center;margin-top:10px;background:#f4eee4;padding:10px;border-radius:6px;">To cancel this booking, please contact us on WhatsApp with your booking reference and name.</p>' +
 '</div>' +
 '</div>';
 }
