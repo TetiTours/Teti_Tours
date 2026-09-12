@@ -5610,7 +5610,8 @@ showImage(currentIndex - 1);
 
 thumbStrip.innerHTML =
 gallery.map(function(src, i){
-return '<img src="' + src + '" data-index="' + i +
+var thumbSrc = src.replace(/\.webp$/, "-thumb.webp");
+return '<img src="' + thumbSrc + '" data-index="' + i +
 '" alt="Tour photo ' + (i + 1) + '" loading="lazy" decoding="async" class="' + (i === 0 ? "active-thumb" : "") + '">';
 }).join("");
 
