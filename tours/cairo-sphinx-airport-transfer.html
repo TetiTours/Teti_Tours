@@ -1543,8 +1543,8 @@ padding:20px;
 box-shadow:0 8px 20px rgba(0,0,0,.05);
 }
 
-.included-box h4,
-.notincluded-box h4{
+.included-box h3,
+.notincluded-box h3{
 font-size:15px;
 margin-bottom:12px;
 color:#2a1d15;
@@ -1596,7 +1596,7 @@ grid-template-columns:1fr;
 margin-bottom:30px;
 }
 
-.itinerary-box h4{
+.itinerary-box h3{
 font-size:15px;
 margin-bottom:16px;
 color:#2a1d15;
@@ -1634,7 +1634,7 @@ font-size:14px;
 z-index:1;
 }
 
-.itinerary-step-body h5{
+.itinerary-step-body h4{
 font-size:15px;
 color:#2a1d15;
 margin-bottom:4px;
@@ -3067,26 +3067,26 @@ The same service covers transfers to and from Sphinx International Airport near 
 <section style="max-width:900px;margin:0 auto 60px;padding:0 20px;">
 
 <div style="text-align:center;margin-bottom:24px;">
-<div style="color:#d6b77a;font-size:26px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+<div style="color:#7a5a30;font-size:26px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
 <h2 style="font-size:22px;color:#2a1d15;margin:6px 0;">5.0 out of 5 &mdash; 22 Reviews on TripAdvisor</h2>
 <a href="https://www.tripadvisor.com/Attraction_Review-g294201-d34435103-Reviews-Teti_Tours-Cairo_Cairo_Governorate.html" target="_blank" rel="noopener" style="color:#b38b52;font-size:14px;text-decoration:underline;">See all reviews on TripAdvisor &rarr;</a>
 </div>
 
 <div style="display:flex;gap:16px;flex-wrap:wrap;">
 <div style="background:white;border-radius:10px;padding:20px;box-shadow:0 6px 18px rgba(0,0,0,.06);flex:1;min-width:220px;">
-<div style="color:#d6b77a;font-size:18px;margin-bottom:8px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+<div style="color:#7a5a30;font-size:18px;margin-bottom:8px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
 <p style="color:#5a4c40;font-size:14px;line-height:1.6;margin-bottom:10px;">Praised her private driver for four days across Cairo, Giza, Memphis and Alexandria, calling him excellent and highly recommended.</p>
 <strong style="color:#2a1d15;font-size:13px;">AdventureGirl4Travel</strong>
 </div>
 
 <div style="background:white;border-radius:10px;padding:20px;box-shadow:0 6px 18px rgba(0,0,0,.06);flex:1;min-width:220px;">
-<div style="color:#d6b77a;font-size:18px;margin-bottom:8px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+<div style="color:#7a5a30;font-size:18px;margin-bottom:8px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
 <p style="color:#5a4c40;font-size:14px;line-height:1.6;margin-bottom:10px;">Described the service and driver as professional, punctual, friendly and very helpful throughout the trip.</p>
 <strong style="color:#2a1d15;font-size:13px;">Khan K.</strong>
 </div>
 
 <div style="background:white;border-radius:10px;padding:20px;box-shadow:0 6px 18px rgba(0,0,0,.06);flex:1;min-width:220px;">
-<div style="color:#d6b77a;font-size:18px;margin-bottom:8px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+<div style="color:#7a5a30;font-size:18px;margin-bottom:8px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
 <p style="color:#5a4c40;font-size:14px;line-height:1.6;margin-bottom:10px;">Said the driver was on time, friendly, and made her feel very safe on the ride.</p>
 <strong style="color:#2a1d15;font-size:13px;">Irene C.</strong>
 </div>
@@ -3180,12 +3180,12 @@ Tour Details
 <div class="included-grid">
 
 <div class="included-box">
-<h4>✔ What's Included</h4>
+<h3>✔ What's Included</h3>
 <ul id="detailIncluded"></ul>
 </div>
 
 <div class="notincluded-box">
-<h4>✘ Not Included</h4>
+<h3>✘ Not Included</h3>
 <ul id="detailNotIncluded"></ul>
 </div>
 
@@ -3195,7 +3195,7 @@ Tour Details
 <!-- ITINERARY -->
 
 <div class="itinerary-box">
-<h4>Itinerary</h4>
+<h3>Itinerary</h3>
 <div id="detailItinerary"></div>
 </div>
 
@@ -4969,7 +4969,7 @@ steps.map((step, index) =>
 '<div class="itinerary-step">' +
 '<div class="itinerary-step-num">' + (index + 1) + '</div>' +
 '<div class="itinerary-step-body">' +
-'<h5>' + step.title + '</h5>' +
+'<h4>' + step.title + '</h4>' +
 '<p>' + step.desc + '</p>' +
 '</div>' +
 '</div>'

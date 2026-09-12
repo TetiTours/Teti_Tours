@@ -1563,8 +1563,8 @@ padding:20px;
 box-shadow:0 8px 20px rgba(0,0,0,.05);
 }
 
-.included-box h4,
-.notincluded-box h4{
+.included-box h3,
+.notincluded-box h3{
 font-size:15px;
 margin-bottom:12px;
 color:#2a1d15;
@@ -1616,7 +1616,7 @@ grid-template-columns:1fr;
 margin-bottom:30px;
 }
 
-.itinerary-box h4{
+.itinerary-box h3{
 font-size:15px;
 margin-bottom:16px;
 color:#2a1d15;
@@ -1654,7 +1654,7 @@ font-size:14px;
 z-index:1;
 }
 
-.itinerary-step-body h5{
+.itinerary-step-body h4{
 font-size:15px;
 color:#2a1d15;
 margin-bottom:4px;
@@ -3099,12 +3099,12 @@ Tour Details
 <div class="included-grid">
 
 <div class="included-box">
-<h4>✔ What's Included</h4>
+<h3>✔ What's Included</h3>
 <ul id="detailIncluded"></ul>
 </div>
 
 <div class="notincluded-box">
-<h4>✘ Not Included</h4>
+<h3>✘ Not Included</h3>
 <ul id="detailNotIncluded"></ul>
 </div>
 
@@ -3114,7 +3114,7 @@ Tour Details
 <!-- ITINERARY -->
 
 <div class="itinerary-box">
-<h4>Itinerary</h4>
+<h3>Itinerary</h3>
 <div id="detailItinerary"></div>
 </div>
 
@@ -4916,7 +4916,7 @@ steps.map((step, index) =>
 '<div class="itinerary-step">' +
 '<div class="itinerary-step-num">' + (index + 1) + '</div>' +
 '<div class="itinerary-step-body">' +
-'<h5>' + step.title + '</h5>' +
+'<h4>' + step.title + '</h4>' +
 '<p>' + step.desc + '</p>' +
 '</div>' +
 '</div>'
