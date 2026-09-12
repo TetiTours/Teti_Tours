@@ -5429,6 +5429,13 @@ tour.images :
 
 let currentIndex = 0;
 
+function preloadGalleryImage(idx){
+if(gallery.length < 2){ return; }
+var safeIdx = (idx + gallery.length) % gallery.length;
+var img = new Image();
+img.src = gallery[safeIdx];
+}
+
 function showImage(index){
 
 currentIndex =
@@ -5443,6 +5450,9 @@ t.classList.toggle(
 Number(t.dataset.index) === currentIndex
 );
 });
+
+preloadGalleryImage(currentIndex + 1);
+preloadGalleryImage(currentIndex - 1);
 
 }
 
