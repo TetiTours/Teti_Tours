@@ -4123,13 +4123,19 @@ schema.aggregateRating = {
 
 schema.review = reviews.slice(0, 10).map(r => ({
 "@type": "Review",
+"itemReviewed": {
+"@type": "TravelAgency",
+"name": "Teti Tour",
+"url": "https://www.tetitours.com/"
+},
 "author": {
 "@type": "Person",
 "name": r.name || "Guest"
 },
 "reviewRating": {
 "@type": "Rating",
-"ratingValue": String(r.rating || 5)
+"ratingValue": String(r.rating || 5),
+"bestRating": "5"
 },
 "reviewBody": r.message || ""
 }));
