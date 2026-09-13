@@ -3127,19 +3127,6 @@ Giza Pyramids, Saqqara & Memphis →
 
 </section>
 
-<script type="application/ld+json">
-{
-"@context": "https://schema.org",
-"@type": "TravelAgency",
-"name": "Teti Tour",
-"aggregateRating": {
-"@type": "AggregateRating",
-"ratingValue": "5.0",
-"reviewCount": "22"
-}
-}
-</script>
-
 </main>
 
 <footer>
@@ -4241,9 +4228,9 @@ schema.aggregateRating = {
 schema.review = reviews.slice(0, 10).map(r => ({
 "@type": "Review",
 "itemReviewed": {
-"@type": "TravelAgency",
-"name": "Teti Tour",
-"url": "https://www.tetitours.com/"
+"@type": schema["@type"],
+"name": schema.name,
+"url": schema.url
 },
 "author": {
 "@type": "Person",
