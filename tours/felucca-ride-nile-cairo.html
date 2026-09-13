@@ -1943,10 +1943,47 @@ background:#b38b52;
    MOBILE
    ========================================================= */
 
+.menu-toggle{
+display:none;
+background:none;
+border:none;
+color:white;
+font-size:32px;
+line-height:1;
+cursor:pointer;
+padding:8px 10px;
+position:absolute;
+top:22px;
+right:18px;
+z-index:1001;
+}
+
 @media(max-width:900px){
+
+.menu-toggle{
+display:block;
+}
 
 .navbar nav{
 display:none;
+position:absolute;
+top:88px;
+left:0;
+right:0;
+flex-direction:column;
+gap:0;
+background:#17100c;
+box-shadow:0 12px 28px rgba(0,0,0,.35);
+padding:8px 0;
+}
+
+.navbar nav.mobile-open{
+display:flex;
+}
+
+.navbar nav a{
+padding:16px 28px;
+border-bottom:1px solid rgba(255,255,255,.08);
 }
 
 .brand img{
@@ -2065,11 +2102,14 @@ height:230px;
 <img src="../logo.png" alt="Teti Tour Logo" width="180" height="60" fetchpriority="high" decoding="async">
 </div>
 
-<nav>
+<button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+
+<nav id="mobileNav">
 <a href="#home">Home</a>
 <a href="#tours">Tours</a>
 <a href="#faq">FAQ</a>
 <a href="#about">About Us</a>
+<a href="#reviews">Reviews</a>
 <a href="#contact">Contact</a>
 </nav>
 </header>
@@ -7344,6 +7384,34 @@ formArea.innerHTML =
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function(){
+
+const menuToggle = document.getElementById("menuToggle");
+const mobileNav = document.getElementById("mobileNav");
+
+if(menuToggle && mobileNav){
+
+menuToggle.addEventListener("click", function(){
+
+const isOpen = mobileNav.classList.toggle("mobile-open");
+
+menuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+menuToggle.innerHTML = isOpen ? "&#10005;" : "&#9776;";
+
+});
+
+mobileNav.querySelectorAll("a").forEach(function(link){
+
+link.addEventListener("click", function(){
+
+mobileNav.classList.remove("mobile-open");
+menuToggle.setAttribute("aria-expanded", "false");
+menuToggle.innerHTML = "&#9776;";
+
+});
+
+});
+
+}
 
 populateReviewTourSelect();
 
