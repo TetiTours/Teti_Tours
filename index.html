@@ -4078,7 +4078,6 @@ throw new Error("Supabase HTTP " + response.status);
 const data = await response.json();
 const reviews = Array.isArray(data) ? data : [];
 renderApprovedReviews(reviews);
-updateReviewSchema(reviews);
 
 }catch(error){
 console.error("loadApprovedReviews error:", error);
@@ -4089,66 +4088,7 @@ container.innerHTML =
 }
 
 
-/* =========================================================
-   UPDATE REVIEW SCHEMA (SEO)
-   Adds aggregateRating + individual reviews to the
-   TravelAgency structured data, so search engines can show
-   star ratings next to the site in search results.
-   ========================================================= */
 
-function updateReviewSchema(reviews){
-
-const schemaTag =
-document.getElementById("businessSchema");
-
-if(!schemaTag || !reviews || reviews.length === 0){
-return;
-}
-
-try{
-
-const schema = JSON.parse(schemaTag.textContent);
-
-const totalStars =
-reviews.reduce((sum, r) => sum + (Number(r.rating) || 0), 0);
-
-const averageRating =
-(totalStars / reviews.length).toFixed(1);
-
-schema.aggregateRating = {
-"@type": "AggregateRating",
-"ratingValue": averageRating,
-"reviewCount": reviews.length
-};
-
-schema.review = reviews.slice(0, 10).map(r => ({
-"@type": "Review",
-"itemReviewed": {
-"@type": schema["@type"],
-"name": schema.name,
-"url": schema.url
-},
-"author": {
-"@type": "Person",
-"name": r.name || "Guest"
-},
-"reviewRating": {
-"@type": "Rating",
-"ratingValue": String(r.rating || 5),
-"bestRating": "5"
-},
-"reviewBody": r.message || ""
-}));
-
-schemaTag.textContent = JSON.stringify(schema);
-
-}catch(error){
-
-console.error("updateReviewSchema error:", error);
-
-}
-
-}
 
 
 function renderApprovedReviews(reviews){
