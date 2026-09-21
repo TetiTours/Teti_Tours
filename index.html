@@ -3032,6 +3032,17 @@ See All Our Reviews on TripAdvisor
 <label for="reviewCountry">Your Country (optional)</label>
 <input type="text" id="reviewCountry" maxlength="60" placeholder="e.g. United Kingdom">
 
+<label for="reviewSource">How did you hear about us? (optional)</label>
+<select id="reviewSource">
+<option value="" selected>Select an option</option>
+<option value="TripAdvisor">TripAdvisor</option>
+<option value="Google Search">Google Search</option>
+<option value="Instagram/Facebook">Instagram / Facebook</option>
+<option value="Friend or Referral">Friend or Referral</option>
+<option value="Hotel/Accommodation">Hotel / Accommodation</option>
+<option value="Other">Other</option>
+</select>
+
 <label id="ratingLabel">Your Rating</label>
 <div class="star-picker" id="starPicker">
 <span data-value="1">★</span>
@@ -4373,6 +4384,10 @@ document.getElementById("reviewTour").value;
 const country =
 document.getElementById("reviewCountry").value.trim();
 
+const source =
+document.getElementById("reviewSource") ?
+document.getElementById("reviewSource").value : "";
+
 const message =
 document.getElementById("reviewMessage").value.trim();
 
@@ -4430,6 +4445,7 @@ body: JSON.stringify({
 name: name,
 tour_name: tourName,
 country: country || null,
+source: source || null,
 rating: selectedRating,
 message: message,
 photo_url: photoUrl,
@@ -4448,6 +4464,10 @@ selectedRating = 0;
 
 if(document.getElementById("reviewCountry")){
 document.getElementById("reviewCountry").value = "";
+}
+
+if(document.getElementById("reviewSource")){
+document.getElementById("reviewSource").value = "";
 }
 
 if(starPicker){
