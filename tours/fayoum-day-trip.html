@@ -4893,7 +4893,7 @@ document.querySelectorAll("[data-tour-id]").forEach(function(badge){
 
 const tourId = badge.getAttribute("data-tour-id");
 
-let lowest = null;
+let price = null;
 
 const flatRow = window.tourPrices.find(function(r){
 return String(r.Tour_id).trim().toLowerCase() ===
@@ -4901,34 +4901,34 @@ String(tourId).trim().toLowerCase();
 });
 
 if(flatRow){
-lowest = getTwoGuestPrice(flatRow);
+price = getTwoGuestPrice(flatRow);
 }
 
-if(window.tourPackages){
+if(price === null && window.tourPackages){
 
 const packages = window.tourPackages.filter(function(p){
 return String(p.tour_id).trim().toLowerCase() ===
 String(tourId).trim().toLowerCase();
 });
 
-packages.forEach(function(pkg){
+if(packages.length > 0){
 
-const pkgPrice = getTwoGuestPrice(pkg);
-
-if(pkgPrice !== null && (lowest === null || pkgPrice < lowest)){
-lowest = pkgPrice;
-}
-
+const sorted = packages.slice().sort(function(a, b){
+return (a.display_order ?? 0) - (b.display_order ?? 0);
 });
 
+price = getTwoGuestPrice(sorted[0]);
+
 }
 
-if(lowest === null){
+}
+
+if(price === null){
 badge.textContent = "";
 return;
 }
 
-badge.textContent = "From $" + lowest.toFixed(0) + " for 2 guests";
+badge.textContent = "From $" + price.toFixed(0);
 
 });
 
