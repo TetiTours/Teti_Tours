@@ -912,6 +912,14 @@ return `
 }
 
 
+const ADMIN_TOUR_TITLE_OVERRIDES = {
+"Saqqara-Memphis": "Saqqara-Memphis (Giza Pyramids, Saqqara & Memphis)"
+};
+
+function getAdminTourTitle(tourId){
+return ADMIN_TOUR_TITLE_OVERRIDES[tourId] || tourId;
+}
+
 function renderPackageGroupHtml(tourId, packages){
 
 const rowsHtml =
@@ -919,7 +927,7 @@ packages.map(pkg => renderPackageRowHtml(pkg)).join("");
 
 return `
 <div class="package-group" data-tour-id="${escapeAdminHtml(tourId)}">
-<div class="package-group-title">${escapeAdminHtml(tourId)}</div>
+<div class="package-group-title">${escapeAdminHtml(getAdminTourTitle(tourId))}</div>
 <div class="package-row-labels">
 <span>Package Name</span>
 <span>Description</span>
