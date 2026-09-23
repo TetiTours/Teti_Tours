@@ -4833,30 +4833,15 @@ return [];
    requiring the visitor to open the booking form)
    ========================================================= */
 
-function getLowestTierPrice(row){
+function getTwoGuestPrice(row){
 
-const fields =
-["price_solo", "price_1_2", "price_3_14", "price_15_25"];
+const v = row.price_1_2;
 
-let min = null;
-
-fields.forEach(function(f){
-
-const v = row[f];
-
-if(v !== null && v !== undefined && v !== "" && !isNaN(Number(v))){
-
-const num = Number(v);
-
-if(min === null || num < min){
-min = num;
+if(v === null || v === undefined || v === "" || isNaN(Number(v))){
+return null;
 }
 
-}
-
-});
-
-return min;
+return Number(v);
 
 }
 
@@ -4879,7 +4864,7 @@ String(tourId).trim().toLowerCase();
 });
 
 if(flatRow){
-lowest = getLowestTierPrice(flatRow);
+lowest = getTwoGuestPrice(flatRow);
 }
 
 if(window.tourPackages){
@@ -4891,10 +4876,10 @@ String(tourId).trim().toLowerCase();
 
 packages.forEach(function(pkg){
 
-const pkgLowest = getLowestTierPrice(pkg);
+const pkgPrice = getTwoGuestPrice(pkg);
 
-if(pkgLowest !== null && (lowest === null || pkgLowest < lowest)){
-lowest = pkgLowest;
+if(pkgPrice !== null && (lowest === null || pkgPrice < lowest)){
+lowest = pkgPrice;
 }
 
 });
@@ -4906,7 +4891,7 @@ badge.textContent = "";
 return;
 }
 
-badge.textContent = "From $" + lowest.toFixed(0);
+badge.textContent = "From $" + lowest.toFixed(0) + " for 2 guests";
 
 });
 
