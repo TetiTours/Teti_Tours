@@ -410,6 +410,13 @@ margin:0 auto 40px;
 background:#20c98c;
 }
 
+.tour-price-badge{
+display:block;
+color:#7a5a30;
+font-size:15px;
+font-weight:bold;
+margin-bottom:12px;
+}
 .pickup-badge{
 display:inline-block;
 background:#e8f3e4;
@@ -2278,6 +2285,8 @@ Private Cairo airport transfer or Sphinx airport transfer,
 to or from your hotel.
 </p>
 
+<div class="tour-price-badge" data-tour-id="Airport-transfer">Loading price&hellip;</div>
+
 <div class="tour-bottom">
 
 <span>
@@ -2364,6 +2373,8 @@ and Magic Lake.
 
 <div class="pickup-badge">✓ Pickup &amp; Drop-off Included</div>
 
+<div class="tour-price-badge" data-tour-id="Fayoum">Loading price&hellip;</div>
+
 <div class="tour-bottom">
 
 <span>
@@ -2406,6 +2417,8 @@ and Bibliotheca Alexandrina.
 </p>
 
 <div class="pickup-badge">✓ Pickup &amp; Drop-off Included</div>
+
+<div class="tour-price-badge" data-tour-id="Alexandria">Loading price&hellip;</div>
 
 <div class="tour-bottom">
 
@@ -2481,6 +2494,8 @@ Visit the Pyramids of Giza and the Grand Egyptian Museum.
 
 <div class="pickup-badge">✓ Pickup &amp; Drop-off Included</div>
 
+<div class="tour-price-badge" data-tour-id="GEM-Pyramids">Loading price&hellip;</div>
+
 <button
 class="cairo-option-button"
 onclick="openCairoOption('GEM-Pyramids')">
@@ -2510,6 +2525,8 @@ Explore the famous Giza Pyramids, the Step Pyramid of Djoser at Saqqara and anci
 </p>
 
 <div class="pickup-badge">✓ Pickup &amp; Drop-off Included</div>
+
+<div class="tour-price-badge" data-tour-id="Saqqara-Memphis">Loading price&hellip;</div>
 
 <button
 class="cairo-option-button"
@@ -2541,6 +2558,8 @@ Discover Saqqara, Dahshur pyramids and Memphis.
 
 <div class="pickup-badge">✓ Pickup &amp; Drop-off Included</div>
 
+<div class="tour-price-badge" data-tour-id="Saqqara-Dahshur-Memphis">Loading price&hellip;</div>
+
 <button
 class="cairo-option-button"
 onclick="openCairoOption('Saqqara-Dahshur-Memphis')">
@@ -2570,6 +2589,8 @@ Discover Islamic Cairo, the Citadel and NMEC.
 </p>
 
 <div class="pickup-badge">✓ Pickup &amp; Drop-off Included</div>
+
+<div class="tour-price-badge" data-tour-id="Citadel-NMEC">Loading price&hellip;</div>
 
 <button
 class="cairo-option-button"
@@ -2601,6 +2622,8 @@ A private half-day visit to the famous Giza Pyramids.
 
 <div class="pickup-badge">✓ Pickup &amp; Drop-off Included</div>
 
+<div class="tour-price-badge" data-tour-id="Half-Giza">Loading price&hellip;</div>
+
 <button
 class="cairo-option-button"
 onclick="openCairoOption('Half-Giza')">
@@ -2630,6 +2653,8 @@ Spend a half day exploring the Grand Egyptian Museum.
 </p>
 
 <div class="pickup-badge">✓ Pickup &amp; Drop-off Included</div>
+
+<div class="tour-price-badge" data-tour-id="Half-GEM">Loading price&hellip;</div>
 
 <button
 class="cairo-option-button"
@@ -2661,6 +2686,8 @@ Enjoy an evening dinner experience on the Nile.
 
 <div class="pickup-badge">✓ Pickup &amp; Drop-off Included</div>
 
+<div class="tour-price-badge" data-tour-id="Nile-Cruise">Loading price&hellip;</div>
+
 <button
 class="cairo-option-button"
 onclick="openCairoOption('Nile-Cruise')">
@@ -2691,6 +2718,8 @@ A relaxed, private felucca sail with lunch on board — perfect for couples.
 
 <div class="pickup-badge">✓ Pickup &amp; Drop-off Included</div>
 
+<div class="tour-price-badge" data-tour-id="VIP-Felucca-Lunch">Loading price&hellip;</div>
+
 <button
 class="cairo-option-button"
 onclick="openCairoOption('VIP-Felucca-Lunch')">
@@ -2720,6 +2749,8 @@ A simple, relaxing sail on the Nile aboard a traditional felucca.
 </p>
 
 <div class="pickup-badge">✓ Pickup &amp; Drop-off Included</div>
+
+<div class="tour-price-badge" data-tour-id="Felucca-One-Hour">Loading price&hellip;</div>
 
 <button
 class="cairo-option-button"
@@ -4845,6 +4876,93 @@ return [];
    LOAD TOURS
    ========================================================= */
 
+
+
+/* =========================================================
+   RENDER TOUR CARD PRICE BADGES (shows "From $X per person"
+   on tour cards using the solo/lowest tier rate, without
+   requiring the visitor to open the booking form)
+   ========================================================= */
+
+function getLowestTierPrice(row){
+
+const fields =
+["price_solo", "price_1_2", "price_3_14", "price_15_25"];
+
+let min = null;
+
+fields.forEach(function(f){
+
+const v = row[f];
+
+if(v !== null && v !== undefined && v !== "" && !isNaN(Number(v))){
+
+const num = Number(v);
+
+if(min === null || num < min){
+min = num;
+}
+
+}
+
+});
+
+return min;
+
+}
+
+
+function renderTourCardPrices(){
+
+if(!window.tourPrices){
+return;
+}
+
+document.querySelectorAll("[data-tour-id]").forEach(function(badge){
+
+const tourId = badge.getAttribute("data-tour-id");
+
+let lowest = null;
+
+const flatRow = window.tourPrices.find(function(r){
+return String(r.Tour_id).trim().toLowerCase() ===
+String(tourId).trim().toLowerCase();
+});
+
+if(flatRow){
+lowest = getLowestTierPrice(flatRow);
+}
+
+if(window.tourPackages){
+
+const packages = window.tourPackages.filter(function(p){
+return String(p.tour_id).trim().toLowerCase() ===
+String(tourId).trim().toLowerCase();
+});
+
+packages.forEach(function(pkg){
+
+const pkgLowest = getLowestTierPrice(pkg);
+
+if(pkgLowest !== null && (lowest === null || pkgLowest < lowest)){
+lowest = pkgLowest;
+}
+
+});
+
+}
+
+if(lowest === null){
+badge.textContent = "";
+return;
+}
+
+badge.textContent = "From $" + lowest.toFixed(0);
+
+});
+
+}
+
 async function loadTours(){
 
 console.log("Loading prices...");
@@ -4864,6 +4982,8 @@ console.log(
 "Total packages:",
 window.tourPackages.length
 );
+
+renderTourCardPrices();
 
 // If a tour's booking form was already opened (e.g. via a direct
 // ?tour= link) before this fetch finished, refresh it now that
