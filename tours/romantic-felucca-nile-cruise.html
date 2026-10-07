@@ -7542,8 +7542,8 @@ children: children,
 guide_language: guideLanguage,
 pickup: pickup,
 message: message || null,
-price: price,
-currency: currency,
+price: (price === "" || price === undefined ? null : price),
+currency: currency || null,
 status: "confirmed"
 })
 });
