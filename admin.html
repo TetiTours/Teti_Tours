@@ -1404,6 +1404,8 @@ statusBadge +
 '<div><div class="booking-field-label">Booked On</div><div class="booking-field-value">' + createdDate + '</div></div>' +
 '</div>' +
 
+(booking.details ? '<div class="booking-row"><div><div class="booking-field-label">Details</div><div class="booking-field-value" style="font-weight:normal;white-space:pre-line;">' + escapeAdminHtml(booking.details) + '</div></div></div>' : "") +
+
 (booking.message ? '<div class="booking-row"><div><div class="booking-field-label">Message</div><div class="booking-field-value" style="font-weight:normal;">' + booking.message + '</div></div></div>' : "") +
 
 (isCancelled ? "" : '<button class="cancel-booking-btn" onclick="cancelBooking(' + booking.id + ')">Cancel Booking</button>') +

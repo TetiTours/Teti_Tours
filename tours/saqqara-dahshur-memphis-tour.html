@@ -7536,6 +7536,7 @@ headers:{
 body: JSON.stringify({
 reference: bookingRef,
 tour_date: ((document.getElementById("tourDate")||{}).value || null),
+details: (window.buildBookingDetails ? window.buildBookingDetails() : null),
 pickup_time: (((window.currentTour === "Airport-transfer" ? document.getElementById("time") : document.getElementById("tourTime"))||{}).value || null),
 tour_name: tourName,
 package_name: packageName || null,
@@ -7839,11 +7840,17 @@ if(m&&h&&h.parentNode){h.parentNode.insertBefore(m,h.nextSibling);}
 setTimeout(function(){document.body.style.overflow="auto";},600);
 });
 window.closeDetails=function(){document.body.style.overflow="auto";};
+window.buildBookingDetails=function(){
+if(window.currentTour!=="Airport-transfer")return null;
+var g=function(id){var e=document.getElementById(id);return e&&e.value?e.value:"-";};
+var d=document.querySelector('input[name="direction"]:checked');
+return "Direction: "+(d?d.value:"-")+"\nAirport: "+g("airport")+"\nFlight number: "+g("flight")+"\nBags: "+g("bags");
+};
 window.bookingFetchWithFallback=async function(url,opts){
 var res=await fetch(url,opts);
-if(!res.ok&&opts&&typeof opts.body==="string"&&opts.body.indexOf("tour_date")>-1){
+if(!res.ok&&opts&&typeof opts.body==="string"&&(opts.body.indexOf("tour_date")>-1||opts.body.indexOf("details")>-1)){
 try{
-var o=JSON.parse(opts.body);delete o.tour_date;delete o.pickup_time;
+var o=JSON.parse(opts.body);delete o.tour_date;delete o.pickup_time;delete o.details;
 var o2=Object.assign({},opts,{body:JSON.stringify(o)});
 res=await fetch(url,o2);
 }catch(e){}
