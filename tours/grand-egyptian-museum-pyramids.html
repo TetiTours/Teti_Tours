@@ -3632,6 +3632,19 @@ placeholder="e.g. MS985">
 
 <div>
 
+<label for="airportDate">
+Pickup Date
+</label>
+
+<input
+type="date"
+id="airportDate"
+required>
+
+</div>
+
+<div>
+
 <label for="time">
 Pickup Time
 </label>
@@ -6672,6 +6685,9 @@ required;
 time.required =
 required;
 
+const airportDate = document.getElementById("airportDate");
+if(airportDate){ airportDate.required = required; }
+
 direction.forEach(
 radio => {
 
@@ -7419,6 +7435,10 @@ airport +
 flight +
 "\n" +
 
+"Pickup Date: " +
+(document.getElementById("airportDate") ? document.getElementById("airportDate").value : "") +
+"\n" +
+
 "Pickup Time: " +
 time +
 "\n\n";
@@ -7527,7 +7547,7 @@ message ||
 const bookingRef = "TT-" + Date.now().toString().slice(-8);
 
 try{
-await fetch(SUPABASE_URL + "/rest/v1/bookings",{
+await bookingFetchWithFallback(SUPABASE_URL + "/rest/v1/bookings",{
 method:"POST",
 headers:{
 "apikey":SUPABASE_KEY,
@@ -7537,6 +7557,8 @@ headers:{
 },
 body: JSON.stringify({
 reference: bookingRef,
+tour_date: ((document.getElementById("tourDate")||{}).value || null),
+pickup_time: (((window.currentTour === "Airport-transfer" ? document.getElementById("time") : document.getElementById("tourTime"))||{}).value || null),
 tour_name: tourName,
 package_name: packageName || null,
 guest_name: name,
@@ -7839,6 +7861,34 @@ if(m&&h&&h.parentNode){h.parentNode.insertBefore(m,h.nextSibling);}
 setTimeout(function(){document.body.style.overflow="auto";},600);
 });
 window.closeDetails=function(){document.body.style.overflow="auto";};
+window.bookingFetchWithFallback=async function(url,opts){
+var res=await fetch(url,opts);
+if(!res.ok&&opts&&typeof opts.body==="string"&&opts.body.indexOf("tour_date")>-1){
+try{
+var o=JSON.parse(opts.body);delete o.tour_date;delete o.pickup_time;
+var o2=Object.assign({},opts,{body:JSON.stringify(o)});
+return await fetch(url,o2);
+}catch(e){return res;}
+}
+return res;
+};
+document.addEventListener("DOMContentLoaded",function(){
+var ad=document.getElementById("airportDate"),td=document.getElementById("tourDate");
+if(!ad)return;
+var d=new Date(),p=function(n){return String(n).padStart(2,"0");};
+ad.min=d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate());
+var sync=function(){if(td)td.value=ad.value;};
+ad.addEventListener("input",sync);ad.addEventListener("change",sync);
+});
+document.addEventListener("DOMContentLoaded",function(){
+var fa=document.getElementById("bookingFormArea");
+if(!fa||!window.MutationObserver)return;
+new MutationObserver(function(){
+if(fa.innerText&&fa.innerText.indexOf("BOOKING CONFIRMED")>-1){
+setTimeout(function(){var y=fa.getBoundingClientRect().top+window.pageYOffset-20;window.scrollTo({top:y,behavior:"smooth"});},150);
+}
+}).observe(fa,{childList:true});
+});
 })();
 </script>
 </body>

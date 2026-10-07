@@ -717,6 +717,7 @@ Loading packages...
 
 <h2>Bookings</h2>
 <span id="bookingsCount" style="color:#75675b;font-size:13px;"></span>
+<div style="margin-top:10px;"><label for="bookingSort" style="display:inline;font-size:13px;margin-right:8px;">Sort by</label><select id="bookingSort" onchange="renderBookings()" style="padding:8px;border:1px solid #d5c8b8;border-radius:5px;font-size:14px;background:white;"><option value="tour">Tour date (upcoming first)</option><option value="booked">Newest bookings first</option></select></div>
 
 <div class="admin-box">
 
@@ -1303,15 +1304,54 @@ container.innerHTML =
 return;
 }
 
+window.__bookings = data;
+
 if(countLabel){
 countLabel.textContent =
 data.length + " total";
 }
 
+renderBookings();
+
+}
+
+
+function formatTourDate(value){
+if(!value){ return "-"; }
+const d = new Date(value + "T00:00:00");
+if(isNaN(d.getTime())){ return value; }
+return d.toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short",year:"numeric"});
+}
+
+function renderBookings(){
+
+const container = document.getElementById("bookingsList");
+if(!container){ return; }
+
+let data = (window.__bookings || []).slice();
+
 if(data.length === 0){
 container.innerHTML =
 '<p style="color:#75675b;">No bookings yet.</p>';
 return;
+}
+
+const sortSelect = document.getElementById("bookingSort");
+const mode = sortSelect ? sortSelect.value : "tour";
+
+if(mode === "tour"){
+const today = new Date().toISOString().slice(0,10);
+const rank = function(b){
+if(!b.tour_date){ return 2; }
+return b.tour_date >= today ? 0 : 1;
+};
+data.sort(function(a,b){
+const ra = rank(a), rb = rank(b);
+if(ra !== rb){ return ra - rb; }
+if(ra === 0){ return a.tour_date < b.tour_date ? -1 : (a.tour_date > b.tour_date ? 1 : 0); }
+if(ra === 1){ return a.tour_date < b.tour_date ? 1 : (a.tour_date > b.tour_date ? -1 : 0); }
+return 0;
+});
 }
 
 let html = "";
@@ -1339,6 +1379,11 @@ html +=
 (booking.package_name ? '<div style="color:#75675b;font-size:13px;">' + booking.package_name + '</div>' : '') +
 '</div>' +
 statusBadge +
+'</div>' +
+
+'<div class="booking-row" style="background:#f8f3ea;padding:10px;border-radius:8px;">' +
+'<div><div class="booking-field-label">Tour Date</div><div class="booking-field-value" style="font-size:16px;">' + formatTourDate(booking.tour_date) + '</div></div>' +
+'<div><div class="booking-field-label">Pickup Time</div><div class="booking-field-value" style="font-size:16px;">' + (booking.pickup_time || "-") + '</div></div>' +
 '</div>' +
 
 '<div class="booking-row">' +
