@@ -7500,7 +7500,7 @@ bags +
 
 whatsappMessage +=
 
-"Hotel / Pickup: " +
+window.hotelFieldLabel() +
 pickup +
 "\n" +
 
@@ -7844,8 +7844,30 @@ window.buildBookingDetails=function(){
 if(window.currentTour!=="Airport-transfer")return null;
 var g=function(id){var e=document.getElementById(id);return e&&e.value?e.value:"-";};
 var d=document.querySelector('input[name="direction"]:checked');
-return "Direction: "+(d?d.value:"-")+"\nAirport: "+g("airport")+"\nFlight number: "+g("flight")+"\nBags: "+g("bags");
+var dir=d?d.value:"-";
+var toAirport=dir.indexOf("Hotel")===0;
+var airport=g("airport"),hotel=g("pickup");
+var pin=window.pickupLocationLink?("\nHotel location pin: "+window.pickupLocationLink):"";
+return "Direction: "+dir+"\nPickup: "+(toAirport?hotel:airport)+"\nDrop-off: "+(toAirport?airport:hotel)+"\nFlight number: "+g("flight")+"\nBags: "+g("bags")+pin;
 };
+window.hotelFieldLabel=function(){
+if(window.currentTour!=="Airport-transfer")return "Hotel / Pickup: ";
+var d=document.querySelector('input[name="direction"]:checked');
+if(!d)return "Hotel: ";
+return d.value.indexOf("Hotel")===0?"Pickup Hotel: ":"Drop-off Hotel: ";
+};
+document.addEventListener("DOMContentLoaded",function(){
+var lp=document.querySelector('label[for="pickup"]'),la=document.querySelector('label[for="airport"]');
+var radios=document.querySelectorAll('input[name="direction"]');
+if(!lp||!la||!radios.length)return;
+var upd=function(){
+var d=document.querySelector('input[name="direction"]:checked');
+if(!d)return;
+if(d.value.indexOf("Hotel")===0){la.textContent="Drop-off Airport";lp.textContent="Pickup Hotel Name & Location";}
+else{la.textContent="Pickup Airport";lp.textContent="Drop-off Hotel Name & Location";}
+};
+radios.forEach(function(r){r.addEventListener("change",upd);});
+});
 window.bookingFetchWithFallback=async function(url,opts){
 var res=await fetch(url,opts);
 if(!res.ok&&opts&&typeof opts.body==="string"&&(opts.body.indexOf("tour_date")>-1||opts.body.indexOf("details")>-1)){

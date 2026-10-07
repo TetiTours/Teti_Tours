@@ -1400,7 +1400,7 @@ statusBadge +
 
 '<div class="booking-row">' +
 '<div><div class="booking-field-label">Price</div><div class="booking-field-value">' + (booking.price != null ? Number(booking.price).toFixed(2) + " " + (booking.currency || "") : "On request") + '</div></div>' +
-'<div><div class="booking-field-label">Pickup</div><div class="booking-field-value">' + (booking.pickup || "-") + '</div></div>' +
+'<div><div class="booking-field-label">' + (booking.details ? 'Hotel / Location' : 'Pickup') + '</div><div class="booking-field-value">' + (booking.pickup || "-") + '</div></div>' +
 '<div><div class="booking-field-label">Booked On</div><div class="booking-field-value">' + createdDate + '</div></div>' +
 '</div>' +
 
