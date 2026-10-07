@@ -7845,8 +7845,13 @@ if(!res.ok&&opts&&typeof opts.body==="string"&&opts.body.indexOf("tour_date")>-1
 try{
 var o=JSON.parse(opts.body);delete o.tour_date;delete o.pickup_time;
 var o2=Object.assign({},opts,{body:JSON.stringify(o)});
-return await fetch(url,o2);
-}catch(e){return res;}
+res=await fetch(url,o2);
+}catch(e){}
+}
+if(!res.ok){
+var txt="";try{txt=await res.clone().text();}catch(e){}
+console.error("BOOKING SAVE FAILED",res.status,txt);
+if(/[?&]debug/.test(location.search)){alert("Booking save failed: "+res.status+"\n"+txt);}
 }
 return res;
 };
