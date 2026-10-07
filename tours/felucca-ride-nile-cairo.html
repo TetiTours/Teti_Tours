@@ -3211,7 +3211,7 @@ Half Day Giza Pyramids →
 
 <div style="text-align:center;margin-bottom:24px;">
 <div style="color:#7a5a30;font-size:26px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-<h2 style="font-size:22px;color:#2a1d15;margin:6px 0;">5.0 out of 5 &mdash; 22 Reviews on TripAdvisor</h2>
+<h2 style="font-size:22px;color:#2a1d15;margin:6px 0;">Rated 5.0 out of 5 on TripAdvisor</h2>
 <a href="https://www.tripadvisor.com/Attraction_Review-g294201-d34435103-Reviews-Teti_Tours-Cairo_Cairo_Governorate.html" target="_blank" rel="noopener" style="color:#7a5a30;font-size:14px;text-decoration:underline;">See all reviews on TripAdvisor &rarr;</a>
 </div>
 
@@ -7793,5 +7793,27 @@ height:26px;
 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.001 2C6.478 2 2 6.477 2 12c0 1.86.504 3.656 1.46 5.221L2 22l4.927-1.431A9.945 9.945 0 0 0 12.001 22C17.523 22 22 17.523 22 12S17.523 2 12.001 2zm0 18.167a8.15 8.15 0 0 1-4.17-1.147l-.299-.177-3.003.873.883-2.942-.194-.303A8.147 8.147 0 1 1 20.167 12a8.173 8.173 0 0 1-8.166 8.167z"/></svg>
 </a>
 
+<style id="tour-inline-page">
+/* Tour pages: show tour details as part of the page, not as a pop-up */
+body.tour-page #detailModal{position:static!important;display:block!important;background:transparent!important;overflow:visible!important;z-index:auto!important;padding:0!important}
+body.tour-page #detailModal .detail-box{min-height:0;box-shadow:none}
+body.tour-page .close-detail{display:none!important}
+body.tour-page #home,body.tour-page #tours{display:none!important}
+body.tour-page .navbar{position:relative;background:#2a1d15;height:84px;align-items:center;padding:5px 20px}
+body.tour-page .brand img{width:150px;height:70px;transform:none}
+body.tour-page .navbar nav{padding-top:0}
+</style>
+<script>
+(function(){
+document.body.classList.add("tour-page");
+document.addEventListener("DOMContentLoaded",function(){
+var nl=document.querySelectorAll("#mobileNav a");nl.forEach(function(a){var h=a.getAttribute("href");if(h==="#home")a.setAttribute("href","../");else if(h==="#tours")a.setAttribute("href","../#tours");});
+var m=document.getElementById("detailModal"),h=document.getElementById("home")||document.querySelector("header");
+if(m&&h&&h.parentNode){h.parentNode.insertBefore(m,h.nextSibling);}
+setTimeout(function(){document.body.style.overflow="auto";},600);
+});
+window.closeDetails=function(){document.body.style.overflow="auto";};
+})();
+</script>
 </body>
 </html>
