@@ -7863,7 +7863,7 @@ setTimeout(function(){document.body.style.overflow="auto";},600);
 });
 window.closeDetails=function(){document.body.style.overflow="auto";};
 window.buildBookingDetails=function(){
-if(window.currentTour!=="Airport-transfer")return null;
+if(window.currentTour!=="Airport-transfer")return window.pickupLocationLink?("Hotel location pin: "+window.pickupLocationLink):null;
 var g=function(id){var e=document.getElementById(id);return e&&e.value?e.value:"-";};
 var d=document.querySelector('input[name="direction"]:checked');
 var dir=d?d.value:"-";
