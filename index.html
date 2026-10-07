@@ -3519,6 +3519,19 @@ placeholder="e.g. MS985">
 
 <div>
 
+<label for="airportDate">
+Pickup Date
+</label>
+
+<input
+type="date"
+id="airportDate"
+required>
+
+</div>
+
+<div>
+
 <label for="time">
 Pickup Time
 </label>
@@ -6559,6 +6572,9 @@ required;
 time.required =
 required;
 
+const airportDate = document.getElementById("airportDate");
+if(airportDate){ airportDate.required = required; }
+
 direction.forEach(
 radio => {
 
@@ -7306,6 +7322,10 @@ airport +
 flight +
 "\n" +
 
+"Pickup Date: " +
+(document.getElementById("airportDate") ? document.getElementById("airportDate").value : "") +
+"\n" +
+
 "Pickup Time: " +
 time +
 "\n\n";
@@ -7389,7 +7409,7 @@ bags +
 
 whatsappMessage +=
 
-"Hotel / Pickup: " +
+window.hotelFieldLabel() +
 pickup +
 "\n" +
 
@@ -7414,7 +7434,7 @@ message ||
 const bookingRef = "TT-" + Date.now().toString().slice(-8);
 
 try{
-await fetch(SUPABASE_URL + "/rest/v1/bookings",{
+await bookingFetchWithFallback(SUPABASE_URL + "/rest/v1/bookings",{
 method:"POST",
 headers:{
 "apikey":SUPABASE_KEY,
@@ -7424,6 +7444,9 @@ headers:{
 },
 body: JSON.stringify({
 reference: bookingRef,
+tour_date: ((document.getElementById("tourDate")||{}).value || null),
+pickup_time: (((window.currentTour === "Airport-transfer" ? document.getElementById("time") : document.getElementById("tourTime"))||{}).value || null),
+details: (window.buildBookingDetails ? window.buildBookingDetails() : null),
 tour_name: tourName,
 package_name: packageName || null,
 guest_name: name,
@@ -7433,8 +7456,8 @@ children: children,
 guide_language: guideLanguage,
 pickup: pickup,
 message: message || null,
-price: price,
-currency: currency,
+price: (price === "" || price === undefined ? null : price),
+currency: currency || null,
 status: "confirmed"
 })
 });
@@ -7688,5 +7711,88 @@ height:26px;
 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.001 2C6.478 2 2 6.477 2 12c0 1.86.504 3.656 1.46 5.221L2 22l4.927-1.431A9.945 9.945 0 0 0 12.001 22C17.523 22 22 17.523 22 12S17.523 2 12.001 2zm0 18.167a8.15 8.15 0 0 1-4.17-1.147l-.299-.177-3.003.873.883-2.942-.194-.303A8.147 8.147 0 1 1 20.167 12a8.173 8.173 0 0 1-8.166 8.167z"/></svg>
 </a>
 
+<script id="booking-fixes">
+(function(){
+window.buildBookingDetails=function(){
+if(window.currentTour!=="Airport-transfer")return window.pickupLocationLink?("Hotel location pin: "+window.pickupLocationLink):null;
+var g=function(id){var e=document.getElementById(id);return e&&e.value?e.value:"-";};
+var d=document.querySelector('input[name="direction"]:checked');
+var dir=d?d.value:"-";
+var toAirport=dir.indexOf("Hotel")===0;
+var airport=g("airport"),hotel=g("pickup");
+var pin=window.pickupLocationLink?("\nHotel location pin: "+window.pickupLocationLink):"";
+return "Direction: "+dir+"\nPickup: "+(toAirport?hotel:airport)+"\nDrop-off: "+(toAirport?airport:hotel)+"\nFlight number: "+g("flight")+"\nBags: "+g("bags")+pin;
+};
+window.hotelFieldLabel=function(){
+if(window.currentTour!=="Airport-transfer")return "Hotel / Pickup: ";
+var d=document.querySelector('input[name="direction"]:checked');
+if(!d)return "Hotel: ";
+return d.value.indexOf("Hotel")===0?"Pickup Hotel: ":"Drop-off Hotel: ";
+};
+document.addEventListener("DOMContentLoaded",function(){
+var lp=document.querySelector('label[for="pickup"]'),la=document.querySelector('label[for="airport"]');
+var radios=document.querySelectorAll('input[name="direction"]');
+if(!lp||!la||!radios.length)return;
+var upd=function(){
+var d=document.querySelector('input[name="direction"]:checked');
+if(!d)return;
+if(d.value.indexOf("Hotel")===0){la.textContent="Drop-off Airport";lp.textContent="Pickup Hotel Name & Location";}
+else{la.textContent="Pickup Airport";lp.textContent="Drop-off Hotel Name & Location";}
+};
+radios.forEach(function(r){r.addEventListener("change",upd);});
+});
+window.bookingFetchWithFallback=async function(url,opts){
+var res=await fetch(url,opts);
+if(!res.ok&&opts&&typeof opts.body==="string"&&(opts.body.indexOf("tour_date")>-1||opts.body.indexOf("details")>-1)){
+try{
+var o=JSON.parse(opts.body);delete o.tour_date;delete o.pickup_time;delete o.details;
+var o2=Object.assign({},opts,{body:JSON.stringify(o)});
+res=await fetch(url,o2);
+}catch(e){}
+}
+if(!res.ok){
+var txt="";try{txt=await res.clone().text();}catch(e){}
+console.error("BOOKING SAVE FAILED",res.status,txt);
+if(/[?&]debug/.test(location.search)){alert("Booking save failed: "+res.status+"\n"+txt);}
+}
+try{var __b=JSON.parse(opts.body);if(window.trackEvent){window.trackEvent("generate_lead",{tour_name:__b.tour_name,value:Number(__b.price)||0,currency:__b.currency||"USD",booking_ref:__b.reference,tour_date:__b.tour_date||""});}}catch(e){}
+return res;
+};
+document.addEventListener("DOMContentLoaded",function(){
+var ad=document.getElementById("airportDate"),td=document.getElementById("tourDate");
+if(!ad)return;
+var d=new Date(),p=function(n){return String(n).padStart(2,"0");};
+ad.min=d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate());
+var sync=function(){if(td)td.value=ad.value;};
+ad.addEventListener("input",sync);ad.addEventListener("change",sync);
+});
+document.addEventListener("DOMContentLoaded",function(){
+var fa=document.getElementById("bookingFormArea");
+if(!fa||!window.MutationObserver)return;
+new MutationObserver(function(){
+if(fa.innerText&&fa.innerText.indexOf("BOOKING CONFIRMED")>-1){
+setTimeout(function(){fa.scrollIntoView({behavior:"smooth",block:"start"});},150);
+}
+}).observe(fa,{childList:true});
+});
+})();
+</script>
+<script id="ga-events">
+(function(){
+function track(n,p){try{if(window.gtag)window.gtag("event",n,p||{});}catch(e){}}
+window.trackEvent=track;
+document.addEventListener("click",function(e){
+var t=e.target;
+var a=t.closest?t.closest('a[href*="wa.me"]'):null;
+if(a){track("whatsapp_click",{link_location:String(a.className||"link").slice(0,40),page_path:location.pathname});}
+var b=t.closest?t.closest(".location-share-btn"):null;
+if(b){track("share_location_click",{page_path:location.pathname});}
+},true);
+var ot=window.openTourDetails;
+if(typeof ot==="function"){
+window.openTourDetails=function(id){track("view_item",{item_id:String(id),item_name:String(id)});return ot.apply(this,arguments);};
+}
+})();
+</script>
 </body>
 </html>
