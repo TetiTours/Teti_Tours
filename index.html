@@ -2966,7 +2966,7 @@ who are passionate about Egypt's history, culture and hidden gems.
 
 <div style="background:white;border-radius:10px;padding:20px 24px;margin-bottom:14px;box-shadow:0 6px 18px rgba(0,0,0,.06);">
 <h3 style="font-size:17px;color:#2a1d15;margin-bottom:6px;">Are your tours private or group tours?</h3>
-<p style="color:#33251b;font-size:15px;line-height:1.7;">All our tours are private — just you and your group with your own guide and driver, never joined with strangers on a bus.</p>
+<p style="color:#33251b;font-size:15px;line-height:1.7;">All our tours are private — just you and your group with your own guide and driver, never joined with strangers on a bus. The only exception is the White Desert tour, which is also available as a shared group tour.</p>
 </div>
 
 <div style="background:white;border-radius:10px;padding:20px 24px;margin-bottom:14px;box-shadow:0 6px 18px rgba(0,0,0,.06);">
@@ -3867,7 +3867,7 @@ images:[
 name:"White Desert & Black Desert 2-Day Camping Tour",
 
 description:
-"A two-day, one-night private adventure into Egypt's Western Desert. After an early start from Cairo or Giza, you drive to Bahariya Oasis and continue by 4x4 into the desert: the dark volcanic hills of the Black Desert, the quartz crystals of Crystal Mountain, and the chalk rock formations of the White Desert, shaped by the wind into mushrooms, towers and animals. You can swim in a natural hot spring and try sandboarding on the dunes. Dinner is cooked at camp, followed by a night under the stars, and you wake up to sunrise over the White Desert before breakfast and the drive back to Cairo. Entrance tickets, camping, all meals and water are included. Children up to 5 years old travel free; from 6 years the adult price applies. Please note: this tour is not suitable for travelers over 60 years old.",
+"Escape the city for two days in Egypt's Western Desert. After an early pickup from your hotel in Cairo or Giza, you drive south to Bahariya Oasis and continue by 4x4 into the desert, starting with the Black Desert, where dark volcanic hills rise from golden sand. Next comes Crystal Mountain, a ridge of sparkling quartz, and then the White Desert, where wind has carved the chalk rock into towering shapes that glow at sunset. You can swim in a natural hot spring, try sandboarding on the dunes, and watch the sun go down over the formations. Dinner is cooked fresh at camp, followed by a night around the fire under a sky full of stars, and you sleep in a desert camp. In the morning you wake up to sunrise over the White Desert, enjoy breakfast, and head back to Cairo. Entrance tickets, camping, all meals and water are included. Choose a private tour for your own group only, or a shared tour with other travelers.",
 
 icon:"⛺",
 
@@ -7907,7 +7907,10 @@ var o=window.openTourDetails;if(typeof o!=="function")return;
 window.openTourDetails=function(id){var r=o.apply(this,arguments);
 try{var wd=(id==="White-Desert"),c=document.querySelector('label[for="children"]'),a=document.querySelector('label[for="adults"]');
 if(c)c.textContent=wd?"Children (up to 5 yrs, free)":"Children (5\u20139 yrs, half price)";
-if(a)a.textContent=wd?"Adults (6 yrs and older)":"Adults";}catch(e){}
+if(a)a.textContent=wd?"Adults (6 yrs and older)":"Adults";
+var n=document.getElementById("wd-note"),d=document.getElementById("detailDescription");
+if(wd&&!n&&d){n=document.createElement("div");n.id="wd-note";n.setAttribute("style","margin:12px 0;padding:12px 14px;background:#fff6e5;border-left:4px solid #d9962b;border-radius:8px;color:#5a3d12;font-size:14.5px;line-height:1.6;");n.innerHTML="<strong>Good to know:</strong> children up to 5 years old travel free; from 6 years the adult price applies. This tour is not suitable for travelers over 60 years old.";d.parentNode.insertBefore(n,d.nextSibling);}
+if(!wd&&n)n.remove();}catch(e){}
 return r;};
 })();
 </script>
