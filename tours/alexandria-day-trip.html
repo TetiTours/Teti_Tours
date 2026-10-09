@@ -547,6 +547,14 @@ linear-gradient(rgba(0,0,0,.08),rgba(0,0,0,.08)),
 url("../assets/alexandria-citadel.webp");
 }
 
+.desert-image{
+background-image:
+linear-gradient(rgba(0,0,0,.06),rgba(0,0,0,.06)),
+url("../assets/white-desert.webp");
+background-position:center 70%;
+}
+
+
 .tour-label{
 background:#8a6a3d;
 color:white;
@@ -2133,6 +2141,18 @@ height:230px;
 }
 
 </style>
+<style id="tour-inline-head">
+/* Tour pages: show tour details as part of the page, not as a pop-up */
+html.tour-page #detailModal{position:static!important;display:block!important;background:transparent!important;overflow:visible!important;z-index:auto!important;padding:0!important}
+html.tour-page #detailModal .detail-box{min-height:0;box-shadow:none}
+html.tour-page .close-detail{display:none!important}
+html.tour-page #home,html.tour-page #tours{display:none!important}
+html.tour-page .navbar{position:relative;background:#2a1d15;height:84px;align-items:center;padding:5px 20px}
+html.tour-page .brand img{width:150px;height:70px;transform:none}
+html.tour-page .navbar nav{padding-top:0}
+html.tour-page:not(.tour-ready) main>*:not(#detailModal),html.tour-page:not(.tour-ready) #detailModal~*,html.tour-page:not(.tour-ready) main~*{visibility:hidden}
+</style>
+<script>document.documentElement.classList.add("tour-page");</script>
 </head>
 
 <body>
@@ -2473,6 +2493,51 @@ View Details
 </div>
 
 </div>
+
+<!-- WHITE DESERT -->
+
+<div class="tour-card">
+
+<div class="tour-image desert-image" role="img" aria-label="White Desert chalk rock formations at sunset">
+
+<div class="tour-label">
+2 DAYS
+</div>
+
+</div>
+
+<div class="tour-content">
+
+<h3>
+White Desert &amp; Black Desert Camping
+</h3>
+
+<p>
+Two days with a 4x4 safari, hot spring,
+sandboarding and a night in the desert.
+</p>
+
+<div class="pickup-badge">✓ Pickup &amp; Drop-off Included</div>
+
+<div class="tour-price-badge" data-tour-id="White-Desert">Loading price&hellip;</div>
+
+<div class="tour-bottom">
+
+<span>
+White Desert
+</span>
+
+<button
+onclick="openTour('White-Desert')">
+View Details
+</button>
+
+</div>
+
+</div>
+
+</div>
+
 
 </div>
 
@@ -3901,6 +3966,36 @@ images:[
 },
 
 
+"White-Desert":{
+
+name:"White Desert & Black Desert 2-Day Camping Tour",
+
+description:
+"A two-day, one-night private adventure into Egypt's Western Desert. After an early start from Cairo or Giza, you drive to Bahariya Oasis and continue by 4x4 into the desert: the dark volcanic hills of the Black Desert, the quartz crystals of Crystal Mountain, and the chalk rock formations of the White Desert, shaped by the wind into mushrooms, towers and animals. You can swim in a natural hot spring and try sandboarding on the dunes. Dinner is cooked at camp, followed by a night under the stars, and you wake up to sunrise over the White Desert before breakfast and the drive back to Cairo. Entrance tickets, camping, all meals and water are included. Children up to 5 years old travel free; from 6 years the adult price applies. Please note: this tour is not suitable for travelers over 60 years old.",
+
+icon:"⛺",
+
+location:"Bahariya & White Desert",
+
+image:
+"../assets/white-desert.webp",
+
+images:[
+"../assets/white-desert-01.webp",
+"../assets/white-desert-02.webp",
+"../assets/white-desert-03.webp",
+"../assets/white-desert-04.webp",
+"../assets/white-desert-05.webp",
+"../assets/white-desert-06.webp",
+"../assets/white-desert-07.webp",
+"../assets/white-desert-08.webp",
+"../assets/white-desert-09.webp",
+"../assets/white-desert-10.webp"
+]
+
+},
+
+
 "Airport-transfer":{
 
 name:
@@ -5115,7 +5210,25 @@ return;
 
 let included, notIncluded;
 
-if(tourId === "Airport-transfer"){
+if(tourId === "White-Desert"){
+
+included = [
+"Hotel pickup and drop-off in Cairo or Giza",
+"Air-conditioned transport and 4x4 desert safari",
+"Entrance tickets",
+"Sandboarding",
+"Swimming in the hot spring",
+"Camping accommodation in the desert",
+"Breakfast, lunch and dinner",
+"Bottled water"
+];
+
+notIncluded = [
+"Gratuities (tipping for guide and driver)",
+"Personal expenses"
+];
+
+}else if(tourId === "Airport-transfer"){
 
 included = [
 "Private air-conditioned vehicle",
@@ -5159,7 +5272,7 @@ notIncluded.map(item => "<li>" + item + "</li>").join("");
    ITINERARY
    ========================================================= */
 
-const ITINERARY_DATA = {"GEM-Pyramids": [{"title": "Pickup from your Cairo or Giza hotel", "desc": "Your driver picks you up in a private, air-conditioned vehicle."}, {"title": "Giza Pyramids", "desc": "Visit Khufu, Khafre & Menkaure, plus the Great Sphinx."}, {"title": "Lunch break", "desc": "Optional stop, at your own expense."}, {"title": "Grand Egyptian Museum", "desc": "See the complete Tutankhamun collection and the Grand Staircase."}, {"title": "Drop-off back at your hotel", "desc": "Relax on the ride back after a full day of sightseeing."}], "Saqqara-Memphis": [{"title": "Pickup from your Cairo or Giza hotel", "desc": "Your driver picks you up in a private, air-conditioned vehicle."}, {"title": "Giza Pyramids", "desc": "Visit the Great Pyramid and the Great Sphinx."}, {"title": "Saqqara", "desc": "Explore the Step Pyramid of Djoser and nearby tombs."}, {"title": "Memphis open-air museum", "desc": "See the Ramesses II statue and alabaster sphinx."}, {"title": "Drop-off back at your hotel", "desc": "Relax on the ride back to your hotel."}], "Saqqara-Dahshur-Memphis": [{"title": "Pickup from your Cairo or Giza hotel", "desc": "Your driver picks you up in a private, air-conditioned vehicle."}, {"title": "Saqqara", "desc": "Explore the Step Pyramid of Djoser."}, {"title": "Dahshur", "desc": "See the Bent Pyramid and the Red Pyramid."}, {"title": "Memphis open-air museum", "desc": "See the Ramesses II statue and alabaster sphinx."}, {"title": "Drop-off back at your hotel", "desc": "Relax on the ride back to your hotel."}], "Citadel-NMEC": [{"title": "Pickup from your Cairo or Giza hotel", "desc": "Your driver picks you up in a private, air-conditioned vehicle."}, {"title": "Citadel of Saladin", "desc": "Visit the Citadel and the Alabaster Mosque."}, {"title": "Old Cairo", "desc": "Explore historic churches and mosques."}, {"title": "National Museum of Egyptian Civilization", "desc": "See the NMEC's royal mummies hall and galleries."}, {"title": "Drop-off back at your hotel", "desc": "Relax on the ride back to your hotel."}], "Half-Giza": [{"title": "Pickup from your Cairo or Giza hotel", "desc": "Your driver picks you up in a private, air-conditioned vehicle."}, {"title": "Giza Plateau", "desc": "See the three Pyramids and the Great Sphinx."}, {"title": "Panoramic Point", "desc": "Photo stop for the classic three-pyramid view."}, {"title": "Drop-off back at your hotel", "desc": "A quick, focused half-day visit."}], "Half-GEM": [{"title": "Pickup from your Cairo or Giza hotel", "desc": "Your driver picks you up in a private, air-conditioned vehicle."}, {"title": "Grand Hall", "desc": "See the towering Ramesses II statue."}, {"title": "Tutankhamun collection", "desc": "View the complete collection of over 5,000 objects."}, {"title": "Drop-off back at your hotel", "desc": "A quick, focused half-day visit."}], "Nile-Cruise": [{"title": "Pickup from your Cairo or Giza hotel", "desc": "Your driver picks you up in a private, air-conditioned vehicle."}, {"title": "Boarding & dinner service", "desc": "Sail the Nile while enjoying a set dinner menu."}, {"title": "Live entertainment", "desc": "Music or Tanoura shows on select sailings."}, {"title": "Drop-off back at your hotel", "desc": "Relax on the ride back after your evening cruise."}], "VIP-Felucca-Lunch": [{"title": "Pickup from your Cairo or Giza hotel", "desc": "Your driver picks you up in a private, air-conditioned vehicle."}, {"title": "Boarding the felucca", "desc": "Set sail on a traditional wooden felucca."}, {"title": "Onboard lunch", "desc": "Enjoy lunch as the sun sets over the Nile."}, {"title": "Drop-off back at your hotel", "desc": "A relaxed end to a romantic sail."}], "Felucca-One-Hour": [{"title": "Flexible pickup", "desc": "Your driver picks you up from your Cairo or Giza hotel."}, {"title": "Boarding the felucca", "desc": "Set sail on a traditional wooden felucca."}, {"title": "Sailing the Nile", "desc": "Around an hour at a relaxed pace."}, {"title": "Drop-off back at your hotel", "desc": "A short, calming break from the city."}], "Fayoum": [{"title": "Drive to El Fayoum", "desc": "Enjoy a comfortable drive southwest of Cairo, passing picturesque landscapes and rural villages."}, {"title": "Tunis Village", "desc": "A small pottery village known for its scenic views and local crafts."}, {"title": "Lunch", "desc": "A stop for lunch at a local restaurant."}, {"title": "Wadi El Rayan", "desc": "See the waterfalls and Magic Lake against the desert dunes."}, {"title": "Return Journey", "desc": "Relax on the drive back to Cairo."}], "Alexandria": [{"title": "Catacombs of Kom El Shoqafa", "desc": "A fascinating underground necropolis dating back to the 2nd century AD."}, {"title": "Pompey's Pillar", "desc": "A towering ancient column reflecting Alexandria's Greco-Roman heritage."}, {"title": "Lunch", "desc": "Enjoy a delicious lunch at a local restaurant, savoring Egyptian cuisine."}, {"title": "Citadel of Qaitbay", "desc": "A majestic fortress overlooking the Mediterranean Sea."}, {"title": "Alexandria Library", "desc": "A modern marvel built in tribute to the ancient Library of Alexandria."}, {"title": "Return Journey", "desc": "Relax on the journey back to Cairo, with drop-off at your hotel."}]};
+const ITINERARY_DATA = {"GEM-Pyramids": [{"title": "Pickup from your Cairo or Giza hotel", "desc": "Your driver picks you up in a private, air-conditioned vehicle."}, {"title": "Giza Pyramids", "desc": "Visit Khufu, Khafre & Menkaure, plus the Great Sphinx."}, {"title": "Lunch break", "desc": "Optional stop, at your own expense."}, {"title": "Grand Egyptian Museum", "desc": "See the complete Tutankhamun collection and the Grand Staircase."}, {"title": "Drop-off back at your hotel", "desc": "Relax on the ride back after a full day of sightseeing."}], "Saqqara-Memphis": [{"title": "Pickup from your Cairo or Giza hotel", "desc": "Your driver picks you up in a private, air-conditioned vehicle."}, {"title": "Giza Pyramids", "desc": "Visit the Great Pyramid and the Great Sphinx."}, {"title": "Saqqara", "desc": "Explore the Step Pyramid of Djoser and nearby tombs."}, {"title": "Memphis open-air museum", "desc": "See the Ramesses II statue and alabaster sphinx."}, {"title": "Drop-off back at your hotel", "desc": "Relax on the ride back to your hotel."}], "Saqqara-Dahshur-Memphis": [{"title": "Pickup from your Cairo or Giza hotel", "desc": "Your driver picks you up in a private, air-conditioned vehicle."}, {"title": "Saqqara", "desc": "Explore the Step Pyramid of Djoser."}, {"title": "Dahshur", "desc": "See the Bent Pyramid and the Red Pyramid."}, {"title": "Memphis open-air museum", "desc": "See the Ramesses II statue and alabaster sphinx."}, {"title": "Drop-off back at your hotel", "desc": "Relax on the ride back to your hotel."}], "Citadel-NMEC": [{"title": "Pickup from your Cairo or Giza hotel", "desc": "Your driver picks you up in a private, air-conditioned vehicle."}, {"title": "Citadel of Saladin", "desc": "Visit the Citadel and the Alabaster Mosque."}, {"title": "Old Cairo", "desc": "Explore historic churches and mosques."}, {"title": "National Museum of Egyptian Civilization", "desc": "See the NMEC's royal mummies hall and galleries."}, {"title": "Drop-off back at your hotel", "desc": "Relax on the ride back to your hotel."}], "Half-Giza": [{"title": "Pickup from your Cairo or Giza hotel", "desc": "Your driver picks you up in a private, air-conditioned vehicle."}, {"title": "Giza Plateau", "desc": "See the three Pyramids and the Great Sphinx."}, {"title": "Panoramic Point", "desc": "Photo stop for the classic three-pyramid view."}, {"title": "Drop-off back at your hotel", "desc": "A quick, focused half-day visit."}], "Half-GEM": [{"title": "Pickup from your Cairo or Giza hotel", "desc": "Your driver picks you up in a private, air-conditioned vehicle."}, {"title": "Grand Hall", "desc": "See the towering Ramesses II statue."}, {"title": "Tutankhamun collection", "desc": "View the complete collection of over 5,000 objects."}, {"title": "Drop-off back at your hotel", "desc": "A quick, focused half-day visit."}], "Nile-Cruise": [{"title": "Pickup from your Cairo or Giza hotel", "desc": "Your driver picks you up in a private, air-conditioned vehicle."}, {"title": "Boarding & dinner service", "desc": "Sail the Nile while enjoying a set dinner menu."}, {"title": "Live entertainment", "desc": "Music or Tanoura shows on select sailings."}, {"title": "Drop-off back at your hotel", "desc": "Relax on the ride back after your evening cruise."}], "VIP-Felucca-Lunch": [{"title": "Pickup from your Cairo or Giza hotel", "desc": "Your driver picks you up in a private, air-conditioned vehicle."}, {"title": "Boarding the felucca", "desc": "Set sail on a traditional wooden felucca."}, {"title": "Onboard lunch", "desc": "Enjoy lunch as the sun sets over the Nile."}, {"title": "Drop-off back at your hotel", "desc": "A relaxed end to a romantic sail."}], "Felucca-One-Hour": [{"title": "Flexible pickup", "desc": "Your driver picks you up from your Cairo or Giza hotel."}, {"title": "Boarding the felucca", "desc": "Set sail on a traditional wooden felucca."}, {"title": "Sailing the Nile", "desc": "Around an hour at a relaxed pace."}, {"title": "Drop-off back at your hotel", "desc": "A short, calming break from the city."}], "Fayoum": [{"title": "Drive to El Fayoum", "desc": "Enjoy a comfortable drive southwest of Cairo, passing picturesque landscapes and rural villages."}, {"title": "Tunis Village", "desc": "A small pottery village known for its scenic views and local crafts."}, {"title": "Lunch", "desc": "A stop for lunch at a local restaurant."}, {"title": "Wadi El Rayan", "desc": "See the waterfalls and Magic Lake against the desert dunes."}, {"title": "Return Journey", "desc": "Relax on the drive back to Cairo."}], "Alexandria": [{"title": "Catacombs of Kom El Shoqafa", "desc": "A fascinating underground necropolis dating back to the 2nd century AD."}, {"title": "Pompey's Pillar", "desc": "A towering ancient column reflecting Alexandria's Greco-Roman heritage."}, {"title": "Lunch", "desc": "Enjoy a delicious lunch at a local restaurant, savoring Egyptian cuisine."}, {"title": "Citadel of Qaitbay", "desc": "A majestic fortress overlooking the Mediterranean Sea."}, {"title": "Alexandria Library", "desc": "A modern marvel built in tribute to the ancient Library of Alexandria."}, {"title": "Return Journey", "desc": "Relax on the journey back to Cairo, with drop-off at your hotel."}], "White-Desert": [{"title": "Day 1: Early pickup from your hotel", "desc": "Your driver collects you at about 5:00 AM from your Cairo or Giza hotel in a private, air-conditioned vehicle."}, {"title": "Day 1: Drive to Bahariya Oasis", "desc": "A scenic drive of about six hours into the Western Desert, with a stop on the way."}, {"title": "Day 1: Hot spring and lunch", "desc": "Swim in a natural hot spring at the oasis, then have lunch before heading into the desert."}, {"title": "Day 1: Black Desert", "desc": "Climb the dark volcanic hills scattered across the sand for wide views over the desert."}, {"title": "Day 1: Crystal Mountain", "desc": "See a hill made of quartz crystals and the rock formations around it."}, {"title": "Day 1: White Desert and sandboarding", "desc": "Walk among the white chalk formations carved by the wind, and try sandboarding on the dunes."}, {"title": "Day 1: Sunset, dinner and overnight camp", "desc": "Watch the sunset, enjoy dinner cooked at camp, and spend the night in the desert under the stars."}, {"title": "Day 2: Sunrise and breakfast", "desc": "Wake up to sunrise over the White Desert and have breakfast at camp."}, {"title": "Day 2: Return to Cairo", "desc": "Drive back by way of Bahariya Oasis and arrive at your hotel in Cairo or Giza in the evening."}]};
 
 function renderItinerary(tourId, tour){
 
@@ -5486,7 +5599,7 @@ hasChildPrice
 ?
 Number(tour.price_child)
 :
-(adultRateNum / 2);
+(String(tour.tour_id).trim().toLowerCase() === "white-desert" ? 0 : adultRateNum / 2);
 
 return (adultRateNum * adults) + (childRate * children);
 
@@ -6594,6 +6707,10 @@ populateFixedTimeSelect("tourTime", ["17:00", "19:00"]);
 
 populateFixedTimeSelect("tourTime", ["07:00"]);
 
+}else if(tourId === "White-Desert"){
+
+populateFixedTimeSelect("tourTime", ["05:00"]);
+
 }else if(tourId === "VIP-Felucca-Lunch"){
 
 populateTimeSelect("tourTime", 12, 22);
@@ -6803,7 +6920,7 @@ hasChildPrice
 ?
 Number(tour.price_child)
 :
-(adultRateNum / 2);
+(String(tour.tour_id).trim().toLowerCase() === "white-desert" ? 0 : adultRateNum / 2);
 
 let breakdownText =
 adults +
@@ -7743,11 +7860,8 @@ if (heroVideo && soundButton) {
 
 <script>
 document.addEventListener("DOMContentLoaded", function(){
-setTimeout(function(){
-if(typeof openTour === "function"){
-openTour('Alexandria');
-}
-}, 250);
+try{ if(typeof openTour === "function"){ openTour('Alexandria'); } }catch(e){ console.error(e); }
+document.documentElement.classList.add("tour-ready");
 });
 window.closeDetails = function(){
 const modal = document.getElementById("detailModal");
@@ -7922,6 +8036,16 @@ var ot=window.openTourDetails;
 if(typeof ot==="function"){
 window.openTourDetails=function(id){track("view_item",{item_id:String(id),item_name:String(id)});return ot.apply(this,arguments);};
 }
+})();
+</script>
+<script id="child-label">
+(function(){
+var o=window.openTourDetails;if(typeof o!=="function")return;
+window.openTourDetails=function(id){var r=o.apply(this,arguments);
+try{var wd=(id==="White-Desert"),c=document.querySelector('label[for="children"]'),a=document.querySelector('label[for="adults"]');
+if(c)c.textContent=wd?"Children (up to 5 yrs, free)":"Children (5\u20139 yrs, half price)";
+if(a)a.textContent=wd?"Adults (6 yrs and older)":"Adults";}catch(e){}
+return r;};
 })();
 </script>
 </body>
