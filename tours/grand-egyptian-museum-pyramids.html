@@ -8070,5 +8070,97 @@ if(!wd&&n)n.remove();}catch(e){}
 return r;};
 })();
 </script>
+<script id="round-trip">
+(function(){
+function isAirportRT(){
+try{
+var p=window.findPackageById?window.findPackageById(window.currentPackageId):null;
+return !!(p&&/round/i.test(p.package_name||"")&&String(p.tour_id).trim().toLowerCase()==="airport-transfer");
+}catch(e){return false;}
+}
+function build(){
+var d=document.getElementById("returnFields");
+if(d)return d;
+var af=document.getElementById("airportFields");
+if(!af)return null;
+d=document.createElement("div");
+d.id="returnFields";
+d.style.display="none";
+d.innerHTML='<label style="display:block;margin-top:14px;">Return Trip (Hotel &rarr; same airport)</label>'+
+'<div class="row"><div><label for="returnFlight">Return Flight Number</label><input type="text" id="returnFlight" placeholder="e.g. MS986"></div>'+
+'<div><label for="returnDate">Return Pickup Date</label><input type="date" id="returnDate"></div>'+
+'<div><label for="returnTime">Return Pickup Time</label><select id="returnTime"><option value="">Select Time</option></select></div></div>';
+af.appendChild(d);
+var r=document.createElement("input");
+r.type="radio";r.name="direction";r.id="roundTripDir";r.style.display="none";
+r.value="Round trip (Airport → Hotel, then Hotel → Airport)";
+af.appendChild(r);
+return d;
+}
+var LB={flight:"Flight Number",airportDate:"Pickup Date",time:"Pickup Time"};
+var LRT={flight:"Arrival Flight Number",airportDate:"Arrival Date",time:"Arrival Pickup Time"};
+function setLabel(id,txt){var l=document.querySelector('label[for="'+id+'"]');if(l)l.textContent=txt;}
+function apply(){
+var d=build();if(!d)return;
+var rt=isAirportRT();
+var af=document.getElementById("airportFields");
+var dirBox=af.querySelector(".direction");
+var dirLabel=af.querySelector("label");
+var radio=document.getElementById("roundTripDir");
+var rf=document.getElementById("returnFlight"),rd=document.getElementById("returnDate"),rtm=document.getElementById("returnTime");
+d.style.display=rt?"block":"none";
+if(dirBox)dirBox.style.display=rt?"none":"";
+if(dirLabel&&dirLabel.textContent.indexOf("Transfer Direction")>-1)dirLabel.style.display=rt?"none":"";
+rf.required=rt;rd.required=rt;rtm.required=rt;
+var lp=document.querySelector('label[for="pickup"]'),la=document.querySelector('label[for="airport"]');
+if(lp&&!lp.dataset.o)lp.dataset.o=lp.textContent;
+if(la&&!la.dataset.o)la.dataset.o=la.textContent;
+if(rt){
+radio.checked=true;
+if(rtm.options.length<=1){var t=document.getElementById("time");if(t&&t.options.length>1)rtm.innerHTML=t.innerHTML;}
+var today=new Date(),p2=function(n){return String(n).padStart(2,"0");};
+var min=today.getFullYear()+"-"+p2(today.getMonth()+1)+"-"+p2(today.getDate());
+var ad=document.getElementById("airportDate");
+rd.min=(ad&&ad.value)||min;
+setLabel("flight",LRT.flight);setLabel("airportDate",LRT.airportDate);setLabel("time",LRT.time);
+if(la)la.textContent="Airport (arrival and return)";
+if(lp)lp.textContent="Hotel Name & Location";
+}else{
+if(radio.checked)radio.checked=false;
+setLabel("flight",LB.flight);setLabel("airportDate",LB.airportDate);setLabel("time",LB.time);
+if(la&&la.dataset.o)la.textContent=la.dataset.o;
+if(lp&&lp.dataset.o)lp.textContent=lp.dataset.o;
+var c=document.querySelector('input[name="direction"]:checked');
+if(c)c.dispatchEvent(new Event("change"));
+}
+}
+window.__rtApply=apply;
+var os=window.selectPackage;
+if(typeof os==="function"){
+window.selectPackage=function(id){var r=os.apply(this,arguments);try{apply();}catch(e){}return r;};
+}
+var ot=window.openTourDetails;
+if(typeof ot==="function"){
+window.openTourDetails=function(){var r=ot.apply(this,arguments);try{setTimeout(apply,0);}catch(e){}return r;};
+}
+document.addEventListener("change",function(e){
+if(e.target&&e.target.id==="airportDate"){var rd=document.getElementById("returnDate");if(rd&&isAirportRT()){rd.min=e.target.value||rd.min;if(rd.value&&e.target.value&&rd.value<e.target.value)rd.value=e.target.value;}}
+});
+var ob=window.buildBookingDetails;
+window.buildBookingDetails=function(){
+var base=ob?ob():null;
+if(!base||!isAirportRT())return base;
+var g=function(id){var e=document.getElementById(id);return e&&e.value?e.value:"-";};
+var add="\nReturn: Hotel → "+g("airport")+"\nReturn pickup date: "+g("returnDate")+"\nReturn pickup time: "+g("returnTime")+"\nReturn flight number: "+g("returnFlight");
+return base.indexOf("\nBags:")>-1?base.replace("\nBags:",add+"\nBags:"):base+add;
+};
+var oh=window.hotelFieldLabel;
+window.hotelFieldLabel=function(){
+if(!isAirportRT())return oh?oh():"Hotel: ";
+var g=function(id){var e=document.getElementById(id);return e&&e.value?e.value:"-";};
+return "Return Date: "+g("returnDate")+"\nReturn Pickup Time: "+g("returnTime")+"\nReturn Flight Number: "+g("returnFlight")+"\nHotel (arrival drop-off and return pickup): ";
+};
+})();
+</script>
 </body>
 </html>
