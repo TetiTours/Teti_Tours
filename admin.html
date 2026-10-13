@@ -1466,6 +1466,14 @@ lines.push("");
 lines.push("Tour: " + (booking.tour_name || "-") + (booking.package_name && booking.package_name !== "Airport Transfer" ? " (" + booking.package_name + ")" : ""));
 lines.push("Date: " + formatTourDate(booking.tour_date));
 lines.push("Pickup time: " + (booking.pickup_time || "-"));
+
+let detailsText = booking.details || "";
+const flightMatch = detailsText.match(/^Flight number:.*$/m);
+if(flightMatch){
+lines.push(flightMatch[0]);
+detailsText = detailsText.replace(flightMatch[0], "").replace(/\n{2,}/g, "\n").replace(/^\n+|\n+$/g, "");
+}
+
 lines.push("");
 lines.push("Guest: " + (booking.guest_name || "-"));
 lines.push("Phone: " + (booking.guest_phone || "-"));
@@ -1481,8 +1489,8 @@ if(!booking.details || booking.details.indexOf("Pickup:") === -1){
 lines.push("Pickup: " + (booking.pickup || "-"));
 }
 
-if(booking.details){
-lines.push(booking.details);
+if(detailsText){
+lines.push(detailsText);
 }
 
 if(booking.message){
