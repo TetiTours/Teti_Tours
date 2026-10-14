@@ -135,4 +135,14 @@
 <changefreq>monthly</changefreq>
 <priority>0.7</priority>
 </url>
+<url>
+<loc>https://www.tetitours.com/guide/wadi-el-hitan-whale-valley-and-magic-lake.html</loc>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>https://www.tetitours.com/guide/alexandria-highlights-qaitbay-citadel-catacombs-library.html</loc>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
 </urlset>
