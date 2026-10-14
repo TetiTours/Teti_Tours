@@ -71,6 +71,11 @@
 <priority>0.9</priority>
 </url>
 <url>
+<loc>https://www.tetitours.com/tours/white-desert-black-desert-camping-tour.html</loc>
+<changefreq>monthly</changefreq>
+<priority>0.9</priority>
+</url>
+<url>
 <loc>https://www.tetitours.com/guide/how-to-get-from-cairo-airport-to-giza.html</loc>
 <changefreq>monthly</changefreq>
 <priority>0.7</priority>
@@ -122,6 +127,11 @@
 </url>
 <url>
 <loc>https://www.tetitours.com/guide/saqqara-vs-dahshur-which-pyramids-to-visit.html</loc>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>https://www.tetitours.com/guide/white-desert-day-trip-or-overnight-camping.html</loc>
 <changefreq>monthly</changefreq>
 <priority>0.7</priority>
 </url>
