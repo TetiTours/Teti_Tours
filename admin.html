@@ -544,6 +544,16 @@ margin-bottom:14px;
 box-shadow:0 6px 18px rgba(0,0,0,.06);
 }
 
+.booking-card.completed{
+background:#eef4fb;
+border-left:6px solid #1f4268;
+}
+
+.complete-booking-btn.undo{
+background:#e3e3e3;
+color:#333;
+}
+
 .booking-card.cancelled{
 opacity:.55;
 }
@@ -1493,7 +1503,7 @@ const createdDate =
 new Date(booking.created_at).toLocaleString();
 
 html +=
-'<div class="booking-card' + (isCancelled ? ' cancelled' : '') + '">' +
+'<div class="booking-card' + (isCancelled ? ' cancelled' : '') + (isCompleted ? ' completed' : '') + '">' +
 
 '<div style="display:flex;justify-content:space-between;align-items:flex-start;">' +
 '<div>' +
@@ -1533,7 +1543,7 @@ statusBadge +
 '<div>' +
 '<button class="share-booking-btn" onclick="shareBooking(' + booking.id + ')">Share on WhatsApp</button>' +
 '<button class="copy-booking-btn" onclick="copyBooking(' + booking.id + ', this)">Copy</button>' +
-(isCancelled ? "" : '<button class="complete-booking-btn" onclick="setBookingStatus(' + booking.id + ', \'' + (isCompleted ? 'confirmed' : 'completed') + '\')">' + (isCompleted ? 'Mark as Confirmed' : 'Mark as Completed') + '</button>') +
+(isCancelled ? "" : '<button class="complete-booking-btn' + (isCompleted ? ' undo' : '') + '" onclick="setBookingStatus(' + booking.id + ', \'' + (isCompleted ? 'confirmed' : 'completed') + '\')">' + (isCompleted ? 'Mark as Confirmed' : 'Mark as Completed') + '</button>') +
 (isCancelled ? "" : '<button class="cancel-booking-btn" onclick="cancelBooking(' + booking.id + ')">Cancel Booking</button>') +
 '</div>' +
 
