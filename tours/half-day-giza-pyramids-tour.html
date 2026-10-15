@@ -8212,5 +8212,18 @@ if(!b&&n)n.remove();}catch(e){}
 return r;};
 })();
 </script>
+<script id="driver-lang-js">
+(function(){
+var NL={"Nile-Cruise":1,"VIP-Felucca-Lunch":1,"Felucca-One-Hour":1,"Bedouin-Dinner":1};
+function apply(id){try{var sel=document.getElementById("guideLanguage"),box=sel&&sel.parentElement,note=document.getElementById("driver-lang-note");
+if(!box)return;
+if(NL[id]){sel.value="English";box.style.display="none";
+if(!note){note=document.createElement("p");note.id="driver-lang-note";note.setAttribute("style","font-size:14px;color:#33251b;margin:4px 0 12px;");note.textContent="Your driver speaks good English.";box.parentNode.insertBefore(note,box.nextSibling);}
+note.style.display="block";}
+else{box.style.display="";if(note)note.style.display="none";}}catch(e){}}
+["openTourDetails","openCairoOption"].forEach(function(n){var o=window[n];if(typeof o!=="function")return;
+window[n]=function(id){var r=o.apply(this,arguments);apply(id);return r;};});
+})();
+</script>
 </body>
 </html>
