@@ -3827,6 +3827,12 @@ onclick="shareMyLocation()">
 </div>
 
 
+<label for="heardFrom">
+How did you hear about us?
+</label>
+
+<input type="text" id="heardFrom" required maxlength="80" pattern=".*\S.*" placeholder="Google, Instagram, a friend, TripAdvisor..." autocomplete="off">
+
 <label for="message">
 Additional Message
 </label>
@@ -7691,6 +7697,7 @@ window.pickupLocationLink
 
 (guideLanguageField ? ("Guide Language: " + guideLanguage + "\n") : ("Guide Language: English (driver)\n")) +
 
+(window.leadSourceLine ? window.leadSourceLine() : "") +
 "Additional Message: " +
 
 (
@@ -7723,7 +7730,7 @@ adults: adults,
 children: children,
 guide_language: guideLanguage,
 pickup: pickup,
-message: message || null,
+message: ((message || "") + (window.leadSourceDb ? window.leadSourceDb() : "")).trim() || null,
 price: (price === "" || price === undefined ? null : price),
 currency: currency || null,
 status: "confirmed"
@@ -8221,6 +8228,21 @@ note.style.display="block";}
 else{box.style.display="";if(note)note.style.display="none";}}catch(e){}}
 ["openTourDetails","openCairoOption"].forEach(function(n){var o=window[n];if(typeof o!=="function")return;
 window[n]=function(id){var r=o.apply(this,arguments);apply(id);return r;};});
+})();
+</script>
+<script id="heard-src-js">
+(function(){
+var K="tt_src";
+try{var q=new URLSearchParams(location.search),o={};
+["utm_source","utm_medium","utm_campaign"].forEach(function(k){if(q.get(k))o[k]=q.get(k);});
+var r=document.referrer?new URL(document.referrer).hostname.replace(/^www\./,""):"";
+if(r&&r.indexOf("tetitours.com")<0)o.ref=r;
+if(Object.keys(o).length){var old=JSON.parse(sessionStorage.getItem(K)||"{}");sessionStorage.setItem(K,JSON.stringify(Object.assign(old,o)));}
+}catch(e){}
+function auto(){try{var o=JSON.parse(sessionStorage.getItem(K)||"{}");if(o.utm_source)return o.utm_source+(o.utm_medium?"/"+o.utm_medium:"")+(o.utm_campaign?"/"+o.utm_campaign:"");return o.ref||"";}catch(e){return "";}}
+function heard(){var s=document.getElementById("heardFrom");return s?s.value.trim():"";}
+window.leadSourceLine=function(){return "Heard About Us: "+(heard()||"-")+"\n";};
+window.leadSourceDb=function(){var a=auto();return "\n[Heard from: "+(heard()||"-")+(a?" | Auto: "+a:"")+"]";};
 })();
 </script>
 </body>
