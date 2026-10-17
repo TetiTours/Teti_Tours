@@ -3463,15 +3463,88 @@ required>
 
 <div>
 
-<label for="phone">
+<label for="phoneLocal">
 Guest Phone
 </label>
 
-<input
-type="tel"
-id="phone"
-placeholder="Your WhatsApp number"
-required>
+<div style="display:flex;gap:8px;align-items:flex-start;">
+<select id="phoneCountry" required style="flex:0 0 52%;min-width:0;padding-left:8px;padding-right:4px;" aria-label="Country code">
+<option value="">Select country</option>
+<option value="+54">Argentina (+54)</option>
+<option value="+61">Australia (+61)</option>
+<option value="+43">Austria (+43)</option>
+<option value="+973">Bahrain (+973)</option>
+<option value="+32">Belgium (+32)</option>
+<option value="+55">Brazil (+55)</option>
+<option value="+359">Bulgaria (+359)</option>
+<option value="+1">Canada (+1)</option>
+<option value="+56">Chile (+56)</option>
+<option value="+86">China (+86)</option>
+<option value="+57">Colombia (+57)</option>
+<option value="+385">Croatia (+385)</option>
+<option value="+357">Cyprus (+357)</option>
+<option value="+420">Czech Republic (+420)</option>
+<option value="+45">Denmark (+45)</option>
+<option value="+20">Egypt (+20)</option>
+<option value="+372">Estonia (+372)</option>
+<option value="+358">Finland (+358)</option>
+<option value="+33">France (+33)</option>
+<option value="+49">Germany (+49)</option>
+<option value="+30">Greece (+30)</option>
+<option value="+36">Hungary (+36)</option>
+<option value="+354">Iceland (+354)</option>
+<option value="+91">India (+91)</option>
+<option value="+62">Indonesia (+62)</option>
+<option value="+353">Ireland (+353)</option>
+<option value="+972">Israel (+972)</option>
+<option value="+39">Italy (+39)</option>
+<option value="+81">Japan (+81)</option>
+<option value="+962">Jordan (+962)</option>
+<option value="+965">Kuwait (+965)</option>
+<option value="+371">Latvia (+371)</option>
+<option value="+961">Lebanon (+961)</option>
+<option value="+370">Lithuania (+370)</option>
+<option value="+352">Luxembourg (+352)</option>
+<option value="+60">Malaysia (+60)</option>
+<option value="+52">Mexico (+52)</option>
+<option value="+212">Morocco (+212)</option>
+<option value="+31">Netherlands (+31)</option>
+<option value="+64">New Zealand (+64)</option>
+<option value="+47">Norway (+47)</option>
+<option value="+968">Oman (+968)</option>
+<option value="+92">Pakistan (+92)</option>
+<option value="+51">Peru (+51)</option>
+<option value="+63">Philippines (+63)</option>
+<option value="+48">Poland (+48)</option>
+<option value="+351">Portugal (+351)</option>
+<option value="+974">Qatar (+974)</option>
+<option value="+40">Romania (+40)</option>
+<option value="+7">Russia (+7)</option>
+<option value="+966">Saudi Arabia (+966)</option>
+<option value="+381">Serbia (+381)</option>
+<option value="+65">Singapore (+65)</option>
+<option value="+421">Slovakia (+421)</option>
+<option value="+386">Slovenia (+386)</option>
+<option value="+27">South Africa (+27)</option>
+<option value="+82">South Korea (+82)</option>
+<option value="+34">Spain (+34)</option>
+<option value="+46">Sweden (+46)</option>
+<option value="+41">Switzerland (+41)</option>
+<option value="+66">Thailand (+66)</option>
+<option value="+216">Tunisia (+216)</option>
+<option value="+90">Turkey (+90)</option>
+<option value="+380">Ukraine (+380)</option>
+<option value="+971">United Arab Emirates (+971)</option>
+<option value="+44">United Kingdom (+44)</option>
+<option value="+1">United States (+1)</option>
+<option value="other">Other country</option>
+</select>
+<input type="tel" id="phoneLocal" inputmode="tel" autocomplete="tel-national" placeholder="Phone number" required style="flex:1;min-width:0;margin-bottom:0;" aria-label="Phone number">
+</div>
+<input type="hidden" id="phone">
+<p style="font-size:12px;color:#33251b;margin-top:6px;">
+Your WhatsApp number. Choose your country and the code is added for you.
+</p>
 
 </div>
 
@@ -8241,6 +8314,29 @@ function auto(){try{var o=JSON.parse(sessionStorage.getItem(K)||"{}");if(o.utm_s
 function heard(){var s=document.getElementById("heardFrom");return s?s.value.trim():"";}
 window.leadSourceLine=function(){return "Heard About Us: "+(heard()||"-")+"\n";};
 window.leadSourceDb=function(){var a=auto();return "\n[Heard from: "+(heard()||"-")+(a?" | Auto: "+a:"")+"]";};
+})();
+</script>
+<script id="phone-cc-js">
+(function(){
+var sel=document.getElementById("phoneCountry"),loc=document.getElementById("phoneLocal"),hid=document.getElementById("phone");
+if(!sel||!loc||!hid)return;
+function upd(){
+var c=sel.value,l=loc.value.trim(),out="",ok=true,msg="";
+var intl=(l.indexOf("+")===0)||(l.indexOf("00")===0);
+if(intl||c==="other"){
+ out=l.replace(/^00/,"+");
+ ok=/^\+[0-9][0-9 \(\)\-]{7,20}$/.test(out);
+ msg="Enter the full number starting with + and your country code.";
+}else if(c){
+ var d=l.replace(/[^0-9]/g,"").replace(/^0+/,"");
+ out=c+" "+d;ok=d.length>=6;msg="Please enter a valid phone number.";
+}
+hid.value=out;
+loc.setCustomValidity(l&&!ok?msg:"");
+}
+sel.addEventListener("change",upd);loc.addEventListener("input",upd);
+loc.addEventListener("invalid",function(){});
+upd();
 })();
 </script>
 </body>
