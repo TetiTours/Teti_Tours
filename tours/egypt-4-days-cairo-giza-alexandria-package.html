@@ -27,7 +27,7 @@
 
 <title>4 Days in Egypt: Cairo, Giza & Alexandria Private Package | Teti Tours</title>
 
-<link rel="preload" as="image" href="../assets/great-pyramid.webp" fetchpriority="high">
+<link rel="preload" as="image" href="../assets/giza-01.webp" fetchpriority="high">
 
 <meta name="description" content="Private 4 day Egypt package: Giza Pyramids, Grand Egyptian Museum, Alexandria and Old Cairo with airport transfers. Choose with or without 3 nights' hotel.">
 
@@ -2208,13 +2208,10 @@ html.tour-page:not(.tour-ready) main>*:not(#detailModal),html.tour-page:not(.tou
         loop
         playsinline
         preload="metadata"
-        poster="../assets/great-pyramid.webp"
+        poster="../assets/giza-01.webp"
         aria-hidden="true"
         tabindex="-1">
 
-        <source
-            src="../Teti_Tour_Hero_Video_compressed.mp4"
-            type="video/mp4">
 
     </video>
 
@@ -2265,7 +2262,7 @@ id="detailModal">
 
 <div
 class="detail-image"
-id="detailImage" style="background-image: url(&quot;../assets/great-pyramid.webp&quot;);">
+id="detailImage" style="background-image: url(&quot;../assets/giza-01.webp&quot;);">
 
 <button type="button" class="gallery-nav gallery-nav-prev active" id="galleryPrev" aria-label="Previous photo">‹</button>
 <button type="button" class="gallery-nav gallery-nav-next active" id="galleryNext" aria-label="Next photo">›</button>
@@ -8519,5 +8516,8 @@ window[n]=function(){var r=o.apply(this,arguments);apply();return r;};});
 })();
 </script>
 <style>.pk-hide{display:none!important;}</style>
+<script>
+window.addEventListener("load",function(){setTimeout(function(){var v=document.querySelector(".hero-video");if(!v||v.getAttribute("src")){return;}v.src="../Teti_Tour_Hero_Video_compressed.mp4";v.play().catch(function(){});},2500);});
+</script>
 </body>
 </html>
