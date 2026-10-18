@@ -3898,6 +3898,10 @@ required>
 
 </div>
 
+<p style="font-size:12px;color:#33251b;margin:6px 0 10px;">
+Required: type your hotel name and choose it from the list, or pin it on the map.
+</p>
+
 <div class="pickup-map-preview" id="pickupMapPreview" style="display:none;">
 <iframe id="pickupMapFrame" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 </div>
@@ -3907,14 +3911,31 @@ required>
 <button
 type="button"
 class="location-share-btn"
-onclick="shareMyLocation()">
+id="mapPickBtn"
+onclick="openMapPicker()"
+style="margin-right:8px;margin-bottom:8px;">
 
-📍 Share My Exact Location (optional)
+🗺️ Choose on map
+
+</button>
+
+<button
+type="button"
+class="location-share-btn"
+onclick="shareMyLocation()"
+style="margin-bottom:8px;">
+
+📍 Use my current location
 
 </button>
 
 <div class="location-share-status" id="locationStatus"></div>
 
+</div>
+
+<div id="mapPicker" style="display:none;margin-top:10px;">
+<div id="mapPickerMap" role="application" aria-label="Map to choose your hotel location" style="height:260px;border-radius:8px;border:1px solid #d5c8b8;"></div>
+<p style="font-size:12px;color:#33251b;margin-top:6px;">Tap the map to drop the pin on your hotel. You can drag the pin to adjust it.</p>
 </div>
 
 
@@ -7479,6 +7500,13 @@ async function(event){
 
 event.preventDefault();
 
+if(!window.pickupLocationLink){
+alert("Please choose your hotel on the map: type the hotel name and pick it from the list, or tap \"Choose on map\" and tap your hotel's location.");
+var pk=document.getElementById("pickup");
+if(pk&&pk.scrollIntoView){pk.scrollIntoView({block:"center"});}
+return;
+}
+
 
 let tourName = "";
 let tourLocation = "";
@@ -8357,6 +8385,48 @@ loc.setCustomValidity(l&&!ok?msg:"");
 sel.addEventListener("change",upd);loc.addEventListener("input",upd);
 loc.addEventListener("invalid",function(){});
 upd();
+})();
+</script>
+<script id="map-pick-js">
+(function(){
+var map=null,marker=null;
+var BASE="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/";
+function loadLeaflet(cb){
+if(window.L){cb();return;}
+var css=document.createElement("link");css.rel="stylesheet";css.href=BASE+"leaflet.min.css";document.head.appendChild(css);
+var s=document.createElement("script");s.src=BASE+"leaflet.min.js";s.onload=cb;
+s.onerror=function(){alert("The map could not load. Please type your hotel name and choose it from the list.");};
+document.head.appendChild(s);
+}
+function setPin(lat,lng){
+lat=Math.round(lat*1e6)/1e6;lng=Math.round(lng*1e6)/1e6;
+if(marker){marker.setLatLng([lat,lng]);}
+else{
+marker=L.marker([lat,lng],{draggable:true}).addTo(map);
+marker.on("dragend",function(){var p=marker.getLatLng();setPin(p.lat,p.lng);});
+}
+window.pickupLocationLink="https://www.google.com/maps?q="+lat+","+lng;
+var st=document.getElementById("locationStatus");
+if(st){st.textContent="\u2713 Pin added. Looking up the address...";st.style.color="#4c7a3f";}
+if(typeof fillPickupFromCoords==="function"){fillPickupFromCoords(lat,lng,st);}
+}
+window.openMapPicker=function(){
+var box=document.getElementById("mapPicker");if(!box)return;
+box.style.display="block";
+loadLeaflet(function(){
+if(!map){
+map=L.map("mapPickerMap").setView([30.0444,31.2357],11);
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"\u00a9 OpenStreetMap"}).addTo(map);
+map.on("click",function(e){setPin(e.latlng.lat,e.latlng.lng);});
+}
+setTimeout(function(){map.invalidateSize();},120);
+box.scrollIntoView({block:"nearest"});
+});
+};
+document.addEventListener("click",function(e){
+var b=e.target.closest?e.target.closest("#mapPickBtn"):null;
+if(b&&window.trackEvent){window.trackEvent("choose_on_map_click",{page_path:location.pathname});}
+},true);
 })();
 </script>
 </body>
