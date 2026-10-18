@@ -544,6 +544,16 @@ margin-bottom:14px;
 box-shadow:0 6px 18px rgba(0,0,0,.06);
 }
 
+.booking-card.completed{
+background:#eef4fb;
+border-left:6px solid #1f4268;
+}
+
+.complete-booking-btn.undo{
+background:#e3e3e3;
+color:#333;
+}
+
 .booking-card.cancelled{
 opacity:.55;
 }
@@ -563,19 +573,40 @@ color:#2d5223;
 }
 
 .booking-status-completed{
-background:#e6eef8;
-color:#24456b;
+background:#e3ecf6;
+color:#1f4268;
 }
 
 .complete-booking-btn{
-background:#2d5223;
-color:white;
-border:none;
 padding:8px 14px;
-border-radius:6px;
-cursor:pointer;
+border:none;
+border-radius:5px;
+background:#1f4268;
+color:white;
 font-size:13px;
-margin:8px 8px 0 0;
+cursor:pointer;
+margin-left:8px;
+}
+
+.booking-summary{
+width:100%;
+border-collapse:collapse;
+margin-top:14px;
+background:white;
+font-size:14px;
+}
+
+.booking-summary th,.booking-summary td{
+border:1px solid #e5dbc8;
+padding:8px 10px;
+text-align:left;
+color:#2a1d15;
+}
+
+.booking-summary th{
+background:#f8f3ea;
+font-size:12px;
+text-transform:uppercase;
 }
 
 .booking-status-cancelled{
@@ -768,6 +799,8 @@ Loading packages...
 <h2>Bookings</h2>
 <span id="bookingsCount" style="color:#75675b;font-size:13px;"></span>
 <div style="margin-top:10px;"><label for="bookingSort" style="display:inline;font-size:13px;margin-right:8px;">Sort by</label><select id="bookingSort" onchange="renderBookings()" style="padding:8px;border:1px solid #d5c8b8;border-radius:5px;font-size:14px;background:white;"><option value="tour">Tour date (upcoming first)</option><option value="booked">Newest bookings first</option></select></div>
+
+<div id="bookingsSummary"></div>
 
 <div class="admin-box">
 
@@ -1387,9 +1420,54 @@ if(isNaN(d.getTime())){ return value; }
 return d.toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short",year:"numeric"});
 }
 
+function renderBookingsSummary(data){
+
+const box = document.getElementById("bookingsSummary");
+if(!box){ return; }
+
+const months = {};
+
+data.forEach(function(b){
+const key = b.tour_date ? String(b.tour_date).slice(0,7) : "No date";
+if(!months[key]){ months[key] = { count:0, guests:0, done:0, money:{} }; }
+const m = months[key];
+m.count += 1;
+m.guests += (Number(b.adults) || 0) + (Number(b.children) || 0);
+if(b.status === "completed"){ m.done += 1; }
+if(b.price != null){
+const cur = b.currency || "";
+m.money[cur] = (m.money[cur] || 0) + Number(b.price);
+}
+});
+
+const keys = Object.keys(months).sort().reverse();
+
+if(keys.length === 0){ box.innerHTML = ""; return; }
+
+let html = '<table class="booking-summary"><thead><tr><th>Month</th><th>Bookings</th><th>Guests</th><th>Completed</th><th>Total</th></tr></thead><tbody>';
+
+keys.forEach(function(k){
+const m = months[k];
+let label = k;
+if(k !== "No date"){
+const d = new Date(k + "-01T00:00:00");
+label = d.toLocaleDateString("en-GB",{month:"long",year:"numeric"});
+}
+const money = Object.keys(m.money).map(function(c){ return m.money[c].toFixed(2) + " " + c; }).join(" + ") || "-";
+html += '<tr><td>' + label + '</td><td>' + m.count + '</td><td>' + m.guests + '</td><td>' + m.done + '</td><td>' + money + '</td></tr>';
+});
+
+html += '</tbody></table>';
+box.innerHTML = html;
+
+}
+
 function renderBookings(){
 
 const all = window.__bookings || [];
+
+renderBookingsSummary(all);
+
 const active = all.filter(function(b){ return b.status !== "completed"; });
 const done = all.filter(function(b){ return b.status === "completed"; });
 
@@ -1445,17 +1523,17 @@ isCancelled
 ?
 '<span class="booking-status-badge booking-status-cancelled">Cancelled</span>'
 :
-isCompleted
+(isCompleted
 ?
 '<span class="booking-status-badge booking-status-completed">Completed</span>'
 :
-'<span class="booking-status-badge booking-status-confirmed">Confirmed</span>';
+'<span class="booking-status-badge booking-status-confirmed">Confirmed</span>');
 
 const createdDate =
 new Date(booking.created_at).toLocaleString();
 
 html +=
-'<div class="booking-card' + (isCancelled ? ' cancelled' : '') + '">' +
+'<div class="booking-card' + (isCancelled ? ' cancelled' : '') + (isCompleted ? ' completed' : '') + '">' +
 
 '<div style="display:flex;justify-content:space-between;align-items:flex-start;">' +
 '<div>' +
@@ -1495,8 +1573,8 @@ statusBadge +
 '<div>' +
 '<button class="share-booking-btn" onclick="shareBooking(' + booking.id + ')">Share on WhatsApp</button>' +
 '<button class="copy-booking-btn" onclick="copyBooking(' + booking.id + ', this)">Copy</button>' +
-(isCompleted ? '<button class="copy-booking-btn" onclick="setBookingStatus(' + booking.id + ', \'confirmed\')">Move back to active</button>' : '<button class="complete-booking-btn" onclick="setBookingStatus(' + booking.id + ', \'completed\')">Mark Completed</button>') +
-(isCancelled || isCompleted ? "" : '<button class="cancel-booking-btn" onclick="cancelBooking(' + booking.id + ')">Cancel Booking</button>') +
+(isCancelled ? "" : '<button class="complete-booking-btn' + (isCompleted ? ' undo' : '') + '" onclick="setBookingStatus(' + booking.id + ', \'' + (isCompleted ? 'confirmed' : 'completed') + '\')">' + (isCompleted ? 'Mark as Confirmed' : 'Mark as Completed') + '</button>') +
+(isCancelled ? "" : '<button class="cancel-booking-btn" onclick="cancelBooking(' + booking.id + ')">Cancel Booking</button>') +
 '</div>' +
 
 '</div>';
