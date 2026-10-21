@@ -2164,6 +2164,7 @@ height:230px;
 </style>
 <style id="tour-inline-head">
 /* Tour pages: show tour details as part of the page, not as a pop-up */
+html.tour-page .jump-book{display:inline-block;margin:4px 0 14px;padding:12px 22px;background:#2a1d15;color:#fff;font-weight:bold;font-size:16px;border-radius:6px;text-decoration:none}.jump-book{display:none}#bookingForm{scroll-margin-top:16px}
 html.tour-page #detailModal{position:static!important;display:block!important;background:transparent!important;overflow:visible!important;z-index:auto!important;padding:0!important}
 html.tour-page #detailModal .detail-box{min-height:0;box-shadow:none}
 html.tour-page .close-detail{display:none!important}
@@ -2275,6 +2276,8 @@ experiences across Cairo, Giza and beyond.
 <div class="detail-content">
 
 <h2 id="detailTitle">Private Cairo Airport or Sphinx Airport Transfer to or from Hotel</h2>
+<a class="jump-book" href="#bookingForm">Book this tour ↓</a>
+
 
 <p id="detailDescription">A comfortable, air-conditioned private transfer between Cairo International Airport or Sphinx International Airport and your hotel, with a driver waiting for you at arrivals — no shared shuttles and no waiting for other passengers. Flight tracking is included, so pickup adjusts automatically if your flight is early or delayed, and your driver will be holding a sign with your name.</p>
 
@@ -2588,7 +2591,7 @@ Sphinx International Airport
 
 <label for="airportDate">Pickup Date</label>
 
-<input type="date" id="airportDate" required="" min="2026-10-19">
+<input type="date" id="airportDate" required="" min="2026-10-21">
 
 </div>
 
