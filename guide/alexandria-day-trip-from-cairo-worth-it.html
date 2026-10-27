@@ -121,6 +121,32 @@ footer p{margin-top:12px;color:#c8bbac;}
 .footer-social a{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.08);color:white;text-decoration:none;font-size:17px;}
 .copyright{margin-top:20px;color:#c8bbac;font-size:13px;}
 </style>
+<!-- Google tag (gtag.js) - deferred until after page load so it doesn't compete with LCP/rendering -->
+<script>
+  try{var q=location.search;if(/[?&]internal=1/.test(q))localStorage.setItem('teti_internal','1');if(/[?&]internal=0/.test(q))localStorage.removeItem('teti_internal');if(localStorage.getItem('teti_internal')==='1')window['ga-disable-G-NEWYPC8JLB']=true;}catch(e){}
+window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  window.gtag = gtag;
+  gtag('js', new Date());
+  gtag('config', 'G-NEWYPC8JLB');
+
+  function loadGtagScript(){
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-NEWYPC8JLB';
+    document.head.appendChild(s);
+  }
+  var gtagLoaded = false;
+  function loadGtagOnce(){
+    if (gtagLoaded) { return; }
+    gtagLoaded = true;
+    loadGtagScript();
+  }
+  ['scroll','pointerdown','keydown','touchstart'].forEach(function(ev){
+    window.addEventListener(ev, loadGtagOnce, {once:true, passive:true});
+  });
+  window.addEventListener('load', function(){ setTimeout(loadGtagOnce, 5000); });
+</script>
 </head>
 <body>
 

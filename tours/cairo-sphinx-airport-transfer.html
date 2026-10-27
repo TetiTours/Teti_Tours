@@ -3,7 +3,8 @@
 <head>
 <!-- Google tag (gtag.js) - deferred until after page load so it doesn't compete with LCP/rendering -->
 <script>
-  window.dataLayer = window.dataLayer || [];
+  try{var q=location.search;if(/[?&]internal=1/.test(q))localStorage.setItem('teti_internal','1');if(/[?&]internal=0/.test(q))localStorage.removeItem('teti_internal');if(localStorage.getItem('teti_internal')==='1')window['ga-disable-G-NEWYPC8JLB']=true;}catch(e){}
+window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   window.gtag = gtag;
   gtag('js', new Date());
