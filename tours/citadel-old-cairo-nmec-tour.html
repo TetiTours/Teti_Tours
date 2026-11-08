@@ -2272,6 +2272,7 @@ experiences across Cairo, Giza and beyond.
 
 <h2 id="detailTitle">Citadel &amp; Old Cairo + Civilization Museum</h2>
 <a class="jump-book" href="#bookingForm">Book this tour ↓</a>
+<div id="fromPriceLine" class="from-price-line" aria-live="polite"></div>
 
 
 <p id="detailDescription">This tour covers Cairo's Islamic and Coptic heritage alongside its newest museum. The Citadel of Saladin, built in the 12th century atop a hill overlooking the city, houses the Alabaster Mosque of Muhammad Ali and sweeping views over Cairo. Old Cairo's narrow streets hold some of the country's oldest churches and historic mosques. The tour also includes the National Museum of Egyptian Civilization (NMEC), where 22 royal mummies were relocated in a widely covered procession in 2021, and which traces Egyptian history from prehistory through to the present day.</p>
@@ -4413,6 +4414,20 @@ function now(){run(true);}
 function arm(){setTimeout(run,3000);}
 if(document.readyState==="complete"){arm();}else{window.addEventListener("load",arm);}
 })();
+</script>
+<style>
+.from-price-line{min-height:26px;margin:10px 0 4px;font-size:17px;font-weight:bold;color:#7a5a30;line-height:1.4}
+.from-price-line small{display:block;font-size:13px;font-weight:normal;color:#33251b}
+</style>
+<script>
+(function(){var el=document.getElementById("fromPriceLine");if(!el)return;var n=0;
+var t=setInterval(function(){n++;if(n>120){clearInterval(t);return}
+var id=window.currentTour;if(!id||!window.tourPrices||!window.tourPrices.length)return;
+var b=document.querySelector('.tour-price-badge[data-tour-id="'+id+'"]');
+var tx=b?b.textContent.trim():"";if(tx.indexOf("From $")!==0)return;
+var per=(window.tourPackages||[]).some(function(p){return String(p.tour_id).trim().toLowerCase()===String(id).trim().toLowerCase()});
+el.innerHTML=tx+(per?" per person":" for 1-2 guests")+"<small>Pay cash on arrival &middot; Free cancellation up to 48h</small>";
+clearInterval(t)},250)})();
 </script>
 </body>
 </html>

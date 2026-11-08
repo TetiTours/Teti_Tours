@@ -2272,6 +2272,7 @@ experiences across Cairo, Giza and beyond.
 
 <h2 id="detailTitle">Felucca</h2>
 <a class="jump-book" href="#bookingForm">Book this tour ↓</a>
+<div id="fromPriceLine" class="from-price-line" aria-live="polite"></div>
 
 
 <p id="detailDescription">A simple, relaxing sail on a traditional wooden felucca along the Nile. No engine, no rush — just the wind in the sail and views of Cairo drifting slowly by. A refreshing way to take a break from the city and enjoy the river at your own pace.</p>
@@ -4409,6 +4410,20 @@ function now(){run(true);}
 function arm(){setTimeout(run,3000);}
 if(document.readyState==="complete"){arm();}else{window.addEventListener("load",arm);}
 })();
+</script>
+<style>
+.from-price-line{min-height:26px;margin:10px 0 4px;font-size:17px;font-weight:bold;color:#7a5a30;line-height:1.4}
+.from-price-line small{display:block;font-size:13px;font-weight:normal;color:#33251b}
+</style>
+<script>
+(function(){var el=document.getElementById("fromPriceLine");if(!el)return;var n=0;
+var t=setInterval(function(){n++;if(n>120){clearInterval(t);return}
+var id=window.currentTour;if(!id||!window.tourPrices||!window.tourPrices.length)return;
+var b=document.querySelector('.tour-price-badge[data-tour-id="'+id+'"]');
+var tx=b?b.textContent.trim():"";if(tx.indexOf("From $")!==0)return;
+var per=(window.tourPackages||[]).some(function(p){return String(p.tour_id).trim().toLowerCase()===String(id).trim().toLowerCase()});
+el.innerHTML=tx+(per?" per person":" for 1-2 guests")+"<small>Pay cash on arrival &middot; Free cancellation up to 48h</small>";
+clearInterval(t)},250)})();
 </script>
 </body>
 </html>

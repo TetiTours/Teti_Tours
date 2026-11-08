@@ -2278,6 +2278,7 @@ experiences across Cairo, Giza and beyond.
 
 <h2 id="detailTitle">Private Cairo Airport or Sphinx Airport Transfer to or from Hotel</h2>
 <a class="jump-book" href="#bookingForm">Book this tour ↓</a>
+<div id="fromPriceLine" class="from-price-line" aria-live="polite"></div>
 
 
 <p id="detailDescription">A comfortable, air-conditioned private transfer between Cairo International Airport or Sphinx International Airport and your hotel, with a driver waiting for you at arrivals — no shared shuttles and no waiting for other passengers. Flight tracking is included, so pickup adjusts automatically if your flight is early or delayed, and your driver will be holding a sign with your name.</p>
@@ -4368,6 +4369,20 @@ function now(){run(true);}
 function arm(){setTimeout(run,3000);}
 if(document.readyState==="complete"){arm();}else{window.addEventListener("load",arm);}
 })();
+</script>
+<style>
+.from-price-line{min-height:26px;margin:10px 0 4px;font-size:17px;font-weight:bold;color:#7a5a30;line-height:1.4}
+.from-price-line small{display:block;font-size:13px;font-weight:normal;color:#33251b}
+</style>
+<script>
+(function(){var el=document.getElementById("fromPriceLine");if(!el)return;var n=0;
+var t=setInterval(function(){n++;if(n>120){clearInterval(t);return}
+var id=window.currentTour;if(!id||!window.tourPrices||!window.tourPrices.length)return;
+var b=document.querySelector('.tour-price-badge[data-tour-id="'+id+'"]');
+var tx=b?b.textContent.trim():"";if(tx.indexOf("From $")!==0)return;
+var per=(window.tourPackages||[]).some(function(p){return String(p.tour_id).trim().toLowerCase()===String(id).trim().toLowerCase()});
+el.innerHTML=tx+(per?" per person":" for 1-2 guests")+"<small>Pay cash on arrival &middot; Free cancellation up to 48h</small>";
+clearInterval(t)},250)})();
 </script>
 </body>
 </html>

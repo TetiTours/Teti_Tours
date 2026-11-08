@@ -2279,6 +2279,7 @@ experiences across Cairo, Giza and beyond.
 
 <h2 id="detailTitle">Bedouin Dinner &amp; Show Night in the Giza Desert</h2>
 <a class="jump-book" href="#bookingForm">Book this tour ↓</a>
+<div id="fromPriceLine" class="from-price-line" aria-live="polite"></div>
 
 
 <p id="detailDescription">Spend an evening the Bedouin way, in the desert near the Giza Pyramids. Your driver collects you from your hotel in Cairo or Giza and takes you to a traditional desert camp, where you watch the sun go down over the sand from low Bedouin seating. As the sky darkens, a mixed grill is served with rice and fresh salads, followed by tea brewed over charcoal. You sit on floor cushions around a low table in a Bedouin tent while music plays, and later the night fills with a Tanoura whirling dance and a fire show under the stars. Water, tea or soft drinks are included, along with hotel pickup and drop-off. The tour is private, just you and your group with your own driver.</p><div id="bd-note" style="margin:12px 0;padding:12px 14px;background:#fff6e5;border-left:4px solid #d9962b;border-radius:8px;color:#5a3d12;font-size:14.5px;line-height:1.6;"><strong>Good to know:</strong> the camp is open from 5:00 PM until 12:00 AM, and the show starts at 9:00 PM. You choose your hotel pickup time between 4:00 PM and 8:00 PM, and the drive takes about an hour.</div>
@@ -4377,6 +4378,20 @@ function now(){run(true);}
 function arm(){setTimeout(run,3000);}
 if(document.readyState==="complete"){arm();}else{window.addEventListener("load",arm);}
 })();
+</script>
+<style>
+.from-price-line{min-height:26px;margin:10px 0 4px;font-size:17px;font-weight:bold;color:#7a5a30;line-height:1.4}
+.from-price-line small{display:block;font-size:13px;font-weight:normal;color:#33251b}
+</style>
+<script>
+(function(){var el=document.getElementById("fromPriceLine");if(!el)return;var n=0;
+var t=setInterval(function(){n++;if(n>120){clearInterval(t);return}
+var id=window.currentTour;if(!id||!window.tourPrices||!window.tourPrices.length)return;
+var b=document.querySelector('.tour-price-badge[data-tour-id="'+id+'"]');
+var tx=b?b.textContent.trim():"";if(tx.indexOf("From $")!==0)return;
+var per=(window.tourPackages||[]).some(function(p){return String(p.tour_id).trim().toLowerCase()===String(id).trim().toLowerCase()});
+el.innerHTML=tx+(per?" per person":" for 1-2 guests")+"<small>Pay cash on arrival &middot; Free cancellation up to 48h</small>";
+clearInterval(t)},250)})();
 </script>
 </body>
 </html>
